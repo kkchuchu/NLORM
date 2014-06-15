@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLORM", "NLORM\NLORM.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLORM.Core", "NLORM.Core\NLORM.Core.csproj", "{2306E206-1317-41B0-B437-3BD0934B546C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLORM.Core.Test", "NLORM.Core.Test\NLORM.Core.Test.csproj", "{AF9787BA-AC55-4981-924E-01D0CE969B08}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{2306E206-1317-41B0-B437-3BD0934B546C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2306E206-1317-41B0-B437-3BD0934B546C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2306E206-1317-41B0-B437-3BD0934B546C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF9787BA-AC55-4981-924E-01D0CE969B08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF9787BA-AC55-4981-924E-01D0CE969B08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF9787BA-AC55-4981-924E-01D0CE969B08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF9787BA-AC55-4981-924E-01D0CE969B08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
