@@ -34,12 +34,21 @@ namespace NLORM.Core
 
         public ModelDefinition ConverClassToModelDefinition<T>() where T : new()
         {
-            TableNameAttribute attrTableName =
-          (TableNameAttribute)Attribute.GetCustomAttribute(typeof(T), typeof(TableNameAttribute));
-
-            var ret = new ModelDefinition(attrTableName.TableName, null);
-
+            string tableName = GetTableNameByType(typeof(T));
+            var ret = new ModelDefinition(tableName, null);
             return ret;
+        }
+
+        private string GetTableNameByType(Type classType)
+        {
+            var tableNameAttr = GetTableNameAttrByType(classType);
+            string ret = tableNameAttr == null ? classType.Name : tableNameAttr.TableName;
+            return ret;
+        }
+
+        private TableNameAttribute GetTableNameAttrByType(Type classType)
+        {
+            return (TableNameAttribute)Attribute.GetCustomAttribute(classType, typeof(TableNameAttribute));
         }
     }
 }
