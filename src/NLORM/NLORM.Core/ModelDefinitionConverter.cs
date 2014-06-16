@@ -35,6 +35,7 @@ namespace NLORM.Core
         public ModelDefinition ConverClassToModelDefinition<T>() where T : new()
         {
             string tableName = GetTableNameByType(typeof(T));
+            var fiedlDic = GetColumnFieldDefinition(typeof(T));
             var ret = new ModelDefinition(tableName, null);
             return ret;
         }
@@ -49,6 +50,11 @@ namespace NLORM.Core
         private TableNameAttribute GetTableNameAttrByType(Type classType)
         {
             return (TableNameAttribute)Attribute.GetCustomAttribute(classType, typeof(TableNameAttribute));
+        }
+
+        private Dictionary<string, ColumnFieldDefinition> GetColumnFieldDefinition(Type classType)
+        {
+            return null;
         }
     }
 }
