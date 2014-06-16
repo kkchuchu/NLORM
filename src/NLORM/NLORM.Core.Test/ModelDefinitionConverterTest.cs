@@ -12,6 +12,10 @@ namespace NLORM.Core.Test
 
     }
 
+    class TestClassB
+    {
+    }
+
     /// <summary>
     /// Summary description for ModelDefinitionConverterTest
     /// </summary>
@@ -72,6 +76,15 @@ namespace NLORM.Core.Test
             var md = mdc.ConverClassToModelDefinition<TestClassA>();
             string tableName = md.TableName;
             Assert.AreEqual("TestTableA", tableName);
+        }
+
+        [TestMethod]
+        public void TestGetTableNameWithoutAttr()
+        {
+            var mdc = ModelDefinitionConverter.Instance;
+            var md = mdc.ConverClassToModelDefinition<TestClassB>();
+            string tableName = md.TableName;
+            Assert.AreEqual("TestClassB", tableName);
         }
     }
 }
