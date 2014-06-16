@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NLORM.Core.Attributes
 {
-    class BaseAttribute : Attribute
+    public class BaseAttribute : Attribute
     {
         protected readonly Guid guId;
     }
