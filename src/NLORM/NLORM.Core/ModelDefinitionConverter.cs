@@ -10,27 +10,11 @@ namespace NLORM.Core
 {
     public class ModelDefinitionConverter
     {
-        private static volatile ModelDefinitionConverter instance;
-        private static object syncRoot = new Object();
+        INLORMDbConnection nldbc;
 
-        private ModelDefinitionConverter() { }
-        /// <summary>
-        /// singleton
-        /// </summary>
-        public static ModelDefinitionConverter Instance
+        public ModelDefinitionConverter(INLORMDbConnection dbc)
         {
-            get
-            {
-                if (instance == null)
-                {
-                    lock (syncRoot)
-                    {
-                        if (instance == null)
-                            instance = new ModelDefinitionConverter();
-                    }
-                }
-                return instance;
-            }
+            nldbc = dbc;
         }
 
         public ModelDefinition ConverClassToModelDefinition<T>() where T : new()
@@ -55,49 +39,54 @@ namespace NLORM.Core
 
         private Dictionary<string, ColumnFieldDefinition> GetColumnFieldDefinition(Type classType)
         {
-            //TODO not done
             var propeties = classType.GetProperties();
 			Dictionary<string, ColumnFieldDefinition> ret = new Dictionary<string, ColumnFieldDefinition>();
             foreach (var pro in propeties)
             {
                 string proName = pro.Name;
                 var columnFieldDef = GetColumnFieldDefByProprty(pro);
+                ret.Add(pro.Name, columnFieldDef);
             }
-            return null;
+            return ret;
         }
 
         private ColumnFieldDefinition GetColumnFieldDefByProprty(PropertyInfo prop)
         {
             object[] attrs = prop.GetCustomAttributes(true);
             var ret = new ColumnFieldDefinition();
+            ColumnNameAttribute colNameAttr = null;
+            ColumnTypeAttribute colTypeAttr = null; 
             foreach (object attr in attrs)
             {
-                var colNameAttr = (ColumnNameAttribute)attr;
-                var colTypeAttr = (ColumnTypeAttribute)attr;
-                if (colNameAttr != null)
-                {
-                    AsignColNameAttrToDef(ret, colNameAttr);
-                }
-                if (colTypeAttr != null)
-                {
-                    AsignColTypeAttrToDef(ret, colTypeAttr);
-                }
+                colNameAttr = (ColumnNameAttribute)attr;
+                colTypeAttr = (ColumnTypeAttribute)attr;
             }
+            AsignColNameAttrToDef(ret, colNameAttr,prop);
+            AsignColTypeAttrToDef(ret, colTypeAttr,prop);
             return ret;
         }
 
-        private void AsignColNameAttrToDef(ColumnFieldDefinition colunmF,ColumnNameAttribute colNameAttr)
+        private void AsignColNameAttrToDef(ColumnFieldDefinition colunmF,
+            ColumnNameAttribute colNameAttr,PropertyInfo prop)
         {
-            colunmF.ColumnName = colNameAttr.ColumnName;
+            colunmF.ColumnName = colNameAttr == null ? prop.Name : colNameAttr.ColumnName;
         }
 
-        private void AsignColTypeAttrToDef(ColumnFieldDefinition colunmF, ColumnTypeAttribute colTypeAttr)
+        private void AsignColTypeAttrToDef(ColumnFieldDefinition colunmF, 
+            ColumnTypeAttribute colTypeAttr,PropertyInfo prop)
         {
-            colunmF.FieldType = colTypeAttr.DBType;
-            colunmF.Length = colTypeAttr.Length;
-            colunmF.Nullable = colTypeAttr.Nullable;
-            colunmF.DefaultValue = colTypeAttr.DefaultValue;
-            colunmF.Comment = colTypeAttr.Comment;
+            if (colTypeAttr != null)
+            {
+                colunmF.FieldType = colTypeAttr.DBType;
+                colunmF.Length = colTypeAttr.Length;
+                colunmF.Nullable = colTypeAttr.Nullable;
+                colunmF.DefaultValue = colTypeAttr.DefaultValue;
+                colunmF.Comment = colTypeAttr.Comment;
+            }
+            else
+            {
+                //TODO It will get DefaultValue By every dbprovider
+            }
         }
     }
 }

@@ -7,6 +7,6 @@ namespace NLORM.Core
 {
     public interface INLORMDbConnection
     {
-        public bool CreateTable<T>();
+        bool CreateTable<T>();
     }
 }

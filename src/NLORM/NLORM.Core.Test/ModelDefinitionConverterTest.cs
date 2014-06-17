@@ -72,7 +72,7 @@ namespace NLORM.Core.Test
         [TestMethod]
         public void TestGetTableName()
         {
-            var mdc = ModelDefinitionConverter.Instance;
+            var mdc = new ModelDefinitionConverter(null);
             var md = mdc.ConverClassToModelDefinition<TestClassA>();
             string tableName = md.TableName;
             Assert.AreEqual("TestTableA", tableName);
@@ -81,7 +81,7 @@ namespace NLORM.Core.Test
         [TestMethod]
         public void TestGetTableNameWithoutAttr()
         {
-            var mdc = ModelDefinitionConverter.Instance;
+            var mdc = new ModelDefinitionConverter(null);
             var md = mdc.ConverClassToModelDefinition<TestClassB>();
             string tableName = md.TableName;
             Assert.AreEqual("TestClassB", tableName);
