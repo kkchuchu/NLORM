@@ -21,7 +21,7 @@ namespace NLORM.Core
         {
             string tableName = GetTableNameByType(typeof(T));
             var fiedlDic = GetColumnFieldDefinition(typeof(T));
-            var ret = new ModelDefinition(tableName, null);
+            var ret = new ModelDefinition(tableName, fiedlDic);
             return ret;
         }
 
@@ -58,8 +58,8 @@ namespace NLORM.Core
             ColumnTypeAttribute colTypeAttr = null; 
             foreach (object attr in attrs)
             {
-                colNameAttr = (ColumnNameAttribute)attr;
-                colTypeAttr = (ColumnTypeAttribute)attr;
+                colNameAttr = attr as ColumnNameAttribute;
+                colTypeAttr = attr as ColumnTypeAttribute;
             }
             AsignColNameAttrToDef(ret, colNameAttr,prop);
             AsignColTypeAttrToDef(ret, colTypeAttr,prop);

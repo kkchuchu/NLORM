@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Data;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NLORM.Core.Attributes;
@@ -9,11 +10,14 @@ namespace NLORM.Core.Test
     [TableName("TestTableA")]
     class TestClassA
     {
-
+        [ColumnName("COLID")]
+        [ColumnType(DbType.String,"30",false,"0001","this is id comment")]
+        public string ID { get; set; }
     }
 
     class TestClassB
     {
+        public string ID { get; set; }
     }
 
     /// <summary>
@@ -85,6 +89,24 @@ namespace NLORM.Core.Test
             var md = mdc.ConverClassToModelDefinition<TestClassB>();
             string tableName = md.TableName;
             Assert.AreEqual("TestClassB", tableName);
+        }
+
+        [TestMethod]
+        public void TestGetColNameWithAttr()
+        {
+            var mdc = new ModelDefinitionConverter(null);
+            var md = mdc.ConverClassToModelDefinition<TestClassA>();
+            string idColName = md.PropertyColumnDic["ID"].ColumnName;
+            Assert.AreEqual("COLID", idColName);
+        }
+
+        [TestMethod]
+        public void TestGetColNameWithoutAttr()
+        {
+            var mdc = new ModelDefinitionConverter(null);
+            var md = mdc.ConverClassToModelDefinition<TestClassB>();
+            string idColName = md.PropertyColumnDic["ID"].ColumnName;
+            Assert.AreEqual("ID", idColName);
         }
     }
 }
