@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 using NLORM.Core.BasicDefinitions;
 using NLORM.Core.Attributes;
 
@@ -55,6 +56,18 @@ namespace NLORM.Core
         private Dictionary<string, ColumnFieldDefinition> GetColumnFieldDefinition(Type classType)
         {
             //TODO not done
+            var propeties = classType.GetProperties();
+			Dictionary<string, ColumnFieldDefinition> ret = new Dictionary<string, ColumnFieldDefinition>();
+            foreach (var pro in propeties)
+            {
+
+            }
+            return null;
+        }
+
+        private ColumnFieldDefinition GetColumnFieldDefByProprty(PropertyInfo pro)
+        {
+            //TODO not yet
             return null;
         }
     }
