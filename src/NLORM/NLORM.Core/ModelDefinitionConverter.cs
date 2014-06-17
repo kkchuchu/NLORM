@@ -60,15 +60,44 @@ namespace NLORM.Core
 			Dictionary<string, ColumnFieldDefinition> ret = new Dictionary<string, ColumnFieldDefinition>();
             foreach (var pro in propeties)
             {
-
+                string proName = pro.Name;
+                var columnFieldDef = GetColumnFieldDefByProprty(pro);
             }
             return null;
         }
 
-        private ColumnFieldDefinition GetColumnFieldDefByProprty(PropertyInfo pro)
+        private ColumnFieldDefinition GetColumnFieldDefByProprty(PropertyInfo prop)
         {
-            //TODO not yet
-            return null;
+            object[] attrs = prop.GetCustomAttributes(true);
+            var ret = new ColumnFieldDefinition();
+            foreach (object attr in attrs)
+            {
+                var colNameAttr = (ColumnNameAttribute)attr;
+                var colTypeAttr = (ColumnTypeAttribute)attr;
+                if (colNameAttr != null)
+                {
+                    AsignColNameAttrToDef(ret, colNameAttr);
+                }
+                if (colTypeAttr != null)
+                {
+                    AsignColTypeAttrToDef(ret, colTypeAttr);
+                }
+            }
+            return ret;
+        }
+
+        private void AsignColNameAttrToDef(ColumnFieldDefinition colunmF,ColumnNameAttribute colNameAttr)
+        {
+            colunmF.ColumnName = colNameAttr.ColumnName;
+        }
+
+        private void AsignColTypeAttrToDef(ColumnFieldDefinition colunmF, ColumnTypeAttribute colTypeAttr)
+        {
+            colunmF.FieldType = colTypeAttr.DBType;
+            colunmF.Length = colTypeAttr.Length;
+            colunmF.Nullable = colTypeAttr.Nullable;
+            colunmF.DefaultValue = colTypeAttr.DefaultValue;
+            colunmF.Comment = colTypeAttr.Comment;
         }
     }
 }
