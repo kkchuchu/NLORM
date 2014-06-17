@@ -46,7 +46,6 @@
     <Compile Include="BasicDefinitions\ModelDefinition.cs" />
     <Compile Include="Dapper\SqlMapper.cs" />
     <Compile Include="INLORMDbConnection.cs" />
-    <Compile Include="ISqlBuilder.cs" />
     <Compile Include="ModelDefinitionConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BasicDefinitions\ColumnFieldDefinition.cs" />

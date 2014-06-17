@@ -7,6 +7,11 @@ namespace NLORM.Core
 {
     public interface INLORMDbConnection
     {
+
+        void Open();
+        void Close();
+        void Dispose();
+
         bool CreateTable<T>();
     }
 }
