@@ -54,6 +54,7 @@ namespace NLORM.Core
 
         private Dictionary<string, ColumnFieldDefinition> GetColumnFieldDefinition(Type classType)
         {
+            //TODO not done
             return null;
         }
     }

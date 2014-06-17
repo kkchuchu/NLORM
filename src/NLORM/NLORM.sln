@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLORM.Core", "NLORM.Core\NL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLORM.Core.Test", "NLORM.Core.Test\NLORM.Core.Test.csproj", "{AF9787BA-AC55-4981-924E-01D0CE969B08}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLORM.SQLite", "NLORM.SQLite\NLORM.SQLite.csproj", "{8A22EEC9-42E8-481B-B72F-3D99E72D8C53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{AF9787BA-AC55-4981-924E-01D0CE969B08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF9787BA-AC55-4981-924E-01D0CE969B08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF9787BA-AC55-4981-924E-01D0CE969B08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A22EEC9-42E8-481B-B72F-3D99E72D8C53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A22EEC9-42E8-481B-B72F-3D99E72D8C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A22EEC9-42E8-481B-B72F-3D99E72D8C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A22EEC9-42E8-481B-B72F-3D99E72D8C53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
