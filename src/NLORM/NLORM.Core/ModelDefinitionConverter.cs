@@ -83,10 +83,6 @@ namespace NLORM.Core
                 colunmF.DefaultValue = colTypeAttr.DefaultValue;
                 colunmF.Comment = colTypeAttr.Comment;
             }
-            else
-            {
-                //TODO It will get DefaultValue By every dbprovider
-            }
         }
     }
 }
