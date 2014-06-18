@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data.SQLite;
 using NLORM.Core;
 
 namespace NLORM.SQLite
 {
-    class NLORMSQLiteDb : NLORMBaseDb
+    public class NLORMSQLiteDb : NLORMBaseDb
     {
+        public NLORMSQLiteDb(string connectionString)
+        {
+        }
     }
 }
