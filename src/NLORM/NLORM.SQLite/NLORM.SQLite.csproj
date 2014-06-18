@@ -42,8 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NLORMSQLiteDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="NLSQLiteConnection.cs" />
     <Compile Include="SQLiteSqlBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
