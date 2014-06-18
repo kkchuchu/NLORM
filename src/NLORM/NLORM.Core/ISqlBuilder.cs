@@ -7,5 +7,6 @@ namespace NLORM.Core
 {
     public interface ISqlBuilder
     {
+        string GenCreateTableSql<T>() where T : new();
     }
 }
