@@ -9,7 +9,7 @@ using NLORM.Core.BasicDefinitions;
 
 namespace NLORM.SQLite
 {
-    public class SQLiteSqlBuilder 
+    public class SQLiteSqlBuilder : ISqlBuilder
     {
         public string GenCreateTableSql<T>() where T : new()
         {
