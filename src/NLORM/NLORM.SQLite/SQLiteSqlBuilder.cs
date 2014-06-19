@@ -11,6 +11,9 @@ namespace NLORM.SQLite
 {
     public class SQLiteSqlBuilder : ISqlBuilder
     {
+
+        private const string StringDeafultLength = "255";
+
         public string GenCreateTableSql<T>() where T : new()
         {
             var mdc = new ModelDefinitionConverter(null);
@@ -40,6 +43,9 @@ namespace NLORM.SQLite
                 case DbType.String:
                     ret.Append(CreateStringCreateSql(cfd));
                     break;
+                case DbType.AnsiString:
+                    ret.Append(CreateStringCreateSql(cfd));
+                    break;
 
                 //TODO Not Done , only string now
 
@@ -53,8 +59,8 @@ namespace NLORM.SQLite
         private string CreateStringCreateSql(ColumnFieldDefinition cfd)
         {
             string ret = "";
-            string length = cfd.Length;
-            string nullable = cfd.Nullable ? "":"not null";
+            string length = string.IsNullOrEmpty(cfd.Length)?:cfd.Length;
+            string nullable = cfd.Nullable ? StringDeafultLength:"not null";
             ret += "varchar(" + length + ") " + nullable;
             return ret;
         }
