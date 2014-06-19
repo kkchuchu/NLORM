@@ -42,6 +42,7 @@
     <Compile Include="Attributes\BaseAttribute.cs" />
     <Compile Include="Attributes\ColumnNameAttribute.cs" />
     <Compile Include="Attributes\ColumnTypeAttribute.cs" />
+    <Compile Include="Attributes\NotGenColumnAttribute.cs" />
     <Compile Include="Attributes\TableNameAttribute.cs" />
     <Compile Include="BasicDefinitions\ModelDefinition.cs" />
     <Compile Include="Dapper\SqlMapper.cs" />
