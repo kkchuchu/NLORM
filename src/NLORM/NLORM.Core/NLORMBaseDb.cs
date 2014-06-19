@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using Dapper;
 
 namespace NLORM.Core
 {
@@ -10,6 +11,30 @@ namespace NLORM.Core
     {
         protected ISqlBuilder sqlBuilder;
         protected IDbConnection dbc;
+
+        public void Open()
+        {
+            dbc.Open();
+        }
+
+        public void Close()
+        {
+            dbc.Close();
+        }
+
+        public void Dispose()
+        {
+            this.Close();
+            dbc.Dispose();
+        }
+
+        public void CreateTable<T>() where T : new()
+        {
+            string sql = sqlBuilder.GenCreateTableSql<T>();
+            dbc.Execute(sql);
+        }
+
+
 
     }
 }
