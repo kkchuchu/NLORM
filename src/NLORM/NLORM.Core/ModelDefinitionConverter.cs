@@ -45,7 +45,9 @@ namespace NLORM.Core
             {
                 string proName = pro.Name;
                 var columnFieldDef = GetColumnFieldDefByProprty(pro);
-                ret.Add(pro.Name, columnFieldDef);
+
+				if ( GenCloumn( pro) == true )
+					ret.Add(pro.Name, columnFieldDef);
             }
             return ret;
         }
@@ -84,5 +86,22 @@ namespace NLORM.Core
                 colunmF.Comment = colTypeAttr.Comment;
             }
         }
+
+		private bool GenCloumn(PropertyInfo prop)
+		{
+			bool tag = true;
+
+			object[] attrs = prop.GetCustomAttributes( true);
+
+			NotGenColumnAttribute ngattr = null;
+			foreach ( object attr in attrs)
+			{
+				ngattr = attr as NotGenColumnAttribute;
+				if ( ngattr != null && ngattr.GenCol == false )
+					tag = false;
+			}
+
+			return tag;
+		}
     }
 }
