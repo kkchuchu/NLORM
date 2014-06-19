@@ -2,13 +2,16 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NLORM.SQLite;
+using NLORM.Core.Attributes;
 
 namespace NLORM.SQLite.Test
 {
     class TestClass
     {
+        [ColumnType(DbType.AnsiString,"30",false,"0001","this is id comment")]
         public string ID { get; set; }
 
     }
@@ -69,7 +72,7 @@ namespace NLORM.SQLite.Test
         [TestMethod]
         public void TestMethod1()
         {
-            var sqliteDbc = new NLORMSQLiteDb("C:\\test.sqlite");
+            var sqliteDbc = new NLORMSQLiteDb("Data Source=C:\\test.sqlite");
             sqliteDbc.CreateTable<TestClass>();
         }
     }
