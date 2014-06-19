@@ -87,19 +87,14 @@ namespace NLORM.Core
             }
         }
 
-		private bool GenCloumn(PropertyInfo prop)
+		private bool GenCloumn( PropertyInfo prop)
 		{
 			bool tag = true;
 
-			object[] attrs = prop.GetCustomAttributes( true);
+			NotGenColumnAttribute tarattr = (NotGenColumnAttribute) Attribute.GetCustomAttribute( prop, typeof(NotGenColumnAttribute) );
 
-			NotGenColumnAttribute ngattr = null;
-			foreach ( object attr in attrs)
-			{
-				ngattr = attr as NotGenColumnAttribute;
-				if ( ngattr != null && ngattr.GenCol == false )
-					tag = false;
-			}
+			if ( tarattr != null && tarattr.GenCol == false )
+				tag = false;
 
 			return tag;
 		}
