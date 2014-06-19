@@ -20,6 +20,17 @@ namespace NLORM.Core.Test
         public string ID { get; set; }
     }
 
+	class TestClassC
+	{
+		[NotGenColumn()]
+		public string HiddenColumn { get; set;}
+
+		[ColumnName("COLID")]
+        [ColumnType(DbType.String,"30",false,"0001","this is id comment")]
+		[NotGenColumn()]
+		public string MultiAttribute { get; set;}
+	}
+
     /// <summary>
     /// Summary description for ModelDefinitionConverterTest
     /// </summary>
@@ -107,6 +118,14 @@ namespace NLORM.Core.Test
             var md = mdc.ConverClassToModelDefinition<TestClassB>();
             string idColName = md.PropertyColumnDic["ID"].ColumnName;
             Assert.AreEqual("ID", idColName);
+        }
+
+        [TestMethod]
+        public void TestDoNotGetHiddenColumn()
+        {
+            var mdc = new ModelDefinitionConverter(null);
+            NLORM.Core.BasicDefinitions.ModelDefinition md = mdc.ConverClassToModelDefinition<TestClassC>();
+            Assert.AreEqual<int>( md.PropertyColumnDic.Count, 0);
         }
     }
 }
