@@ -6,6 +6,7 @@ using System.Data;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NLORM.SQLite;
 using NLORM.Core.Attributes;
+using System.IO;
 
 namespace NLORM.SQLite.Test
 {
@@ -24,9 +25,14 @@ namespace NLORM.SQLite.Test
     {
         public NLORMSQLiteDbTest()
         {
-            //
-            // TODO: Add constructor logic here
-            //
+            try
+            {
+                File.Delete("C:\\test.sqlite");
+            }
+            finally
+            {
+
+            }
         }
 
         private TestContext testContextInstance;
@@ -70,7 +76,7 @@ namespace NLORM.SQLite.Test
         #endregion
 
         [TestMethod]
-        public void TestMethod1()
+        public void TestCreateTable()
         {
             var sqliteDbc = new NLORMSQLiteDb("Data Source=C:\\test.sqlite");
             sqliteDbc.CreateTable<TestClass>();

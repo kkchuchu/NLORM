@@ -59,7 +59,7 @@ namespace NLORM.SQLite
         private string CreateStringCreateSql(ColumnFieldDefinition cfd)
         {
             string ret = "";
-            string length = string.IsNullOrEmpty(cfd.Length)?:cfd.Length;
+            string length = string.IsNullOrEmpty(cfd.Length) ? StringDeafultLength : cfd.Length;
             string nullable = cfd.Nullable ? StringDeafultLength:"not null";
             ret += "varchar(" + length + ") " + nullable;
             return ret;
