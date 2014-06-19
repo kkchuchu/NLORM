@@ -126,7 +126,7 @@ namespace NLORM.Core.Test
         {
             var mdc = new ModelDefinitionConverter(null);
             NLORM.Core.BasicDefinitions.ModelDefinition md = mdc.ConverClassToModelDefinition<TestClassC>();
-            Assert.AreEqual<int>( md.PropertyColumnDic.Count, 0);
+            Assert.AreEqual<int>( 0,md.PropertyColumnDic.Count);
         }
     }
 }
