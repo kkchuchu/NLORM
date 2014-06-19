@@ -11,5 +11,22 @@ namespace NLORM.Core
         protected ISqlBuilder sqlBuilder;
         protected IDbConnection dbc;
 
+        public void Open()
+        {
+            dbc.Open();
+        }
+
+        public void Close()
+        {
+            dbc.Close();
+        }
+
+        public void CreateTable<T>() where T : new()
+        {
+            string sql = sqlBuilder.GenCreateTableSql<T>();
+        }
+
+
+
     }
 }

@@ -18,6 +18,7 @@ namespace NLORM.Core.Test
     class TestClassB
     {
         public string ID { get; set; }
+
     }
 
     /// <summary>
