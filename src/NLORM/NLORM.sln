@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLORM.SQLite", "NLORM.SQLit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLORM.SQLite.Test", "NLORM.SQLite.Test\NLORM.SQLite.Test.csproj", "{DFBC31B2-120D-4A69-8F05-7EAFC5621DB5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLORM.MSSQL", "NLORM.MSSQL\NLORM.MSSQL.csproj", "{BB9A9A2E-D5F4-4953-8E46-CD9D60E46222}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLORM.MSSQL.Test", "NLORM.MSSQL.Test\NLORM.MSSQL.Test.csproj", "{C812E724-4BAF-4BE1-AB18-43C806223728}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +41,14 @@ Global
 		{DFBC31B2-120D-4A69-8F05-7EAFC5621DB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFBC31B2-120D-4A69-8F05-7EAFC5621DB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFBC31B2-120D-4A69-8F05-7EAFC5621DB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB9A9A2E-D5F4-4953-8E46-CD9D60E46222}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB9A9A2E-D5F4-4953-8E46-CD9D60E46222}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB9A9A2E-D5F4-4953-8E46-CD9D60E46222}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB9A9A2E-D5F4-4953-8E46-CD9D60E46222}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C812E724-4BAF-4BE1-AB18-43C806223728}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C812E724-4BAF-4BE1-AB18-43C806223728}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C812E724-4BAF-4BE1-AB18-43C806223728}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C812E724-4BAF-4BE1-AB18-43C806223728}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
