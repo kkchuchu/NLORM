@@ -20,9 +20,6 @@ namespace NLORM.Core
                 case DbType.String:
                     ret = GenCreateString(cfd);
                     break;
-                case DbType.AnsiString:
-                    ret = GenCreateString(cfd);
-                    break;
                 default:
                     Debug.Assert(false,"not support type");
                     break;

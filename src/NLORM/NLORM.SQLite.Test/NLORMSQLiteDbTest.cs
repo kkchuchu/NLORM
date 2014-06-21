@@ -12,7 +12,7 @@ namespace NLORM.SQLite.Test
 {
     class TestClass
     {
-        [ColumnType(DbType.AnsiString,"30",false,"0001","this is id comment")]
+        [ColumnType(DbType.String,"30",false,"0001","this is id comment")]
         public string ID { get; set; }
 
     }
