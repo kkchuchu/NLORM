@@ -49,7 +49,9 @@
     <Compile Include="BasicDefinitions\ModelDefinition.cs" />
     <Compile Include="Dapper\SqlMapper.cs" />
     <Compile Include="INLORMDbConnection.cs" />
+    <Compile Include="IQueryBuilder.cs" />
     <Compile Include="ISqlBuilder.cs" />
+    <Compile Include="ISqlGenerator.cs" />
     <Compile Include="ModelDefinitionConverter.cs" />
     <Compile Include="NLORMBaseDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
