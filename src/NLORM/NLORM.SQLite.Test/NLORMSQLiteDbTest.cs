@@ -17,6 +17,12 @@ namespace NLORM.SQLite.Test
 
     }
 
+    class TestClass2
+    {
+        public string ID { get; set; }
+
+    }
+
     /// <summary>
     /// Summary description for NLORMSQLiteDbTest
     /// </summary>
@@ -25,14 +31,7 @@ namespace NLORM.SQLite.Test
     {
         public NLORMSQLiteDbTest()
         {
-            try
-            {
-                File.Delete("C:\\test.sqlite");
-            }
-            finally
-            {
 
-            }
         }
 
         private TestContext testContextInstance;
@@ -65,14 +64,33 @@ namespace NLORM.SQLite.Test
         // [ClassCleanup()]
         // public static void MyClassCleanup() { }
         //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
+         //Use TestInitialize to run code before running each test 
+        [TestInitialize()]
+        public void TestInitialize()
+        {
+            try
+            {
+                File.Delete("C:\\test.sqlite");
+            }
+            finally
+            {
+
+            }
+        }
+        
+         //Use TestCleanup to run code after each test has run
+        [TestCleanup()]
+        public void TestCleanup()
+        {
+            try
+            {
+                File.Delete("C:\\test.sqlite");
+            }
+            finally
+            {
+
+            }
+        }
         #endregion
 
         [TestMethod]
@@ -80,6 +98,13 @@ namespace NLORM.SQLite.Test
         {
             var sqliteDbc = new NLORMSQLiteDb("Data Source=C:\\test.sqlite");
             sqliteDbc.CreateTable<TestClass>();
+        }
+
+        [TestMethod]
+        public void TestCreateTableWithoutDef()
+        {
+            var sqliteDbc = new NLORMSQLiteDb("Data Source=C:\\test.sqlite");
+            sqliteDbc.CreateTable<TestClass2>();
         }
     }
 }
