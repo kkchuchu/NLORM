@@ -7,7 +7,7 @@ namespace NLORM.MSSQL
 	{
 		public NLORMMSSQLDb( string connectionString)
 		{
-			this.dbc = new SqlConnection( connectionString);
+            this.dbConnection = new SqlConnection(connectionString);
 			this.sqlBuilder = new MSSQLSqlBuilder();
 		}
 	}
