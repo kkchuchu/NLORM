@@ -33,8 +33,8 @@ namespace NLORM.SQLite.Test
         string filePath;
         public NLORMSQLiteDbTest()
         {
-            connectionString = "Data Source="+filePath;
             filePath = "C:\\test.sqlite";
+            connectionString = "Data Source="+filePath;
         }
 
         private TestContext testContextInstance;
@@ -113,6 +113,7 @@ namespace NLORM.SQLite.Test
         [TestMethod]
         public void TestDropTable()
         {
+            TestCreateTable();
             var sqliteDbc = new NLORMSQLiteDb(connectionString);
             sqliteDbc.DropTable<TestClass>();
         }
@@ -120,6 +121,7 @@ namespace NLORM.SQLite.Test
         [TestMethod]
         public void TestDropTableWithoutDef()
         {
+            TestCreateTableWithoutDef();
             var sqliteDbc = new NLORMSQLiteDb(connectionString);
             sqliteDbc.DropTable<TestClass2>();
         }
