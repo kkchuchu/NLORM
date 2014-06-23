@@ -29,9 +29,12 @@ namespace NLORM.SQLite.Test
     [TestClass]
     public class NLORMSQLiteDbTest
     {
+        string connectionString;
+        string filePath;
         public NLORMSQLiteDbTest()
         {
-
+            connectionString = "Data Source="+filePath;
+            filePath = "C:\\test.sqlite";
         }
 
         private TestContext testContextInstance;
@@ -70,7 +73,7 @@ namespace NLORM.SQLite.Test
         {
             try
             {
-                File.Delete("C:\\test.sqlite");
+                File.Delete(filePath);
             }
             finally
             {
@@ -84,7 +87,7 @@ namespace NLORM.SQLite.Test
         {
             try
             {
-                File.Delete("C:\\test.sqlite");
+                File.Delete(filePath);
             }
             finally
             {
@@ -96,15 +99,29 @@ namespace NLORM.SQLite.Test
         [TestMethod]
         public void TestCreateTable()
         {
-            var sqliteDbc = new NLORMSQLiteDb("Data Source=C:\\test.sqlite");
+            var sqliteDbc = new NLORMSQLiteDb(connectionString);
             sqliteDbc.CreateTable<TestClass>();
         }
 
         [TestMethod]
         public void TestCreateTableWithoutDef()
         {
-            var sqliteDbc = new NLORMSQLiteDb("Data Source=C:\\test.sqlite");
+            var sqliteDbc = new NLORMSQLiteDb(connectionString);
             sqliteDbc.CreateTable<TestClass2>();
+        }
+
+        [TestMethod]
+        public void TestDropTable()
+        {
+            var sqliteDbc = new NLORMSQLiteDb(connectionString);
+            sqliteDbc.DropTable<TestClass>();
+        }
+
+        [TestMethod]
+        public void TestDropTableWithoutDef()
+        {
+            var sqliteDbc = new NLORMSQLiteDb(connectionString);
+            sqliteDbc.DropTable<TestClass2>();
         }
     }
 }
