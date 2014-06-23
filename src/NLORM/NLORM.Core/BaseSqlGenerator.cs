@@ -35,8 +35,53 @@ namespace NLORM.Core
             string ret = null;
             switch (cfd.FieldType)
             {
+                case DbType.Byte:
+                    throw new NotImplementedException();
+                    break;
+                case DbType.SByte:
+                    throw new NotImplementedException();
+                    break;
+                case DbType.Int16:
+                    throw new NotImplementedException();
+                    break;
+                case DbType.UInt16:
+                    throw new NotImplementedException();
+                    break;
+                case DbType.Int64:
+                    throw new NotImplementedException();
+                    break;
+                case DbType.UInt64:
+                    throw new NotImplementedException();
+                    break;
+                case DbType.Single:
+                    throw new NotImplementedException();
+                    break;
+                case DbType.Double:
+                    throw new NotImplementedException();
+                    break;
+                case DbType.Decimal:
+                    throw new NotImplementedException();
+                    break;
+                case DbType.Boolean:
+                    throw new NotImplementedException();
+                    break;
                 case DbType.String:
                     ret = GenCreateString(cfd);
+                    break;
+                case DbType.StringFixedLength:
+                    throw new NotImplementedException();
+                    break;
+                case DbType.Guid:
+                    throw new NotImplementedException();
+                    break;
+                case DbType.DateTime:
+                    throw new NotImplementedException();
+                    break;
+                case DbType.DateTimeOffset:
+                    throw new NotImplementedException();
+                    break;
+                case DbType.Time:
+                    throw new NotImplementedException();
                     break;
                 default:
                     Debug.Assert(false,"not support type");
