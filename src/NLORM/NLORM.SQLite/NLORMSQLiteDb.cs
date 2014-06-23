@@ -11,7 +11,7 @@ namespace NLORM.SQLite
     {
         public NLORMSQLiteDb(string connectionString)
         {
-            dbc = new SQLiteConnection(connectionString);
+            dbConnection = new SQLiteConnection(connectionString);
             sqlBuilder = new SQLiteSqlBuilder();
         }
     }

@@ -10,28 +10,28 @@ namespace NLORM.Core
     public class NLORMBaseDb 
     {
         protected ISqlBuilder sqlBuilder;
-        protected IDbConnection dbc;
+        protected IDbConnection dbConnection;
 
         public void Open()
         {
-            dbc.Open();
+            dbConnection.Open();
         }
 
         public void Close()
         {
-            dbc.Close();
+            dbConnection.Close();
         }
 
         public void Dispose()
         {
             this.Close();
-            dbc.Dispose();
+            dbConnection.Dispose();
         }
 
         public void CreateTable<T>() where T : new()
         {
             string sql = sqlBuilder.GenCreateTableSql<T>();
-            dbc.Execute(sql);
+            dbConnection.Execute(sql);
         }
 
 

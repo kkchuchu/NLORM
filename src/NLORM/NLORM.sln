@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLORM.SQLite.Test", "NLORM.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLORM.MySql", "NLORM.MySql\NLORM.MySql.csproj", "{C3E047B2-C7A1-455F-8203-490AF9DE8C8D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLORM.MySql.Test", "NLORM.MySql.Test\NLORM.MySql.Test.csproj", "{5B182A02-8B26-4A57-BD4D-25A3328B796D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{C3E047B2-C7A1-455F-8203-490AF9DE8C8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3E047B2-C7A1-455F-8203-490AF9DE8C8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3E047B2-C7A1-455F-8203-490AF9DE8C8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B182A02-8B26-4A57-BD4D-25A3328B796D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B182A02-8B26-4A57-BD4D-25A3328B796D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B182A02-8B26-4A57-BD4D-25A3328B796D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B182A02-8B26-4A57-BD4D-25A3328B796D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
