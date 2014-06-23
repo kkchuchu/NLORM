@@ -65,10 +65,9 @@ namespace NLORM.MySql.Test
         [TestMethod]
         public void TestConnect()
         {
-            string connectionString = "Driver={MySQL ODBC 5.1 Driver};Server=sql5.freemysqlhosting.net;Database=sql544630; User=sql544630;Password=mD3%bW7*;Option=3;";
+            string connectionString = "Server=sql5.freemysqlhosting.net;Database=sql544630;uid=sql544630;pwd=mD3%bW7*;";
             var db = new NLORMMySqlDb( connectionString);
             db.Open();
-
         }
     }
 }
