@@ -85,6 +85,10 @@ namespace NLORM.Core
                 colunmF.DefaultValue = colTypeAttr.DefaultValue;
                 colunmF.Comment = colTypeAttr.Comment;
             }
+            else
+            {
+                colunmF.FieldType = Dapper.SqlMapper.LookupDbType(prop.PropertyType,prop.Name);
+            }
         }
 
 		private bool GenCloumn(PropertyInfo prop)
