@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using System.Diagnostics;
 using Dapper;
 
 namespace NLORM.Core
@@ -32,6 +33,15 @@ namespace NLORM.Core
         {
             string sql = sqlBuilder.GenCreateTableSql<T>();
             dbConnection.Execute(sql);
+        }
+
+        private void EnsureConnection()
+        {
+            Trace.Assert(dbConnection != null); //conn can not be null
+            if (dbConnection.State == ConnectionState.Closed)
+            {
+                dbConnection.Open();
+            }
         }
 
 

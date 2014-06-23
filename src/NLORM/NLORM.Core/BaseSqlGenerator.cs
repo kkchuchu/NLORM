@@ -12,7 +12,25 @@ namespace NLORM.Core
     public class BaseSqlGenerator : ISqlGenerator
     {
         private const string StringDeafultLength = "255";
-        virtual public string GenCreateTableSql(ColumnFieldDefinition cfd)
+        public string GenCreateTableSql(ModelDefinition md)
+        {
+            StringBuilder ret = new StringBuilder();
+            ret.Append("CREATE TABLE " + md.TableName + " (");
+            int i = 1;
+            foreach (var cfd in md.PropertyColumnDic.Values)
+            {
+                ret.Append(GenColumnCreateTableSql(cfd));
+                if (i != md.PropertyColumnDic.Values.Count)
+                {
+                    ret.Append(" ,");
+                }
+                i++;
+            }
+            ret.Append(")");
+            return ret.ToString();
+        }
+
+        private string GenColumnCreateTableSql(ColumnFieldDefinition cfd)
         {
             string ret = null;
             switch (cfd.FieldType)
@@ -36,6 +54,15 @@ namespace NLORM.Core
             ret += "varchar(" + length + ") " + nullable;
             return ret;
         }
+
+
+
+        virtual public string GenDropTableSql(ModelDefinition md)
+        {
+            //TODO
+            return "";
+        }
+
 
     }
 }

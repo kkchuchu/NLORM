@@ -9,6 +9,7 @@ namespace NLORM.Core
 {
     public interface ISqlGenerator
     {
-        string GenCreateTableSql(ColumnFieldDefinition cfd);
+        string GenCreateTableSql(ModelDefinition md);
+        string GenDropTableSql(ModelDefinition md);
     }
 }
