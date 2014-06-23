@@ -31,11 +31,10 @@ namespace NLORM.MySql.Test
     [TestClass]
     public class MySqlDbTest
     {
+        public string connectionString ;
         public MySqlDbTest()
         {
-            //
-            // TODO: Add constructor logic here
-            //
+            connectionString = "Server=sql5.freemysqlhosting.net;Database=sql544630;uid=sql544630;pwd=mD3%bW7*;";
         }
 
         private TestContext testContextInstance;
@@ -81,7 +80,7 @@ namespace NLORM.MySql.Test
         [TestMethod]
         public void TestConnect()
         {
-            string connectionString = "Server=sql5.freemysqlhosting.net;Database=sql544630;uid=sql544630;pwd=mD3%bW7*;";
+            
             var db = new NLORMMySqlDb( connectionString);
             db.Open();
         }
@@ -89,9 +88,30 @@ namespace NLORM.MySql.Test
         [TestMethod]
         public void TestCreateTable()
         {
-            string connectionString = "Server=sql5.freemysqlhosting.net;Database=sql544630;uid=sql544630;pwd=mD3%bW7*;";
             var db = new NLORMMySqlDb(connectionString);
             db.CreateTable<TestClass>();
+        }
+
+
+        [TestMethod]
+        public void TestDropTable()
+        {
+            var db = new NLORMMySqlDb(connectionString);
+            db.DropTable<TestClass>();
+        }
+
+        [TestMethod]
+        public void TestCreateTableWithoutAttr()
+        {
+            var db = new NLORMMySqlDb(connectionString);
+            db.CreateTable<TestClass2>();
+        }
+
+        [TestMethod]
+        public void TestDropTableWithoutAttr()
+        {
+            var db = new NLORMMySqlDb(connectionString);
+            db.DropTable<TestClass2>();
         }
     }
 }

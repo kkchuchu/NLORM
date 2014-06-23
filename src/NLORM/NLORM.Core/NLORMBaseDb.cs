@@ -35,6 +35,12 @@ namespace NLORM.Core
             dbConnection.Execute(sql);
         }
 
+        public void DropTable<T>() where T : new()
+        {
+            string sql = sqlBuilder.GenDropTableSql<T>();
+            dbConnection.Execute(sql);
+        }
+
         private void EnsureConnection()
         {
             Trace.Assert(dbConnection != null); //conn can not be null

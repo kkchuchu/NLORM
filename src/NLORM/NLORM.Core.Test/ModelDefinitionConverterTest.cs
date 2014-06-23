@@ -88,7 +88,7 @@ namespace NLORM.Core.Test
         [TestMethod]
         public void TestGetTableName()
         {
-            var mdc = new ModelDefinitionConverter(null);
+            var mdc = new ModelDefinitionConverter();
             var md = mdc.ConverClassToModelDefinition<TestClassA>();
             string tableName = md.TableName;
             Assert.AreEqual("TestTableA", tableName);
@@ -97,7 +97,7 @@ namespace NLORM.Core.Test
         [TestMethod]
         public void TestGetTableNameWithoutAttr()
         {
-            var mdc = new ModelDefinitionConverter(null);
+            var mdc = new ModelDefinitionConverter();
             var md = mdc.ConverClassToModelDefinition<TestClassB>();
             string tableName = md.TableName;
             Assert.AreEqual("TestClassB", tableName);
@@ -106,7 +106,7 @@ namespace NLORM.Core.Test
         [TestMethod]
         public void TestGetColNameWithAttr()
         {
-            var mdc = new ModelDefinitionConverter(null);
+            var mdc = new ModelDefinitionConverter();
             var md = mdc.ConverClassToModelDefinition<TestClassA>();
             string idColName = md.PropertyColumnDic["ID"].ColumnName;
             Assert.AreEqual("COLID", idColName);
@@ -115,7 +115,7 @@ namespace NLORM.Core.Test
         [TestMethod]
         public void TestGetColNameWithoutAttr()
         {
-            var mdc = new ModelDefinitionConverter(null);
+            var mdc = new ModelDefinitionConverter();
             var md = mdc.ConverClassToModelDefinition<TestClassB>();
             string idColName = md.PropertyColumnDic["ID"].ColumnName;
             Assert.AreEqual("ID", idColName);
@@ -124,7 +124,7 @@ namespace NLORM.Core.Test
         [TestMethod]
         public void TestDoNotGetHiddenColumn()
         {
-            var mdc = new ModelDefinitionConverter(null);
+            var mdc = new ModelDefinitionConverter();
             NLORM.Core.BasicDefinitions.ModelDefinition md = mdc.ConverClassToModelDefinition<TestClassC>();
             Assert.AreEqual<int>( 0,md.PropertyColumnDic.Count);
         }

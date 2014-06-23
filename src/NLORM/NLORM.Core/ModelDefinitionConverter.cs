@@ -10,11 +10,9 @@ namespace NLORM.Core
 {
     public class ModelDefinitionConverter
     {
-        INLORMDbConnection nldbc;
 
-        public ModelDefinitionConverter(INLORMDbConnection dbc)
+        public ModelDefinitionConverter()
         {
-            nldbc = dbc;
         }
 
         public ModelDefinition ConverClassToModelDefinition<T>() where T : new()

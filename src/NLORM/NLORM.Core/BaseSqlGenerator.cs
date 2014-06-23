@@ -56,11 +56,12 @@ namespace NLORM.Core
         }
 
 
-
         virtual public string GenDropTableSql(ModelDefinition md)
         {
-            //TODO
-            return "";
+            StringBuilder ret = new StringBuilder();
+            ret.Append(" DROP TABLE ");
+            ret.Append(md.TableName);
+            return ret.ToString();
         }
 
 
