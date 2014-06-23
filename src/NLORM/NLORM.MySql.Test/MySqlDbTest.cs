@@ -34,7 +34,7 @@ namespace NLORM.MySql.Test
         public string connectionString ;
         public MySqlDbTest()
         {
-            connectionString = "Server=sql5.freemysqlhosting.net;Database=sql544630;uid=sql544630;pwd=mD3%bW7*;";
+            connectionString = "Server=test.mysql.nlorm;Database=nlorm;uid=admin;pwd=1qaz;";
         }
 
         private TestContext testContextInstance;
