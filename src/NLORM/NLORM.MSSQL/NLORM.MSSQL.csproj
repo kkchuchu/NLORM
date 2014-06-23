@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MSSQLSqlBuilder.cs" />
+    <Compile Include="MSSQLSqlGenerator.cs" />
     <Compile Include="NLORMMSSQLDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
