@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using System.Diagnostics;
-using NLORM.Core;
 using NLORM.Core.BasicDefinitions;
 
-namespace NLORM.SQLite
+namespace NLORM.Core
 {
-    public class SQLiteSqlBuilder : BaseSqlBuilder 
+    public interface ISqlGenerator
     {
-
+        string GenCreateTableSql(ColumnFieldDefinition cfd);
     }
 }
