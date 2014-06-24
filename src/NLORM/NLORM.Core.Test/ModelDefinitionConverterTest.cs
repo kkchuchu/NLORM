@@ -128,5 +128,7 @@ namespace NLORM.Core.Test
             NLORM.Core.BasicDefinitions.ModelDefinition md = mdc.ConverClassToModelDefinition<TestClassC>();
             Assert.AreEqual<int>( 0,md.PropertyColumnDic.Count);
         }
+
+        //TODO Add prop name test case
     }
 }
