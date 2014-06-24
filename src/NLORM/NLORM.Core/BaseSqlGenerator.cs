@@ -109,6 +109,53 @@ namespace NLORM.Core
             return ret.ToString();
         }
 
+        virtual public string GenInsertSql(ModelDefinition md)
+        {
+            StringBuilder ret = new StringBuilder();
 
+            StringBuilder fields = new StringBuilder();
+            StringBuilder valueFields = new StringBuilder();
+            fields.Append(GenInsertColFields(md));
+            valueFields.Append(GenInsertValueFields(md));
+            ret.Append(" INSERT INTO ");
+            ret.Append(md.TableName+"( ");
+            ret.Append(fields);
+            ret.Append(" ) VALUES ( ");
+            ret.Append(valueFields);
+            ret.Append(") ");
+            return ret.ToString();
+        }
+
+        private string GenInsertColFields(ModelDefinition md)
+        {
+            string ret = "";
+            int i = 1;
+            foreach (var mdf in md.PropertyColumnDic.Values)
+            {
+                ret += " " + mdf.ColumnName;
+                if (i < md.PropertyColumnDic.Values.Count)
+                {
+                    ret+=" ," ;
+                }
+                i++;
+            }
+            return ret;
+        }
+        
+        private string GenInsertValueFields(ModelDefinition md)
+        {
+            string ret = "";
+            int i = 1;
+            foreach (var mdf in md.PropertyColumnDic.Values)
+            {
+                ret += " @" + mdf.PropName;
+                if (i < md.PropertyColumnDic.Values.Count)
+                {
+                    ret+=" ,";
+                }
+                i++;
+            }
+            return ret;
+        }
     }
 }

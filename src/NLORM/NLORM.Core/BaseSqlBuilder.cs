@@ -14,20 +14,26 @@ namespace NLORM.Core
         {
             SqlGen = new BaseSqlGenerator();
         }
-        virtual public string GenCreateTableSql<T>() where T : new()
+        virtual public string GenCreateTableSql<T>() 
         {
 
             ModelDefinition md = ConvertClassToModelDef<T>();
             return SqlGen.GenCreateTableSql(md);
         }
 
-        virtual public string GenDropTableSql<T>() where T : new()
+        virtual public string GenDropTableSql<T>() 
         {
             ModelDefinition md = ConvertClassToModelDef<T>();
             return SqlGen.GenDropTableSql(md);
         }
 
-        private ModelDefinition ConvertClassToModelDef<T>() where T : new()
+        virtual public string GenInsertSql<T>()
+        {
+            ModelDefinition md = ConvertClassToModelDef<T>();
+            return SqlGen.GenInsertSql(md);
+        }
+
+        private ModelDefinition ConvertClassToModelDef<T>() 
         {
             var mdc = new ModelDefinitionConverter();
             return mdc.ConverClassToModelDefinition<T>();

@@ -30,7 +30,7 @@ namespace NLORM.SQLite.Test
     public class NLORMSQLiteDbTest
     {
         string connectionString;
-        string filePath;
+        static string filePath;
         public NLORMSQLiteDbTest()
         {
             filePath = "C:\\test.sqlite";
@@ -67,7 +67,7 @@ namespace NLORM.SQLite.Test
         // [ClassCleanup()]
         // public static void MyClassCleanup() { }
         //
-         //Use TestInitialize to run code before running each test 
+        //Use TestInitialize to run code before running each test 
         [TestInitialize()]
         public void TestInitialize()
         {
@@ -80,8 +80,7 @@ namespace NLORM.SQLite.Test
 
             }
         }
-        
-         //Use TestCleanup to run code after each test has run
+
         [TestCleanup()]
         public void TestCleanup()
         {
@@ -125,5 +124,62 @@ namespace NLORM.SQLite.Test
             var sqliteDbc = new NLORMSQLiteDb(connectionString);
             sqliteDbc.DropTable<TestClass2>();
         }
+
+        [TestMethod]
+        public void TestInsertClass1()
+        {
+
+            TestCreateTable();
+            var c1 = new TestClass();
+            c1.ID = "5555";
+            var sqliteDbc = new NLORMSQLiteDb(connectionString);
+            sqliteDbc.Insert<TestClass>(c1);
+            var result = sqliteDbc.Query<TestClass>("SELECT * FROM  TestClass");
+            Assert.AreEqual(result.Count() , 1);
+        }
+
+        [TestMethod]
+        public void TestInsertClassMutiData()
+        {
+            TestCreateTable();
+            var sqliteDbc = new NLORMSQLiteDb(connectionString);
+            for (int i = 0; i < 600; i++)
+            {
+                var c1 = new TestClass();
+                c1.ID = "id"+i.ToString();
+                sqliteDbc.Insert<TestClass>(c1);
+            }
+            var result = sqliteDbc.Query<TestClass>("SELECT * FROM  TestClass");
+            Assert.AreEqual(result.Count(), 600);
+        }
+
+        [TestMethod]
+        public void TestInsertClass2()
+        {
+            TestCreateTableWithoutDef();
+            var c1 = new TestClass();
+            c1.ID = "5555";
+            var sqliteDbc = new NLORMSQLiteDb(connectionString);
+            sqliteDbc.Insert<TestClass2>(c1);
+            var result = sqliteDbc.Query<TestClass2>("SELECT * FROM  TestClass2");
+            Assert.AreEqual(result.Count(), 1);
+        }
+
+        [TestMethod]
+        public void TestInsertClass2MutiData()
+        {
+            TestCreateTableWithoutDef();
+            var sqliteDbc = new NLORMSQLiteDb(connectionString);
+            for (int i = 0; i < 600; i++)
+            {
+                var c1 = new TestClass2();
+                c1.ID = "id" + i.ToString();
+                sqliteDbc.Insert<TestClass2>(c1);
+            }
+            var result = sqliteDbc.Query<TestClass2>("SELECT * FROM  TestClass2");
+            Assert.AreEqual(result.Count(), 600);
+        }
+
+
     }
 }

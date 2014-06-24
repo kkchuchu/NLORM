@@ -50,8 +50,7 @@
     <Compile Include="BaseSqlGenerator.cs" />
     <Compile Include="BasicDefinitions\ModelDefinition.cs" />
     <Compile Include="Dapper\SqlMapper.cs" />
-    <Compile Include="INLORMDbConnection.cs" />
-    <Compile Include="IQueryBuilder.cs" />
+    <Compile Include="INLORMDb.cs" />
     <Compile Include="ISqlBuilder.cs" />
     <Compile Include="ISqlGenerator.cs" />
     <Compile Include="ModelDefinitionConverter.cs" />

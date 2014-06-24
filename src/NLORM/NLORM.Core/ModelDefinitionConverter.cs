@@ -15,7 +15,7 @@ namespace NLORM.Core
         {
         }
 
-        public ModelDefinition ConverClassToModelDefinition<T>() where T : new()
+        public ModelDefinition ConverClassToModelDefinition<T>() 
         {
             string tableName = GetTableNameByType(typeof(T));
             var fiedlDic = GetColumnFieldDefinition(typeof(T));
@@ -77,6 +77,7 @@ namespace NLORM.Core
         {
             if (colTypeAttr != null)
             {
+                colunmF.PropName = prop.Name;
                 colunmF.FieldType = colTypeAttr.DBType;
                 colunmF.Length = colTypeAttr.Length;
                 colunmF.Nullable = colTypeAttr.Nullable;
@@ -85,6 +86,7 @@ namespace NLORM.Core
             }
             else
             {
+                colunmF.PropName = prop.Name;
                 colunmF.FieldType = Dapper.SqlMapper.LookupDbType(prop.PropertyType,prop.Name);
             }
         }
