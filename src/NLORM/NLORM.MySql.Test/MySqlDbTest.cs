@@ -31,7 +31,7 @@ namespace NLORM.MySql.Test
     [TestClass]
     public class MySqlDbTest
     {
-        public string connectionString ;
+        static public string connectionString ;
         public MySqlDbTest()
         {
             connectionString = "Server=test.mysql.nlorm;Database=nlorm;uid=admin;pwd=1qaz;";
@@ -60,21 +60,40 @@ namespace NLORM.MySql.Test
         // You can use the following additional attributes as you write your tests:
         //
         // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
+        [ClassInitialize()]
+        public static void MyClassInitialize(TestContext testContext) {
+            try
+            {
+                var db = new NLORMMySqlDb(connectionString);
+                db.DropTable<TestClass>();
+                db.DropTable<TestClass2>();
+                db.Close();
+            }
+            catch { }
+        }
         //
         // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
+        [ClassCleanup()]
+        public static void MyClassCleanup()
+        {
+            try
+            {
+                var db = new NLORMMySqlDb(connectionString);
+                db.DropTable<TestClass>();
+                db.DropTable<TestClass2>();
+                db.Close();
+            }
+            catch { }
+        }
+
         // Use TestInitialize to run code before running each test 
         // [TestInitialize()]
         // public void MyTestInitialize() { }
         //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
+         //Use TestCleanup to run code after each test has run
+         //[TestCleanup()]
+         //public void MyTestCleanup() {}
+        
         #endregion
 
         [TestMethod]
@@ -116,6 +135,80 @@ namespace NLORM.MySql.Test
             var db = new NLORMMySqlDb(connectionString);
             db.DropTable<TestClass2>();
             db.Close();
+        }
+
+        [TestMethod]
+        public void TestInsertClass1()
+        {
+            try
+            {
+                TestDropTable();
+            }
+            catch { }
+            TestCreateTable();
+            var c1 = new TestClass();
+            c1.ID = "5555";
+            var Dbc = new NLORMMySqlDb(connectionString);
+            Dbc.Insert<TestClass>(c1);
+            var result = Dbc.Query<TestClass>("SELECT * FROM  TestClass");
+            Assert.AreEqual(result.Count(), 1);
+        }
+
+        [TestMethod]
+        public void TestInsertClass1Muti()
+        {
+            try
+            {
+                TestDropTable();
+            }
+            catch { }
+            TestCreateTable();
+            var Dbc = new NLORMMySqlDb(connectionString);
+            for (int i = 0; i < 10; i++)
+            {
+                var c1 = new TestClass();
+                c1.ID = "id" + i.ToString();
+                Dbc.Insert<TestClass>(c1);
+            }
+            var result = Dbc.Query<TestClass>("SELECT * FROM  TestClass");
+            Assert.AreEqual(result.Count(), 10);
+        }
+
+        [TestMethod]
+        public void TestInsertClass2()
+        {
+            try
+            {
+                TestDropTableWithoutAttr();
+            }
+            catch { }
+            TestCreateTableWithoutAttr();
+            var c1 = new TestClass2();
+            c1.ID = "5555";
+            var Dbc = new NLORMMySqlDb(connectionString);
+            Dbc.Insert<TestClass2>(c1);
+            var result = Dbc.Query<TestClass2>("SELECT * FROM  TestClass2");
+            Assert.AreEqual(result.Count(), 1);
+        }
+
+        [TestMethod]
+        public void TestInsertClass2Muti()
+        {
+            try
+            {
+                TestDropTableWithoutAttr();
+            }
+            catch { }
+            TestCreateTableWithoutAttr();
+            var Dbc = new NLORMMySqlDb(connectionString);
+            for (int i = 0; i < 10; i++)
+            {
+                var c1 = new TestClass2();
+                c1.ID = "id" + i.ToString();
+                Dbc.Insert<TestClass2>(c1);
+            }
+            var result = Dbc.Query<TestClass2>("SELECT * FROM  TestClass2");
+            Assert.AreEqual(result.Count(), 10);
         }
     }
 }
