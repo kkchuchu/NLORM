@@ -90,6 +90,7 @@ namespace NLORM.MySql.Test
         {
             var db = new NLORMMySqlDb(connectionString);
             db.CreateTable<TestClass>();
+            db.Close();
         }
 
 
@@ -98,6 +99,7 @@ namespace NLORM.MySql.Test
         {
             var db = new NLORMMySqlDb(connectionString);
             db.DropTable<TestClass>();
+            db.Close();
         }
 
         [TestMethod]
@@ -105,6 +107,7 @@ namespace NLORM.MySql.Test
         {
             var db = new NLORMMySqlDb(connectionString);
             db.CreateTable<TestClass2>();
+            db.Close();
         }
 
         [TestMethod]
@@ -112,6 +115,7 @@ namespace NLORM.MySql.Test
         {
             var db = new NLORMMySqlDb(connectionString);
             db.DropTable<TestClass2>();
+            db.Close();
         }
     }
 }
