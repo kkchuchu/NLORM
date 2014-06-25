@@ -65,9 +65,12 @@ namespace NLORM.Core
             GenWhereSql();
             string selectStr = sqlBuilder.SQLString;
             string whereStr = sqlBuilder.GetWhereSQLString();
-            string Sql = selectStr + " WHERE " + whereStr;
+            string Sql = selectStr;
+            if (!string.IsNullOrEmpty(whereStr))
+            {
+                Sql += " WHERE "+whereStr;
+            }
             dynamic consObject = sqlBuilder.GetWhereParas();
-            //TODO Not Yet imp Fliter By
             return (IEnumerable<T>)Query<T>(Sql, consObject);
         }
 

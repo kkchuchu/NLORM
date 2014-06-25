@@ -75,7 +75,7 @@ namespace NLORM.Core
                     Debug.Assert(false);
                     break;
             }
-            whereString+=" "+ret +" ";
+            whereString+=" ("+ret +") ";
             return ret;
         }
 
