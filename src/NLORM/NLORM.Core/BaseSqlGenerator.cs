@@ -126,6 +126,14 @@ namespace NLORM.Core
             return ret.ToString();
         }
 
+        virtual public string GenSelectSql(ModelDefinition md)
+        {
+            StringBuilder ret = new StringBuilder();
+            ret.Append(" SELECT * FROM ");
+            ret.Append(md.TableName + " ");
+            return ret.ToString();
+        }
+
         private string GenInsertColFields(ModelDefinition md)
         {
             string ret = "";
@@ -157,5 +165,8 @@ namespace NLORM.Core
             }
             return ret;
         }
+
+
+
     }
 }

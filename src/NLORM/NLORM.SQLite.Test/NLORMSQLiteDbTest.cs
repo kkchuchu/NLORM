@@ -5,7 +5,9 @@ using System.Linq;
 using System.Data;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NLORM.SQLite;
+using NLORM.Core;
 using NLORM.Core.Attributes;
+using NLORM.Core.BasicDefinitions;
 using System.IO;
 
 namespace NLORM.SQLite.Test
@@ -157,10 +159,12 @@ namespace NLORM.SQLite.Test
         public void TestInsertClass2()
         {
             TestCreateTableWithoutDef();
-            var c1 = new TestClass();
+            var c1 = new TestClass2();
             c1.ID = "5555";
             var sqliteDbc = new NLORMSQLiteDb(connectionString);
             sqliteDbc.Insert<TestClass2>(c1);
+            var d1 = new { a1 = 1 };
+            
             var result = sqliteDbc.Query<TestClass2>("SELECT * FROM  TestClass2");
             Assert.AreEqual(result.Count(), 1);
         }
@@ -178,6 +182,36 @@ namespace NLORM.SQLite.Test
             }
             var result = sqliteDbc.Query<TestClass2>("SELECT * FROM  TestClass2");
             Assert.AreEqual(result.Count(), 600);
+        }
+
+        [TestMethod]
+        public void TestSelectClass1()
+        {
+            TestCreateTable();
+            var c1 = new TestClass();
+            c1.ID = "5555";
+            var sqliteDbc = new NLORMSQLiteDb(connectionString);
+            sqliteDbc.Insert<TestClass>(c1);
+            var d1 = new { a1 = 1 };
+
+            var result = sqliteDbc.Find(typeof(TestClass)).Query<TestClass>();
+            Assert.AreEqual(result.Count(), 1);
+        }
+
+        [TestMethod]
+        public void TestSelectClass1WithCons()
+        {
+            TestCreateTable();
+            var c1 = new TestClass();
+            c1.ID = "5555";
+            var c2 = new TestClass();
+            c2.ID = "5566";
+            var sqliteDbc = new NLORMSQLiteDb(connectionString);
+            sqliteDbc.Insert<TestClass>(c1);
+            sqliteDbc.Insert<TestClass>(c2);
+            var result = sqliteDbc.Find(typeof(TestClass))
+            .FliterBy(FliterType.EQUAL_AND, new { ID="5555"}).Query<TestClass>();
+            Assert.AreEqual(result.Count(), 1);
         }
 
 
