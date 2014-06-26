@@ -14,6 +14,8 @@ namespace NLORM.MSSQL.Test
     {
 		[ColumnType(DbType.String,"30",false,"this is id comment")]
         public string ID { get; set; }
+
+		public string name { get; set; }
     }
 
 	class TestClass2
@@ -77,7 +79,7 @@ namespace NLORM.MSSQL.Test
 			db.CreateTable<TestClass01>();
 			for ( int i = 0; i < 1000; i++)
 			{
-				db.Insert<TestClass01>( new TestClass01(){ ID = @"0" + i.ToString() });
+				db.Insert<TestClass01>( new TestClass01(){ ID = @"0" + i.ToString(), name = @"00" + i.ToString() });
 			}
 			
 			var result = db.Query<TestClass01>(@"SELECT * FROM TestClass01");
@@ -94,13 +96,25 @@ namespace NLORM.MSSQL.Test
 		}
 
 		[TestMethod]
-		public void TestQuery()
+		public void TestQueryMethod1()
 		{
 			INLORMDb db = null;
 			db = new NLORMMSSQLDb( constr);
 			this.TestInsertAlotItems();
 			var result = db.Query<TestClass01>( @"SELECT * FROM TestClass01 where ID = @ID", new TestClass01(){ ID = @"01"});
 			Assert.AreEqual( 1, result.Count());
+		}
+
+		[TestMethod]
+		public void TestQueryMethod2()
+		{
+			INLORMDb db = new NLORMMSSQLDb( constr);
+			db.CreateTable<TestClass01>();
+			db.Insert<TestClass01>( new TestClass01(){ ID = @"11", name = @"albert"});
+			db.Insert<TestClass01>( new TestClass01(){ ID = @"22", name = @"star"});
+			var result = db.Find( typeof(TestClass01) ).FliterBy( FliterType.EQUAL_AND, new { name = "albert"} ).Query<TestClass01>();
+
+			Assert.AreEqual( 1, result.Count() );
 		}
 	}
 }
