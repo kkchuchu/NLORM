@@ -14,7 +14,7 @@ namespace NLORM.SQLite.Test
 {
     class TestClass
     {
-        [ColumnType(DbType.String,"30",false,"0001","this is id comment")]
+        [ColumnType(DbType.String,"30",false,"this is id comment")]
         public string ID { get; set; }
 
     }
@@ -22,6 +22,13 @@ namespace NLORM.SQLite.Test
     class TestClass2
     {
         public string ID { get; set; }
+
+    }
+
+    class TestClass3
+    {
+        public string ID { get; set; }
+        public string NAME { get; set; }
 
     }
 
@@ -212,6 +219,58 @@ namespace NLORM.SQLite.Test
                                   .Query<TestClass>();
             Assert.AreEqual(result.Count(), 1);
         }
+
+        [TestMethod]
+        public void TestCreateTableTestClass3()
+        {
+            var sqliteDbc = new NLORMSQLiteDb(connectionString);
+            sqliteDbc.CreateTable<TestClass3>();
+        }
+        [TestMethod]
+        public void TestDropTableTestClass3()
+        {
+            TestCreateTableTestClass3();
+            var sqliteDbc = new NLORMSQLiteDb(connectionString);
+            sqliteDbc.DropTable<TestClass3>();
+        }
+
+        private void GenTestClass3TestData()
+        {
+            TestCreateTableTestClass3();
+            var c1 = new TestClass3();
+            c1.ID = "5555";
+            c1.NAME = "N5555";
+            var c2 = new TestClass3();
+            c2.ID = "5566";
+            c2.NAME = "N5555";
+            var sqliteDbc = new NLORMSQLiteDb(connectionString);
+            sqliteDbc.Insert<TestClass3>(c1);
+            sqliteDbc.Insert<TestClass3>(c2);
+        }
+
+        [TestMethod]
+        public void TestSelectClass3SelectById()
+        {
+            GenTestClass3TestData();
+            var sqliteDbc = new NLORMSQLiteDb(connectionString);
+            var result = sqliteDbc.Find(typeof(TestClass3))
+                                  .FliterBy(FliterType.EQUAL_AND, new { ID = "5555" })
+                                  .Query<TestClass3>();
+            Assert.AreEqual(result.Count(), 1);
+        }
+
+
+        [TestMethod]
+        public void TestSelectClass3SelectByName()
+        {
+            GenTestClass3TestData();
+            var sqliteDbc = new NLORMSQLiteDb(connectionString);
+            var result = sqliteDbc.Find(typeof(TestClass3))
+                                  .FliterBy(FliterType.EQUAL_AND, new { NAME = "N5555" })
+                                  .Query<TestClass3>();
+            Assert.AreEqual(result.Count(), 2);
+        }
+
 
 
     }

@@ -87,7 +87,6 @@ namespace NLORM.Core
                 colunmF.FieldType = colTypeAttr.DBType;
                 colunmF.Length = colTypeAttr.Length;
                 colunmF.Nullable = colTypeAttr.Nullable;
-                colunmF.DefaultValue = colTypeAttr.DefaultValue;
                 colunmF.Comment = colTypeAttr.Comment;
             }
             else

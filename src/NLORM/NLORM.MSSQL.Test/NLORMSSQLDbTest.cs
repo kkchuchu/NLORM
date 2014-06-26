@@ -12,7 +12,7 @@ namespace NLORM.MSSQL.Test
 {
     class TestClass01
     {
-		[ColumnType(DbType.String,"30",false,"0001","this is id comment")]
+		[ColumnType(DbType.String,"30",false,"this is id comment")]
         public string ID { get; set; }
     }
 
@@ -23,9 +23,8 @@ namespace NLORM.MSSQL.Test
 
 	[TestClass]
 	public class NLORMSSQLDbTest
-    {//"Data Source=.;Initial Catalog=tempdb;Integrated Security=True"
+    {
 		private string constr = @"Data Source=.\SQLEXPRESS;Database=TestORM;Integrated Security=True;";
-		
 		[TestInitialize()]
 		public void TestInitialize()
 		{

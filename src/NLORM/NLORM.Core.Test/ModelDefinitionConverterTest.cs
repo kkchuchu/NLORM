@@ -11,7 +11,7 @@ namespace NLORM.Core.Test
     class TestClassA
     {
         [ColumnName("COLID")]
-        [ColumnType(DbType.String,"30",false,"0001","this is id comment")]
+        [ColumnType(DbType.String,"30",false,"this is id comment")]
         public string ID { get; set; }
     }
 
@@ -27,7 +27,7 @@ namespace NLORM.Core.Test
 		public string HiddenColumn { get; set;}
 
 		[ColumnName("COLID")]
-        [ColumnType(DbType.String,"30",false,"0001","this is id comment")]
+        [ColumnType(DbType.String,"30",false,"this is id comment")]
 		[NotGenColumn()]
 		public string MultiAttribute { get; set;}
 	}

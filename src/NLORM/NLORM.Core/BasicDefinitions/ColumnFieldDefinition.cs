@@ -13,7 +13,6 @@ namespace NLORM.Core.BasicDefinitions
         public DbType FieldType { get; set; }
         public string Length { get; set; }
         public bool Nullable { get; set; }
-        public Object DefaultValue { get; set; }
         public string Comment { get; set; }
     }
 }
