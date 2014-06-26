@@ -90,10 +90,9 @@ namespace NLORM.MySql.Test
         // [TestInitialize()]
         // public void MyTestInitialize() { }
         //
-         //Use TestCleanup to run code after each test has run
-         //[TestCleanup()]
-         //public void MyTestCleanup() {}
-        
+        //Use TestCleanup to run code after each test has run
+        //[TestCleanup()]
+        //public void MyTestCleanup() {}
         #endregion
 
         [TestMethod]

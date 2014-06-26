@@ -48,8 +48,10 @@
     <Compile Include="Attributes\TableNameAttribute.cs" />
     <Compile Include="BaseSqlBuilder.cs" />
     <Compile Include="BaseSqlGenerator.cs" />
+    <Compile Include="BasicDefinitions\FliterObject.cs" />
     <Compile Include="BasicDefinitions\ModelDefinition.cs" />
     <Compile Include="Dapper\SqlMapper.cs" />
+    <Compile Include="FilterTypes.cs" />
     <Compile Include="INLORMDb.cs" />
     <Compile Include="ISqlBuilder.cs" />
     <Compile Include="ISqlGenerator.cs" />

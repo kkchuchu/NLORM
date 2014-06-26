@@ -17,8 +17,14 @@ namespace NLORM.Core
 
         public ModelDefinition ConverClassToModelDefinition<T>() 
         {
-            string tableName = GetTableNameByType(typeof(T));
-            var fiedlDic = GetColumnFieldDefinition(typeof(T));
+
+            return ConverClassToModelDefinition(typeof(T));
+        }
+
+        public ModelDefinition ConverClassToModelDefinition(Type T)
+        {
+            string tableName = GetTableNameByType(T);
+            var fiedlDic = GetColumnFieldDefinition(T);
             var ret = new ModelDefinition(tableName, fiedlDic);
             return ret;
         }

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using Dapper;
 using System.ComponentModel;
 using System.Dynamic;
+using NLORM.Core.BasicDefinitions;
 
 namespace NLORM.Core
 {
@@ -14,6 +15,8 @@ namespace NLORM.Core
     {
         protected ISqlBuilder sqlBuilder;
         protected IDbConnection dbConnection;
+        protected Type QueryType;
+        protected List<FliterObject> FliterObjects;
 
         virtual public void Open()
         {
@@ -49,10 +52,43 @@ namespace NLORM.Core
             return (IEnumerable<T>)ret;
         }
 
+        virtual public INLORMDb Find(Type t)
+        {
+            QueryType = t;
+            FliterObjects = new List<FliterObject>();
+            sqlBuilder.GenSelect(t);
+            return this;
+        }
+
+        virtual public IEnumerable<T> Query<T>()
+        {
+            GenWhereSql();
+            string selectStr = sqlBuilder.SQLString;
+            string whereStr = sqlBuilder.GetWhereSQLString();
+            string Sql = selectStr;
+            if (!string.IsNullOrEmpty(whereStr))
+            {
+                Sql += " WHERE "+whereStr;
+            }
+            dynamic consObject = sqlBuilder.GetWhereParas();
+            return (IEnumerable<T>)Query<T>(Sql, consObject);
+        }
+
+
         virtual public int Insert<T>(Object o)
         {
             string sql = sqlBuilder.GenInsertSql<T>();
             return SqlMapper.Execute(dbConnection,sql,o);
+        }
+
+        public INLORMDb FliterBy(FliterType fType, dynamic param)
+        {
+            var f = new FliterObject();
+            f.ClassType = QueryType;
+            f.Cons = param;
+            f.Fliter = fType;
+            FliterObjects.Add(f);
+            return this;
         }
 
         private void EnsureConnection()
@@ -63,6 +99,15 @@ namespace NLORM.Core
                 dbConnection.Open();
             }
         }
+
+        private void GenWhereSql()
+        {
+            foreach (var f in FliterObjects)
+            {
+                sqlBuilder.GenWhereCons(f);
+            }
+        }
+
 
     }
 }
