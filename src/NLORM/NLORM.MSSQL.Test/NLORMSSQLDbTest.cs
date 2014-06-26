@@ -21,7 +21,7 @@ namespace NLORM.MSSQL.Test
 	[TestClass]
 	public class NLORMSSQLDbTest
     {
-		private string constr = @"Data Source=192.168.107.75\SQLEXPRESS;Database=TestORM;Trusted_Connection=True;";
+		private string constr = @"Data Source=test.mssql.nlorm\SQLEXPRESS;Database=TestORM;Trusted_Connection=True;";
 
 		[TestInitialize()]
 		public void TestInitialize()

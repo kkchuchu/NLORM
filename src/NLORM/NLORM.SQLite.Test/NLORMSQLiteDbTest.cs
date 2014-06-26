@@ -229,7 +229,7 @@ namespace NLORM.SQLite.Test
         [TestMethod]
         public void TestDropTableTestClass3()
         {
-            TestCreateTable();
+            TestCreateTableTestClass3();
             var sqliteDbc = new NLORMSQLiteDb(connectionString);
             sqliteDbc.DropTable<TestClass3>();
         }
