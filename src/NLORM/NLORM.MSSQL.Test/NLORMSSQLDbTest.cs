@@ -4,6 +4,9 @@ using NLORM.Core.Attributes;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
+using System.Xml.Linq;
+using System.Linq;
 
 namespace NLORM.MSSQL.Test
 {
@@ -20,18 +23,18 @@ namespace NLORM.MSSQL.Test
 
 	[TestClass]
 	public class NLORMSSQLDbTest
-    {
-		private string constr = @"Data Source=.\SQLEXPRESS;Database=TestORM;Trusted_Connection=True;";
-
+    {//"Data Source=.;Initial Catalog=tempdb;Integrated Security=True"
+		private string constr = @"Data Source=.\SQLEXPRESS;Database=TestORM;Integrated Security=True;";
+		
 		[TestInitialize()]
 		public void TestInitialize()
 		{
-			INLORMDb mssqlDb = null;
+			INLORMDb msdb = null;
 			try
 			{
-				mssqlDb = new NLORMMSSQLDb( constr);
-				mssqlDb.DropTable<TestClass01>();
-				mssqlDb.DropTable<TestClass2>();
+				msdb = new NLORMMSSQLDb( constr);
+				msdb.DropTable<TestClass01>();
+				msdb.DropTable<TestClass2>();
 			}
 			catch ( Exception)
 			{
@@ -73,7 +76,13 @@ namespace NLORM.MSSQL.Test
 		{
 			INLORMDb db = new NLORMMSSQLDb( constr);
 			db.CreateTable<TestClass01>();
-			db.Insert<TestClass01>( new TestClass01(){ ID = "01"});
+			for ( int i = 0; i < 1000; i++)
+			{
+				db.Insert<TestClass01>( new TestClass01(){ ID = @"0" + i.ToString() });
+			}
+			
+			var result = db.Query<TestClass01>(@"SELECT * FROM TestClass01");
+			Assert.AreEqual( result.Count(), 1000);
 		}
 
 		[TestMethod]
@@ -90,8 +99,9 @@ namespace NLORM.MSSQL.Test
 		{
 			INLORMDb db = null;
 			db = new NLORMMSSQLDb( constr);
-			db.CreateTable<TestClass01>();
-			db.Insert<TestClass01>( new TestClass01(){ ID = "001"} );
+			this.TestInsertAlotItems();
+			var result = db.Query<TestClass01>( @"SELECT * FROM TestClass01 where ID = @ID", new TestClass01(){ ID = @"01"});
+			Assert.AreEqual( 1, result.Count());
 		}
 	}
 }
