@@ -12,7 +12,16 @@ namespace NLORM.Core
         void Close();
         void Dispose();
 
+		/// <summary>
+		/// Use this creating Table.
+		/// </summary>
+		/// <typeparam name="T"> model</typeparam>
         void CreateTable<T>() where T : new();
+
+		/// <summary>
+		/// Use this dropping Table.
+		/// </summary>
+		/// <typeparam name="T"> model</typeparam>
         void DropTable<T>() where T : new();
         IEnumerable<T> Query<T>(string sql, dynamic param = null, IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null);
 
