@@ -12,5 +12,9 @@ namespace NLORM.SQLite
     public class SQLiteSqlBuilder : BaseSqlBuilder 
     {
 
+        public override ISqlBuilder CreateOne()
+        {
+            return new SQLiteSqlBuilder();
+        }
     }
 }

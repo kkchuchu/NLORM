@@ -199,7 +199,7 @@ namespace NLORM.SQLite.Test
             c1.ID = "5555";
             var sqliteDbc = new NLORMSQLiteDb(connectionString);
             sqliteDbc.Insert<TestClass>(c1);
-            var result = sqliteDbc.Find(typeof(TestClass)).Query<TestClass>();
+            var result = sqliteDbc.Query<TestClass>();
             Assert.AreEqual(result.Count(), 1);
         }
 
@@ -214,8 +214,7 @@ namespace NLORM.SQLite.Test
             var sqliteDbc = new NLORMSQLiteDb(connectionString);
             sqliteDbc.Insert<TestClass>(c1);
             sqliteDbc.Insert<TestClass>(c2);
-            var result = sqliteDbc.Find(typeof(TestClass))
-                                  .FliterBy(FliterType.EQUAL_AND, new { ID = "5555" })
+            var result = sqliteDbc.FliterBy(FliterType.EQUAL_AND, new { ID = "5555" })
                                   .Query<TestClass>();
             Assert.AreEqual(result.Count(), 1);
         }
@@ -226,6 +225,7 @@ namespace NLORM.SQLite.Test
             var sqliteDbc = new NLORMSQLiteDb(connectionString);
             sqliteDbc.CreateTable<TestClass3>();
         }
+
         [TestMethod]
         public void TestDropTableTestClass3()
         {
@@ -253,8 +253,7 @@ namespace NLORM.SQLite.Test
         {
             GenTestClass3TestData();
             var sqliteDbc = new NLORMSQLiteDb(connectionString);
-            var result = sqliteDbc.Find(typeof(TestClass3))
-                                  .FliterBy(FliterType.EQUAL_AND, new { ID = "5555" })
+            var result = sqliteDbc.FliterBy(FliterType.EQUAL_AND, new { ID = "5555" })
                                   .Query<TestClass3>();
             Assert.AreEqual(result.Count(), 1);
         }
@@ -265,8 +264,7 @@ namespace NLORM.SQLite.Test
         {
             GenTestClass3TestData();
             var sqliteDbc = new NLORMSQLiteDb(connectionString);
-            var result = sqliteDbc.Find(typeof(TestClass3))
-                                  .FliterBy(FliterType.EQUAL_AND, new { NAME = "N5555" })
+            var result = sqliteDbc.FliterBy(FliterType.EQUAL_AND, new { NAME = "N5555" })
                                   .Query<TestClass3>();
             Assert.AreEqual(result.Count(), 2);
         }
