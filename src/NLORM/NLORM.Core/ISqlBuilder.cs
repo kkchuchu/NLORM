@@ -17,5 +17,7 @@ namespace NLORM.Core
         string GenSelect(Type t);
         string GenWhereCons(FliterObject fo);
         dynamic GetWhereParas();
+
+        ISqlBuilder CreateOne();
     }
 }

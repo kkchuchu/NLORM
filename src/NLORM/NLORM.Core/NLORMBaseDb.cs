@@ -52,16 +52,10 @@ namespace NLORM.Core
             return (IEnumerable<T>)ret;
         }
 
-        virtual public INLORMDb Find(Type t)
-        {
-            QueryType = t;
-            FliterObjects = new List<FliterObject>();
-            sqlBuilder.GenSelect(t);
-            return this;
-        }
 
         virtual public IEnumerable<T> Query<T>()
         {
+            GenSelectSql(typeof(T));
             GenWhereSql();
             string selectStr = sqlBuilder.SQLString;
             string whereStr = sqlBuilder.GetWhereSQLString();
@@ -71,6 +65,7 @@ namespace NLORM.Core
                 Sql += " WHERE "+whereStr;
             }
             dynamic consObject = sqlBuilder.GetWhereParas();
+            ResetFliterCache();
             return (IEnumerable<T>)Query<T>(Sql, consObject);
         }
 
@@ -83,6 +78,8 @@ namespace NLORM.Core
 
         public INLORMDb FliterBy(FliterType fType, dynamic param)
         {
+
+            FliterObjects = FliterObjects?? new List<FliterObject>();
             var f = new FliterObject();
             f.ClassType = QueryType;
             f.Cons = param;
@@ -102,11 +99,33 @@ namespace NLORM.Core
 
         private void GenWhereSql()
         {
+            if (FliterObjects == null)
+            {
+                return;
+            }
             foreach (var f in FliterObjects)
             {
                 sqlBuilder.GenWhereCons(f);
             }
         }
+
+        private void GenSelectSql(Type t)
+        {
+            QueryType = t;
+            sqlBuilder.GenSelect(t);
+        }
+
+        private void ResetSqlBuilder()
+        {
+            sqlBuilder = sqlBuilder.CreateOne();
+        }
+
+        private void ResetFliterCache()
+        {
+            ResetSqlBuilder();
+            FliterObjects = null;
+        }
+
 
 
     }
