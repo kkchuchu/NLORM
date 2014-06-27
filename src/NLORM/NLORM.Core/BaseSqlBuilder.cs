@@ -8,7 +8,7 @@ using System.Dynamic;
 
 namespace NLORM.Core
 {
-    public class BaseSqlBuilder : ISqlBuilder
+    abstract public class BaseSqlBuilder : ISqlBuilder
     {
         protected ISqlGenerator SqlGen;
 
@@ -127,5 +127,9 @@ namespace NLORM.Core
         {
             return whereConsPara;
         }
+
+
+        abstract public ISqlBuilder CreateOne();
+
     }
 }

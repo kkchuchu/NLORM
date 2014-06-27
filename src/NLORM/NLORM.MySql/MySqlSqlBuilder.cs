@@ -12,5 +12,10 @@ namespace NLORM.MySql
         {
             SqlGen = new MySqlSqlGenerator();
         }
+
+        public override ISqlBuilder CreateOne()
+        {
+            return new MySqlSqlBuilder();
+        }
     }
 }
