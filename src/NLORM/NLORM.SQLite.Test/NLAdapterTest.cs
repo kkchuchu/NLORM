@@ -20,16 +20,37 @@ namespace NLORM.SQLite.Test
 	[TestClass]
 	public class NLAdapterTest
 	{
+		[TestCleanup()]
+        public void TestCleanup()
+        {
+            try
+            {
+                File.Delete(filePath);
+            }
+            finally
+            {
+
+            }
+        }
 		private string connectionString;
+		private string filePath;
 		public NLAdapterTest()
 		{
-			string filePath = "C:\\test.sqlite";
+			filePath = "C:\\test.sqlite";
             connectionString = "Data Source="+filePath;
 		}
 		[TestMethod]
 		public void TestCallNLapter()
 		{
-			INLORMDb db = new SQLite.NLORMSQLiteDb( connectionString);
+			INLORMDb db = new SQLite.NLORMSQLiteDb( connectionString);			
+			try
+			{
+				db.DropTable<Testclass01>();
+			}
+			catch( Exception)
+			{
+			}
+			db.CreateTable<Testclass01>();
 			string selectstr = @"SELECT * FROM Testclass01";
 			NLORM.Core.NLAdapter<Testclass01> adapter = new NLORM.Core.NLAdapter<Testclass01>( db, selectstr);
 			adapter.Collection.Add( new Testclass01(){ ID = @"10"} );

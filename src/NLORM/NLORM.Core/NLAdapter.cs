@@ -20,7 +20,7 @@ namespace NLORM.Core
 			this.db = db;
 			this.selectstr = selectstring;
 			this.items = db.Query<T>(selectstr);
-			this.collection.ToNLC( items);
+			this.collection = new NLCollection<T>( items as ArrayList);
 			this.count = items.Count();
 		}
 
@@ -35,6 +35,10 @@ namespace NLORM.Core
 
 	public class NLCollection<T> : IEnumerable, IEnumerable<T>
 	{
+		public NLCollection( ArrayList items)
+		{
+			this.List = items;
+		}
 		public int Count 
 		{ 
 			get
@@ -47,15 +51,16 @@ namespace NLORM.Core
 			get
 			{
 				return List;
-			} 
+			}
+
+			private set
+			{
+				this.List = value;
+			}
 		}
 		private List< Dapper.CommandDefinition> multiscripts;
 		public virtual void CopyTo(Array ar, int index)
 		{
-		}
-		public void  ToNLC( IEnumerable<T> coll)
-		{
-			this.List.AddRange( coll as ICollection);
 		}
 
 		public T this[ int index]
