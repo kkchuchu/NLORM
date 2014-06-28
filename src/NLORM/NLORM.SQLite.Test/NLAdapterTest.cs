@@ -13,14 +13,29 @@ using System.IO;
 
 namespace NLORM.SQLite.Test
 {
-	class Testclass01
-	{
-		public string ID { get; set;}
-	}
+	class TestClass
+    {
+        [ColumnType(DbType.String,"30",false,"this is id comment")]
+        public string ID { get; set; }
+
+    }
+
 	[TestClass]
 	public class NLAdapterTest
 	{
-		[TestCleanup()]
+		[TestInitialize]
+		public void TestInit()
+		{			
+            try
+            {
+                File.Delete(filePath);
+            }
+            finally
+            {
+
+            }
+		}
+		[TestCleanup]
         public void TestCleanup()
         {
             try
@@ -42,26 +57,22 @@ namespace NLORM.SQLite.Test
 		[TestMethod]
 		public void TestCallNLapter()
 		{
-			INLORMDb db = new SQLite.NLORMSQLiteDb( connectionString);			
-			try
-			{
-				db.DropTable<Testclass01>();
-			}
-			catch( Exception)
-			{
-			}
-			db.CreateTable<Testclass01>();
-			string selectstr = @"SELECT * FROM Testclass01";
-			NLORM.Core.NLAdapter<Testclass01> adapter = new NLORM.Core.NLAdapter<Testclass01>( db, selectstr);
-			adapter.Collection.Add( new Testclass01(){ ID = @"10"} );
-			adapter.Collection.Add( new Testclass01(){ ID = @"20"} );// if add same items, what's the result.
-			adapter.Collection.Remove( new Testclass01(){ ID = @"10"});
+			var db = new SQLite.NLORMSQLiteDb( connectionString);
+			db.CreateTable<TestClass>();
+			db.Insert<TestClass>( new TestClass() { ID = @"100"} );
+			db.Insert<TestClass> ( new TestClass() { ID= @"10"});
+			string selectstr = @"SELECT * FROM " + typeof(TestClass).Name;
+			NLORM.Core.NLAdapter<TestClass> adapter = new NLORM.Core.NLAdapter<TestClass>( db, selectstr);
+			adapter.Collection.Add( new TestClass(){ ID = @"20"} );// if add same items, what's the result
+			adapter.Collection.Remove( new TestClass(){ ID = @"10"});
 			adapter.Collection[0].ID = @"4";
 
-			foreach ( Testclass01 item in adapter.Collection)
+			foreach ( TestClass item in adapter.Collection)
 			{
 				
 			}
+
+			adapter.Collection[0].ID = @"";
 		}
 	}
 }

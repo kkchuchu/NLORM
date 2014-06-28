@@ -13,15 +13,16 @@ namespace NLORM.Core
 		private string selectstr;
 		private IEnumerable<T> items;
 		private NLCollection<T> collection;
-		private int count;
-		private ISqlBuilder sqlBuilder;
+
 		public NLAdapter( INLORMDb db, string selectstring)
 		{
 			this.db = db;
 			this.selectstr = selectstring;
 			this.items = db.Query<T>(selectstr);
-			this.collection = new NLCollection<T>( items as ArrayList);
-			this.count = items.Count();
+
+			ArrayList arrli = new ArrayList();
+			arrli.AddRange( items.ToArray());
+			this.collection = new NLCollection<T>( arrli);
 		}
 
 		public NLCollection<T> Collection
@@ -37,28 +38,18 @@ namespace NLORM.Core
 	{
 		public NLCollection( ArrayList items)
 		{
-			this.List = items;
+			this._list = items;
+			multiscri = new List<Dapper.CommandDefinition>();
 		}
 		public int Count 
 		{ 
 			get
 			{
-				return this.List.Count;
+				return this._list.Count;
 			} 
 		}
-		protected ArrayList List 
-		{ 
-			get
-			{
-				return List;
-			}
-
-			private set
-			{
-				this.List = value;
-			}
-		}
-		private List< Dapper.CommandDefinition> multiscripts;
+		private List<Dapper.CommandDefinition> multiscri;
+		private ArrayList _list;
 		public virtual void CopyTo(Array ar, int index)
 		{
 		}
@@ -67,15 +58,15 @@ namespace NLORM.Core
 		{
 			get
 			{
-				List.Add( new Dapper.CommandDefinition( @""));
-				return (T)List[index];
+				multiscri.Add( new Dapper.CommandDefinition( @""));
+				return (T)_list[index];
 			}
 		}
 		public int Add( T item)
 		{
-			List.Add( item);
+			_list.Add( item);
 
-			List.Add( new Dapper.CommandDefinition( @""));
+			multiscri.Add( new Dapper.CommandDefinition( @""));
 
 			return this.Count;
 		}
@@ -85,15 +76,49 @@ namespace NLORM.Core
 			bool succedtag = true;
 			try
 			{
-				List.Remove( item);
-				List.Add( new Dapper.CommandDefinition( @""));// todo
+				for ( int i = 0; i < _list.Count; i++)
+				{
+					if ( this.PublicInstancePropertiesEqual( _list[i], item))
+					{
+						_list.RemoveAt(i);
+						break;
+					}
+				}
+				multiscri.Add( new Dapper.CommandDefinition( @""));// todo
 			}
 			catch ( ArgumentNullException)
 			{
 				succedtag = false;
 			}
-
 			return succedtag;
+		}
+
+		private bool PublicInstancePropertiesEqual<T>(T self, T to, params string[] ignore)
+		{
+			if (self != null && to != null)
+			{
+				Type type = typeof(T);
+				List<string> ignoreList = new List<string>(ignore);
+				foreach (System.Reflection.PropertyInfo pi in type.GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance))
+				{
+					if (!ignoreList.Contains(pi.Name))
+					{
+						object selfValue = type.GetProperty(pi.Name).GetValue(self, null);
+						object toValue = type.GetProperty(pi.Name).GetValue(to, null);
+
+						if (selfValue != toValue && (selfValue == null || !selfValue.Equals(toValue)))
+						{
+							return false;
+						}
+					}
+				}
+				return true;
+			}
+			if ( self == null && to == null)
+			{
+				return true;
+			}
+			return false;
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
@@ -108,7 +133,8 @@ namespace NLORM.Core
 
 		public NLCollectionEnum<T> GetEnumerator()
 		{
-			return new NLCollectionEnum<T>(List.ToArray() as T[]);
+			//update all
+			return new NLCollectionEnum<T>(_list.ToArray( typeof(T)) as T[]);
 		}
 	}
 
