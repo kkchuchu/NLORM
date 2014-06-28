@@ -52,7 +52,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ModelDefinitionConverterTest.cs" />
-    <Compile Include="NLAdapterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
