@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NLORM.Core.Attributes;
@@ -116,5 +117,31 @@ namespace NLORM.SQLite.Test
             var sqliteDbc = new NLORMSQLiteDb(connectionString);
             sqliteDbc.CreateTable<TestClassOnlyIntWCfd>();
         }
+
+        class TestClassOnlyDateTime
+        {
+            public DateTime time { get; set; }
+        }
+
+        [TestMethod]
+        public void TestCreateTableOnlyDateTime()
+        {
+            var sqliteDbc = new NLORMSQLiteDb(connectionString);
+            sqliteDbc.CreateTable<TestClassOnlyDateTime>();
+        }
+
+        class TestClassOnlyDateTimeWCfd
+        {
+            [ColumnType(DbType.DateTime, "", false, "this is time comment")]
+            public DateTime time { get; set; }
+        }
+
+        [TestMethod]
+        public void TestCreateTableOnlyDateTimeWcfd()
+        {
+            var sqliteDbc = new NLORMSQLiteDb(connectionString);
+            sqliteDbc.CreateTable<TestClassOnlyDateTimeWCfd>();
+        }
+
     }
 }

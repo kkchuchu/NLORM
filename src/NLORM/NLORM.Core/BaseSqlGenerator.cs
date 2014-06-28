@@ -75,7 +75,7 @@ namespace NLORM.Core
                     throw new NotImplementedException();
                     break;
                 case DbType.DateTime:
-                    throw new NotImplementedException();
+                    ret = GenCreateDateTime(cfd);
                     break;
                 case DbType.DateTimeOffset:
                     throw new NotImplementedException();
@@ -106,6 +106,16 @@ namespace NLORM.Core
             ret += " " + cfd.ColumnName + " ";
             var nullable = cfd.Nullable ? StringDeafultLength : "not null";
             ret += "INTEGER " + nullable;
+            return ret;
+        }
+
+
+        virtual public string GenCreateDateTime(ColumnFieldDefinition cfd)
+        {
+            var ret = "";
+            ret += " " + cfd.ColumnName + " ";
+            var nullable = cfd.Nullable ? StringDeafultLength : "not null";
+            ret += "DATETIME " + nullable;
             return ret;
         }
 
