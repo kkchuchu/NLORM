@@ -114,63 +114,9 @@ namespace NLORM.MSSQL.Test
 			db.CreateTable<TestClass01>();
 			db.Insert<TestClass01>( new TestClass01(){ ID = @"11", name = @"albert"});
 			db.Insert<TestClass01>( new TestClass01(){ ID = @"22", name = @"star"});
-			var result = db.Find( typeof(TestClass01) ).FliterBy( FliterType.EQUAL_AND, new { name = "albert"} ).Query<TestClass01>();
+			var result = db.FliterBy( FliterType.EQUAL_AND, new { name = "albert"} ).Query<TestClass01>();
 
 			Assert.AreEqual( 1, result.Count() );
-		}
-
-		[TestMethod]
-		public void TestNewQueryMethod()
-		{
-			INLORMDb db = new NLORMMSSQLDb( constr);
-			db.CreateTable<TestClass01>();
-						
-			var items = db.Query<TestClass01>() as List<TestClass01>;
-			//NLAdapter adapter = new NLAdapter();
-			// adapter.INLORMDb = db;
-			// db.query(@"select * from tablename");
-			// db.items.add ( insert)
-			// db.items[4].name = "rick";			
-			// db.update;
-		}
-
-		public void test()
-		{
-			this.JoinTest<TestClass01>( x => x.ID == x.
-		}
-
-		private void JoinTest<T>( Func<T,bool> filter)
-		{
-			filter();
-		}
-	}
-
-	public class NLAdapter
-	{
-		public INLORMDb db { get; set;}
-
-		private string _selectstr;
-		public string Select
-		{
-			get
-			{
-				return _selectstr;
-			}
-			set
-			{
-				this._selectstr = value;
-			}
-		}
-		
-		public NLAdapter( INLORMDb db, string selectstring)
-		{
-			this._selectstr = selectstring;
-			this.db = db;
-		}
-
-		public IEnumerable<T> Fill()
-		{
-			SqlMapper mapping
 		}
 	}
 }
