@@ -11,8 +11,8 @@ namespace NLORM.MySql
     {
         public NLORMMySqlDb(string dbConnectionString)
         {
-            dbConnection = new MySqlConnection(dbConnectionString);
-            sqlBuilder = new MySqlSqlBuilder();
+            DbConnection = new MySqlConnection(dbConnectionString);
+            SqlBuilder = new MySqlSqlBuilder();
         }
     }
 }

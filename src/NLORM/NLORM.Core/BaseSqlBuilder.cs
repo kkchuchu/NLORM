@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using NLORM.Core.BasicDefinitions;
 using System.Diagnostics;
@@ -13,9 +12,9 @@ namespace NLORM.Core
         protected ISqlGenerator SqlGen;
 
         private string _sqlString="";
-        private string whereString = "";
-        private dynamic whereConsPara;
-        private int pCount = 0;
+        private string _whereString = "";
+        private dynamic _whereConsPara;
+        private int _pCount;
         public string SQLString
         {
             get
@@ -34,35 +33,34 @@ namespace NLORM.Core
         virtual public string GenCreateTableSql<T>() 
         {
 
-            ModelDefinition md = ConvertClassToModelDef<T>();
+            var md = ConvertClassToModelDef<T>();
             return SqlGen.GenCreateTableSql(md);
         }
 
         virtual public string GenDropTableSql<T>() 
         {
-            ModelDefinition md = ConvertClassToModelDef<T>();
+            var md = ConvertClassToModelDef<T>();
             return SqlGen.GenDropTableSql(md);
         }
 
         virtual public string GenInsertSql<T>()
         {
-            ModelDefinition md = ConvertClassToModelDef<T>();
+            var md = ConvertClassToModelDef<T>();
             return SqlGen.GenInsertSql(md);
         }
 
         virtual public string GenSelect(Type t)
         {
-            StringBuilder sql = new StringBuilder();
-            whereConsPara = new ExpandoObject();
-            ModelDefinition md = ConvertClassToModelDef(t);
-            string ret = SqlGen.GenSelectSql(md);
+            _whereConsPara = new ExpandoObject();
+            var md = ConvertClassToModelDef(t);
+            var ret = SqlGen.GenSelectSql(md);
             _sqlString += ret;
             return ret;
         }
 
         public string GenWhereCons(FliterObject fo)
         {
-            string ret = "";
+            var ret = "";
             switch (fo.Fliter)
             {
                 case FliterType.EQUAL_AND:
@@ -75,29 +73,30 @@ namespace NLORM.Core
                     Debug.Assert(false);
                     break;
             }
-            whereString+=" ("+ret +") ";
+            _whereString+=" ("+ret +") ";
             return ret;
         }
 
         public string GetWhereSQLString()
         {
-            return whereString;
+            return _whereString;
         }
 
         private string GenWhereConsEqual(FliterObject fo,string op)
         {
-            string ret = " ";
+            var ret = " ";
             var fliterInfo = fo.Cons.GetType().GetProperties();
-            int i = 1;
+            var i = 1;
             foreach (var info in fliterInfo)
             {
-                pCount++;
-                ret += " " + info.Name + "=@P" + pCount+" ";
+                _pCount++;
+                ret += " " + info.Name + "=@P" + _pCount+" ";
                 object v = info.GetValue(fo.Cons, null);
-                AddParaToConstObject("P"+pCount,v);
+                AddParaToConstObject("P"+_pCount,v);
                 if (i < fliterInfo.Length)
                 {
                     ret += " " + op + " ";
+                    i++;
                 }
             }
             return ret;
@@ -117,7 +116,7 @@ namespace NLORM.Core
 
         private void AddParaToConstObject(string s, object o)
         {
-            IDictionary<string, object> wherDic = whereConsPara;
+            IDictionary<string, object> wherDic = _whereConsPara;
             wherDic.Add(s, o);
         }
 
@@ -125,7 +124,7 @@ namespace NLORM.Core
 
         public dynamic GetWhereParas()
         {
-            return whereConsPara;
+            return _whereConsPara;
         }
 
 
