@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Diagnostics;
+using System.Reflection;
 using System.Text;
 using NLORM.Core.BasicDefinitions;
 
@@ -92,33 +93,36 @@ namespace NLORM.Core
 
         virtual public string GenCreateString(ColumnFieldDefinition cfd)
         {
-            var ret = "";
-            ret += " " + cfd.ColumnName + " ";
             var length = string.IsNullOrEmpty(cfd.Length) ? StringDeafultLength : cfd.Length;
-            var nullable = cfd.Nullable ? StringDeafultLength : "not null";
-            ret += "varchar(" + length + ") " + nullable;
-            return ret;
+            return GenCreateSqlByType(cfd, "varchar",length);
         }
 
         virtual public string GenCreateInteger(ColumnFieldDefinition cfd)
         {
-            var ret = "";
-            ret += " " + cfd.ColumnName + " ";
-            var nullable = cfd.Nullable ? StringDeafultLength : "not null";
-            ret += "INTEGER " + nullable;
-            return ret;
+            return GenCreateSqlByType(cfd, "INTEGER");
         }
 
 
         virtual public string GenCreateDateTime(ColumnFieldDefinition cfd)
         {
+            return GenCreateSqlByType(cfd, "DATETIME");
+        }
+
+        private string GenCreateSqlByType( ColumnFieldDefinition cfd,string type,string length="")
+        {
             var ret = "";
             ret += " " + cfd.ColumnName + " ";
             var nullable = cfd.Nullable ? StringDeafultLength : "not null";
-            ret += "DATETIME " + nullable;
-            return ret;
+            if (string.IsNullOrEmpty(length))
+            {
+                ret += type + " " + nullable;
+            }
+            else
+            {
+                ret += type+"(" + length + ") " + nullable; 
+            }
+            return ret; 
         }
-
 
         virtual public string GenDropTableSql(ModelDefinition md)
         {
