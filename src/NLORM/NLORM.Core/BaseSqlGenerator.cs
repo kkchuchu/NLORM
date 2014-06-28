@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
-using System.Linq;
-using System.Runtime.Remoting.Channels;
 using System.Text;
 using NLORM.Core.BasicDefinitions;
 
@@ -14,9 +11,9 @@ namespace NLORM.Core
         private const string StringDeafultLength = "255";
         public string GenCreateTableSql(ModelDefinition md)
         {
-            StringBuilder ret = new StringBuilder();
+            var ret = new StringBuilder();
             ret.Append("CREATE TABLE " + md.TableName + " (");
-            int i = 1;
+            var i = 1;
             foreach (var cfd in md.PropertyColumnDic.Values)
             {
                 ret.Append(GenColumnCreateTableSql(cfd));
@@ -42,7 +39,10 @@ namespace NLORM.Core
                     throw new NotImplementedException();
                     break;
                 case DbType.Int16:
-                    throw new NotImplementedException();
+                    ret = GenCreateInteger(cfd);
+                    break;
+                case DbType.Int32:
+                    ret = GenCreateInteger(cfd);
                     break;
                 case DbType.UInt16:
                     throw new NotImplementedException();
@@ -75,7 +75,7 @@ namespace NLORM.Core
                     throw new NotImplementedException();
                     break;
                 case DbType.DateTime:
-                    throw new NotImplementedException();
+                    ret = GenCreateDateTime(cfd);
                     break;
                 case DbType.DateTimeOffset:
                     throw new NotImplementedException();
@@ -92,18 +92,37 @@ namespace NLORM.Core
 
         virtual public string GenCreateString(ColumnFieldDefinition cfd)
         {
-            string ret = "";
+            var ret = "";
             ret += " " + cfd.ColumnName + " ";
-            string length = string.IsNullOrEmpty(cfd.Length) ? StringDeafultLength : cfd.Length;
-            string nullable = cfd.Nullable ? StringDeafultLength : "not null";
+            var length = string.IsNullOrEmpty(cfd.Length) ? StringDeafultLength : cfd.Length;
+            var nullable = cfd.Nullable ? StringDeafultLength : "not null";
             ret += "varchar(" + length + ") " + nullable;
+            return ret;
+        }
+
+        virtual public string GenCreateInteger(ColumnFieldDefinition cfd)
+        {
+            var ret = "";
+            ret += " " + cfd.ColumnName + " ";
+            var nullable = cfd.Nullable ? StringDeafultLength : "not null";
+            ret += "INTEGER " + nullable;
+            return ret;
+        }
+
+
+        virtual public string GenCreateDateTime(ColumnFieldDefinition cfd)
+        {
+            var ret = "";
+            ret += " " + cfd.ColumnName + " ";
+            var nullable = cfd.Nullable ? StringDeafultLength : "not null";
+            ret += "DATETIME " + nullable;
             return ret;
         }
 
 
         virtual public string GenDropTableSql(ModelDefinition md)
         {
-            StringBuilder ret = new StringBuilder();
+            var ret = new StringBuilder();
             ret.Append(" DROP TABLE ");
             ret.Append(md.TableName);
             return ret.ToString();
@@ -111,10 +130,10 @@ namespace NLORM.Core
 
         virtual public string GenInsertSql(ModelDefinition md)
         {
-            StringBuilder ret = new StringBuilder();
+            var ret = new StringBuilder();
 
-            StringBuilder fields = new StringBuilder();
-            StringBuilder valueFields = new StringBuilder();
+            var fields = new StringBuilder();
+            var valueFields = new StringBuilder();
             fields.Append(GenInsertColFields(md));
             valueFields.Append(GenInsertValueFields(md));
             ret.Append(" INSERT INTO ");
@@ -128,7 +147,7 @@ namespace NLORM.Core
 
         virtual public string GenSelectSql(ModelDefinition md)
         {
-            StringBuilder ret = new StringBuilder();
+            var ret = new StringBuilder();
             ret.Append(" SELECT * FROM ");
             ret.Append(md.TableName + " ");
             return ret.ToString();
@@ -136,8 +155,8 @@ namespace NLORM.Core
 
         private string GenInsertColFields(ModelDefinition md)
         {
-            string ret = "";
-            int i = 1;
+            var ret = "";
+            var i = 1;
             foreach (var mdf in md.PropertyColumnDic.Values)
             {
                 ret += " " + mdf.ColumnName;
@@ -152,8 +171,8 @@ namespace NLORM.Core
         
         private string GenInsertValueFields(ModelDefinition md)
         {
-            string ret = "";
-            int i = 1;
+            var ret = "";
+            var i = 1;
             foreach (var mdf in md.PropertyColumnDic.Values)
             {
                 ret += " @" + mdf.PropName;
