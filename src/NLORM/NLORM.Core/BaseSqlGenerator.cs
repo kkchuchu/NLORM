@@ -33,13 +33,13 @@ namespace NLORM.Core
             string ret = null;
             switch (cfd.FieldType)
             {
-                case DbType.Byte:
+                case DbType.Byte://tinyint
                     throw new NotImplementedException();
                     break;
                 case DbType.SByte:
                     throw new NotImplementedException();
                     break;
-                case DbType.Int16:
+                case DbType.Int16://smallint
                     ret = GenCreateInteger(cfd);
                     break;
                 case DbType.Int32:
@@ -48,19 +48,19 @@ namespace NLORM.Core
                 case DbType.UInt16:
                     throw new NotImplementedException();
                     break;
-                case DbType.Int64:
+                case DbType.Int64://bigint
                     throw new NotImplementedException();
                     break;
                 case DbType.UInt64:
                     throw new NotImplementedException();
                     break;
-		case DbType.UInt32:
-		    throw new NotImplementedException();
-		    break;
-                case DbType.Single:
+                case DbType.UInt32:
                     throw new NotImplementedException();
                     break;
-                case DbType.Double:
+                case DbType.Single://real
+                    throw new NotImplementedException();
+                    break;
+                case DbType.Double://float
                     throw new NotImplementedException();
                     break;
                 case DbType.Decimal:
@@ -84,7 +84,7 @@ namespace NLORM.Core
                 case DbType.DateTimeOffset:
                     throw new NotImplementedException();
                     break;
-                case DbType.Time:
+                case DbType.Time://time
                     throw new NotImplementedException();
                     break;
                 default:
@@ -110,16 +110,41 @@ namespace NLORM.Core
             return GenCreateSqlByType(cfd, "DATETIME");
         }
 
-	virtual public string GenCreateDecimal(ColumnFieldDefinition cfd)
+		virtual public string GenCreateDecimal(ColumnFieldDefinition cfd)
         {
             var length = string.IsNullOrEmpty(cfd.Length) ? StringDeafultLength : cfd.Length;
             return GenCreateSqlByType(cfd, "decimal",length);
         }
 
-	virtual public string GenCreateBit(ColumnFieldDefinition cfd)
- 	{
-       	    return GenCreateSqlByType(cfd, "bit", null);
-	}
+        virtual public string GenCreateBit(ColumnFieldDefinition cfd)
+        {
+            return GenCreateSqlByType(cfd, "bit", null);
+        }
+
+        virtual public string GenCreateFloat(ColumnFieldDefinition cfd)
+        {
+            return GenCreateSqlByType(cfd, "float", null);
+        }
+
+        virtual public string GenCreateReal(ColumnFieldDefinition cfd)
+        {
+            return GenCreateSqlByType(cfd, "real", null);
+        }
+
+        virtual public string GenCreateTime( ColumnFieldDefinition cfd)
+        {
+            return GenCreateSqlByType(cfd, "time", null);
+        }
+
+        virtual public string GenCreateTinyint( ColumnFieldDefinition cfd)
+        {
+            return GenCreateSqlByType(cfd, "tinyint", null);
+        }
+
+        virtual public string GenCreateBigint( ColumnFieldDefinition cfd)
+        {
+            return GenCreateSqlByType(cfd, "bigint", null);
+        }
 
         private string GenCreateSqlByType( ColumnFieldDefinition cfd,string type,string length="")
         {
