@@ -61,10 +61,10 @@ namespace NLORM.Core
                     throw new NotImplementedException();
                     break;
                 case DbType.Decimal:
-                    throw new NotImplementedException();
+                    ret = GenCreateDecimal(cfd);
                     break;
                 case DbType.Boolean:
-                    throw new NotImplementedException();
+                    ret = GenCreateBit( cfd);
                     break;
                 case DbType.String:
                     ret = GenCreateString(cfd);
@@ -101,18 +101,28 @@ namespace NLORM.Core
         {
             return GenCreateSqlByType(cfd, "INTEGER");
         }
-
-
+		
         virtual public string GenCreateDateTime(ColumnFieldDefinition cfd)
         {
             return GenCreateSqlByType(cfd, "DATETIME");
         }
 
+		virtual public string GenCreateDecimal(ColumnFieldDefinition cfd)
+        {
+            var length = string.IsNullOrEmpty(cfd.Length) ? StringDeafultLength : cfd.Length;
+            return GenCreateSqlByType(cfd, "decimal",length);
+        }
+
+		virtual public string GenCreateBit(ColumnFieldDefinition cfd)
+		{
+			return GenCreateSqlByType(cfd, "bit", null);
+		}
+
         private string GenCreateSqlByType( ColumnFieldDefinition cfd,string type,string length="")
         {
             var ret = "";
             ret += " " + cfd.ColumnName + " ";
-            var nullable = cfd.Nullable ? StringDeafultLength : "not null";
+            var nullable = cfd.Nullable ? "" : "not null";
             if (string.IsNullOrEmpty(length))
             {
                 ret += type + " " + nullable;
@@ -188,8 +198,5 @@ namespace NLORM.Core
             }
             return ret;
         }
-
-
-
     }
 }
