@@ -152,8 +152,18 @@ namespace NLORM.Core
         virtual public string GenSelectSql(ModelDefinition md)
         {
             var ret = new StringBuilder();
-            ret.Append(" SELECT * FROM ");
-            ret.Append(md.TableName + " ");
+            ret.Append(" SELECT ");
+            int i = 1;
+            foreach (var cdf in md.PropertyColumnDic.Values)
+            {
+                ret.Append(cdf.ColumnName + " " + cdf.PropName);
+                if (i < md.PropertyColumnDic.Count)
+                {
+                    ret.Append(" , ");
+                    i++;
+                }
+            }
+            ret.Append(" FROM "+ md.TableName + " ");
             return ret.ToString();
         }
 
@@ -188,8 +198,6 @@ namespace NLORM.Core
             }
             return ret;
         }
-
-
 
     }
 }
