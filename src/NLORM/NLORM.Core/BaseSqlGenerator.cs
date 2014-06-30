@@ -54,6 +54,9 @@ namespace NLORM.Core
                 case DbType.UInt64:
                     throw new NotImplementedException();
                     break;
+				case DbType.UInt32:
+					throw new NotImplementedException();
+					break;
                 case DbType.Single:
                     throw new NotImplementedException();
                     break;
