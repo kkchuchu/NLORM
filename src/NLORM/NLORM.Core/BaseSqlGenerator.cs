@@ -54,6 +54,9 @@ namespace NLORM.Core
                 case DbType.UInt64:
                     throw new NotImplementedException();
                     break;
+				case DbType.UInt32:
+					throw new NotImplementedException();
+					break;
                 case DbType.Single:
                     throw new NotImplementedException();
                     break;
@@ -61,10 +64,10 @@ namespace NLORM.Core
                     throw new NotImplementedException();
                     break;
                 case DbType.Decimal:
-                    throw new NotImplementedException();
+                    ret = GenCreateDecimal(cfd);
                     break;
                 case DbType.Boolean:
-                    throw new NotImplementedException();
+                    ret = GenCreateBit( cfd);
                     break;
                 case DbType.String:
                     ret = GenCreateString(cfd);
@@ -101,18 +104,28 @@ namespace NLORM.Core
         {
             return GenCreateSqlByType(cfd, "INTEGER");
         }
-
-
+		
         virtual public string GenCreateDateTime(ColumnFieldDefinition cfd)
         {
             return GenCreateSqlByType(cfd, "DATETIME");
         }
 
+		virtual public string GenCreateDecimal(ColumnFieldDefinition cfd)
+        {
+            var length = string.IsNullOrEmpty(cfd.Length) ? StringDeafultLength : cfd.Length;
+            return GenCreateSqlByType(cfd, "decimal",length);
+        }
+
+		virtual public string GenCreateBit(ColumnFieldDefinition cfd)
+		{
+			return GenCreateSqlByType(cfd, "bit", null);
+		}
+
         private string GenCreateSqlByType( ColumnFieldDefinition cfd,string type,string length="")
         {
             var ret = "";
             ret += " " + cfd.ColumnName + " ";
-            var nullable = cfd.Nullable ? StringDeafultLength : "not null";
+            var nullable = cfd.Nullable ? "" : "not null";
             if (string.IsNullOrEmpty(length))
             {
                 ret += type + " " + nullable;
@@ -152,8 +165,18 @@ namespace NLORM.Core
         virtual public string GenSelectSql(ModelDefinition md)
         {
             var ret = new StringBuilder();
-            ret.Append(" SELECT * FROM ");
-            ret.Append(md.TableName + " ");
+            ret.Append(" SELECT ");
+            int i = 1;
+            foreach (var cdf in md.PropertyColumnDic.Values)
+            {
+                ret.Append(cdf.ColumnName + " " + cdf.PropName);
+                if (i < md.PropertyColumnDic.Count)
+                {
+                    ret.Append(" , ");
+                    i++;
+                }
+            }
+            ret.Append(" FROM "+ md.TableName + " ");
             return ret.ToString();
         }
 
@@ -188,8 +211,5 @@ namespace NLORM.Core
             }
             return ret;
         }
-
-
-
     }
 }
