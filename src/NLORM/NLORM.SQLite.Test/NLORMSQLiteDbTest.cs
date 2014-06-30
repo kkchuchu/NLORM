@@ -12,6 +12,12 @@ using System.IO;
 
 namespace NLORM.SQLite.Test
 {
+	class TestClass
+    {
+        [ColumnType(DbType.String,"30",false,"this is id comment")]
+        public string ID { get; set; }
+
+    }
     class TestClass2
     {
         public string ID { get; set; }
