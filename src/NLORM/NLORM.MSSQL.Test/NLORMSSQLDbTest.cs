@@ -20,10 +20,27 @@ namespace NLORM.MSSQL.Test
 		public string name { get; set; }
     }
 
+	class TestClassDecimal
+	{
+		[ColumnType(DbType.Decimal,"20,10", false, "decimal test")]
+		public Int32 DID { get; set;}
+
+		[ColumnType(DbType.Decimal, "10", true, "decimal test")]
+		public Int32 DDID { get; set;}
+	}
 	class TestClass2
     {
         public string ID { get; set; }
     }
+
+	class TestClassbit
+	{
+		[ColumnType(DbType.Boolean, "1", false, "bit test")]
+		public Boolean BTAG { get; set;}
+
+		[ColumnType(DbType.Boolean, "1", true, "bit test")]
+		public Boolean BBTAG { get; set;}
+	}
 
 	[TestClass]
 	public class NLORMSSQLDbTest
@@ -38,6 +55,7 @@ namespace NLORM.MSSQL.Test
 				msdb = new NLORMMSSQLDb( constr);
 				msdb.DropTable<TestClass01>();
 				msdb.DropTable<TestClass2>();
+				msdb.DropTable<TestClassDecimal>();
 			}
 			catch ( Exception)
 			{
@@ -53,6 +71,7 @@ namespace NLORM.MSSQL.Test
 				mssqlDb = new NLORMMSSQLDb( constr);
 				mssqlDb.DropTable<TestClass01>();
 				mssqlDb.DropTable<TestClass2>();
+				mssqlDb.DropTable<TestClassDecimal>();
 			}
 			catch ( Exception)
 			{
@@ -117,6 +136,24 @@ namespace NLORM.MSSQL.Test
 			var result = db.FliterBy( FliterType.EQUAL_AND, new { name = "albert"} ).Query<TestClass01>();
 
 			Assert.AreEqual( 1, result.Count() );
+		}
+
+		[TestMethod]
+		public void TestCreatDecimalType()
+		{
+			INLORMDb db = new NLORMMSSQLDb( constr);
+			db.CreateTable<TestClassDecimal>();
+
+			db.DropTable<TestClassDecimal>();
+		}
+
+		[TestMethod]
+		public void TestCreatbitType()
+		{
+			INLORMDb db = new NLORMMSSQLDb( constr);
+			db.CreateTable<TestClassbit>();
+
+			db.DropTable<TestClassbit>();
 		}
 	}
 }
