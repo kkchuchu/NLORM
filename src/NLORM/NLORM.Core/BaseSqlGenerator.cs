@@ -54,9 +54,9 @@ namespace NLORM.Core
                 case DbType.UInt64:
                     throw new NotImplementedException();
                     break;
-				case DbType.UInt32:
-					throw new NotImplementedException();
-					break;
+		        case DbType.UInt32:
+		            throw new NotImplementedException();
+		            break;
                 case DbType.Single:
                     throw new NotImplementedException();
                     break;
@@ -110,16 +110,16 @@ namespace NLORM.Core
             return GenCreateSqlByType(cfd, "DATETIME");
         }
 
-		virtual public string GenCreateDecimal(ColumnFieldDefinition cfd)
+	virtual public string GenCreateDecimal(ColumnFieldDefinition cfd)
         {
             var length = string.IsNullOrEmpty(cfd.Length) ? StringDeafultLength : cfd.Length;
             return GenCreateSqlByType(cfd, "decimal",length);
         }
 
-		virtual public string GenCreateBit(ColumnFieldDefinition cfd)
-		{
-			return GenCreateSqlByType(cfd, "bit", null);
-		}
+	virtual public string GenCreateBit(ColumnFieldDefinition cfd)
+ 	{
+       	    return GenCreateSqlByType(cfd, "bit", null);
+	}
 
         private string GenCreateSqlByType( ColumnFieldDefinition cfd,string type,string length="")
         {
