@@ -116,10 +116,10 @@ namespace NLORM.Core
             return GenCreateSqlByType(cfd, "decimal",length);
         }
 
-		virtual public string GenCreateBit(ColumnFieldDefinition cfd)
- 		{
-       	    return GenCreateSqlByType(cfd, "bit", null);
-		}
+        virtual public string GenCreateBit(ColumnFieldDefinition cfd)
+        {
+            return GenCreateSqlByType(cfd, "bit", null);
+        }
 
         private string GenCreateSqlByType( ColumnFieldDefinition cfd,string type,string length="")
         {
