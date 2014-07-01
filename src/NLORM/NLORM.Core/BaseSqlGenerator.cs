@@ -34,7 +34,7 @@ namespace NLORM.Core
             switch (cfd.FieldType)
             {
                 case DbType.Byte://tinyint
-                    throw new NotImplementedException();
+					ret = GenCreateTinyint( cfd);
                     break;
                 case DbType.SByte:
                     throw new NotImplementedException();
@@ -49,7 +49,7 @@ namespace NLORM.Core
                     throw new NotImplementedException();
                     break;
                 case DbType.Int64://bigint
-                    throw new NotImplementedException();
+                    ret = GenCreateBigint(cfd);
                     break;
                 case DbType.UInt64:
                     throw new NotImplementedException();
@@ -58,10 +58,10 @@ namespace NLORM.Core
                     throw new NotImplementedException();
                     break;
                 case DbType.Single://real
-                    throw new NotImplementedException();
+                    ret = GenCreateReal(cfd);
                     break;
                 case DbType.Double://float
-                    throw new NotImplementedException();
+                    ret = GenCreateFloat(cfd);
                     break;
                 case DbType.Decimal:
                     ret = GenCreateDecimal(cfd);
@@ -85,7 +85,7 @@ namespace NLORM.Core
                     throw new NotImplementedException();
                     break;
                 case DbType.Time://time
-                    throw new NotImplementedException();
+                    ret = GenCreateTime(cfd);
                     break;
                 default:
                     Debug.Assert(false,"not support type");
