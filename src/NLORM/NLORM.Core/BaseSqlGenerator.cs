@@ -110,7 +110,7 @@ namespace NLORM.Core
             return GenCreateSqlByType(cfd, "DATETIME");
         }
 
-		virtual public string GenCreateDecimal(ColumnFieldDefinition cfd)
+	virtual public string GenCreateDecimal(ColumnFieldDefinition cfd)
         {
             var length = string.IsNullOrEmpty(cfd.Length) ? StringDeafultLength : cfd.Length;
             return GenCreateSqlByType(cfd, "decimal",length);
