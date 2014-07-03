@@ -156,6 +156,18 @@ namespace NLORM.SQLite.Test
 			sqliteDbc.CreateTable<TestClassOnlyTimeWcfd>();
 		}
 
+        class TestClassOnlyTime
+        {
+            public TimeSpan maintaintime { get; set;}
+        }
+
+        [TestMethod]
+        public void TestCreateTabkeOnlyTime()
+        {
+            var sqliteDbc = new NLORMSQLiteDb( connectionString);
+            sqliteDbc.CreateTable<TestClassOnlyTime>();
+        }
+
 		class TestClassOnlyFloatWcfd
 		{
 			[ColumnType(DbType.Double,"", false, "this is double comment")]
@@ -169,6 +181,18 @@ namespace NLORM.SQLite.Test
 			sqliteDbc.CreateTable<TestClassOnlyFloatWcfd>();
 		}
 
+        class TestClassOnlyFloat
+        {
+            public Double revenue { get; set;}
+        }
+
+        [TestMethod]
+        public void TestCreateTableOnlyFloat()
+        {
+            var sqliteDbc = new NLORMSQLiteDb( connectionString);
+            sqliteDbc.CreateTable<TestClassOnlyFloat>();
+        }
+
 		class TestClassOnlySingleWcfd
 		{
 			public Single reserve { get; set; }
@@ -181,8 +205,21 @@ namespace NLORM.SQLite.Test
 			sqliteDbc.CreateTable<TestClassOnlySingleWcfd>();
 		}
 
+        class TestClassOnlySingle
+        {
+            public Single reserve { get; set; }
+        }
+
+        [TestMethod]
+        public void TestCreatTableOnlySingle()
+        {
+            var sqliteDbc = new NLORMSQLiteDb( connectionString);
+            sqliteDbc.CreateTable<TestClassOnlySingle>();
+        }
+
 		class TestClassOnlyInt64Wcfd
 		{
+            [ColumnType(DbType.Int64, "", false, " this is int64 comment")]
 			public Int64 bigbrother{ get; set; }
 		}
 
@@ -193,8 +230,21 @@ namespace NLORM.SQLite.Test
 			sqliteDbc.CreateTable<TestClassOnlyInt64Wcfd>();
 		}
 
+        class TestclassOnlyInt64
+        {
+            public Int64 bigbrother { get; set; }
+        }
+
+        [TestMethod]
+        public void TestCreateTableOnlyInt64()
+        {
+            var sqliteDbc = new NLORMSQLiteDb( connectionString);
+            sqliteDbc.CreateTable<TestclassOnlyInt64>();
+        }
+
 		class TestClassOnlyInt16Wcfd
 		{
+            [ColumnType(DbType.Int16, "", false, " this is int16 comment")] 
 			public Int16 littlebrother { get; set;}
 		}
 
@@ -205,16 +255,41 @@ namespace NLORM.SQLite.Test
 			sqliteDbc.CreateTable<TestClassOnlyInt16Wcfd>();
 		}
 
+        class TestClassOnlyInt16
+        {
+            public Int16 littlebrother { get; set;}
+        }
+
+        [TestMethod]
+        public void TestCreateTableOnlyInt16()
+        {
+            var sqliteDbc = new NLORMSQLiteDb( connectionString);
+            sqliteDbc.CreateTable<TestClassOnlyInt16>();
+        }
+
 		class TestClassOnlyTinyintWcfd
 		{
+            [ColumnType(DbType.Byte, "", false, " this is tinyint comment")]
 			public Byte tinyintcolumn { get; set; }
 		}
 
 		[TestMethod]
-		public void TestCreateTableOnlyTinyint()
+		public void TestCreateTableOnlyTinyintWcfd()
 		{
 			var sqliteDbc = new NLORMSQLiteDb( connectionString);
 			sqliteDbc.CreateTable<TestClassOnlyTinyintWcfd>();
 		}
+
+        class TestClassOnlyTinyint
+        {
+            public Byte tinyintcolumn { get; set;}
+        }
+
+        [TestMethod]
+        public void TestCreateTableOnlyTinyint()
+        {
+            var sqliteDbc = new NLORMSQLiteDb( connectionString);
+            sqliteDbc.CreateTable<TestClassOnlyTinyint>();
+        }
     }
 }
