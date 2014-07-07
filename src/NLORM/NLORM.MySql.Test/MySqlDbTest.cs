@@ -100,7 +100,14 @@ namespace NLORM.MySql.Test
         {
             
             var db = new NLORMMySqlDb( connectionString);
-            db.Open();
+            try
+            {
+                db.Open();
+            }
+            catch ( MySqlException  ex)
+            {
+                Assert.IsTrue( ex is MySqlException);
+            }
         }
 
         [TestMethod]
