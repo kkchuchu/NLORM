@@ -32,5 +32,6 @@ namespace NLORM.Core
 
         int Insert<T>(Object o);
 
+        int Delete<T>();
     }
 }

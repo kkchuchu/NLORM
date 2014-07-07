@@ -65,6 +65,22 @@ namespace NLORM.Core
         }
 
 
+        virtual public int Delete<T>()
+        {
+            GenDeleteSql(typeof(T));
+            GenWhereSql();
+            var deleteStr = SqlBuilder.SQLString;
+            var whereStr = SqlBuilder.GetWhereSQLString();
+            var sql = deleteStr;
+            if (!string.IsNullOrEmpty(whereStr))
+            {
+                sql += " WHERE "+whereStr;
+            }
+            var consObject = SqlBuilder.GetWhereParas();
+            ResetFliterCache();
+            return ((List<int>)Query<int>(sql, consObject)).Count;
+        }
+
         virtual public int Insert<T>(Object o)
         {
             var sql = SqlBuilder.GenInsertSql<T>();
@@ -112,6 +128,11 @@ namespace NLORM.Core
             FliterObjects = null;
         }
 
+        private void GenDeleteSql(Type t)
+        {
+            QueryType = t;
+            SqlBuilder.GenDelete(t);
+        }
 
 
     }

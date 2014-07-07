@@ -205,6 +205,14 @@ namespace NLORM.Core
             return ret.ToString();
         }
 
+        virtual public string GenDeleteSql(ModelDefinition md)
+        {
+            var ret = new StringBuilder();
+            ret.Append(" DELETE ");
+            ret.Append(" FROM "+ md.TableName + " ");
+            return ret.ToString();
+        }
+
         private string GenInsertColFields(ModelDefinition md)
         {
             var ret = "";

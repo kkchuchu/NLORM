@@ -15,6 +15,7 @@ namespace NLORM.Core
         string GenInsertSql<T>();
 
         string GenSelect(Type t);
+        string GenDelete(Type t);
         string GenWhereCons(FliterObject fo);
         dynamic GetWhereParas();
 
