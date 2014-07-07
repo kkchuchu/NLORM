@@ -58,6 +58,15 @@ namespace NLORM.Core
             return ret;
         }
 
+        virtual public string GenDelete(Type t)
+        {
+            _whereConsPara = new ExpandoObject();
+            var md = ConvertClassToModelDef(t);
+            var ret = SqlGen.GenDeleteSql(md);
+            _sqlString += ret;
+            return ret;
+        }
+
         public string GenWhereCons(FliterObject fo)
         {
             var ret = "";
