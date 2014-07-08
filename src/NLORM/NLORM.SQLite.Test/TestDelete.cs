@@ -66,6 +66,7 @@ namespace NLORM.SQLite.Test
             db.Insert<TestClassOne>( new TestClassOne(){ Id = "rrrrr", income = 789012} );
             db.Insert<TestClassOne>( new TestClassOne(){ Id = "fffff", income = 345678} );
             db.Insert<TestClassOne>( new TestClassOne(){ Id = "lllll", income = 901234} );
+            db.Insert<TestClassOne>( new TestClassOne(){ Id = "alber", income = 901234} );
         }
 
         [TestMethod]
@@ -75,6 +76,15 @@ namespace NLORM.SQLite.Test
             db.FliterBy(FliterType.EQUAL_AND, new { Id = "sssss"}).Delete<TestClassOne>();
             var items = db.FliterBy( FliterType.EQUAL_AND, new { Id = "sssss"}).Query<TestClassOne>();
             Assert.AreEqual( 0, items.Count() );
+        }
+
+        [TestMethod]
+        public void TestDeleteTwoRecord()
+        {
+            var db = new NLORMSQLiteDb( connectionString);
+            db.FliterBy(FliterType.EQUAL_AND, new { income = 901234}).Delete<TestClassOne>();
+            var items = db.Query<TestClassOne>();
+            Assert.AreEqual( 3, items.Count() );
         }
     }
 }
