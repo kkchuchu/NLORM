@@ -12,9 +12,8 @@ namespace NLORM.Core
         string GenCreateTableSql(ModelDefinition md);
         string GenDropTableSql(ModelDefinition md);
         string GenInsertSql(ModelDefinition md);
-
         string GenSelectSql(ModelDefinition md);
-
         string GenDeleteSql(ModelDefinition md);
+        string GenUpdateSql(ModelDefinition md);
     }
 }

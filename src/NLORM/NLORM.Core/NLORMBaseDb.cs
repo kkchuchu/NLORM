@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using Dapper;
 using NLORM.Core.BasicDefinitions;
+using System.Reflection;
 
 namespace NLORM.Core
 {
@@ -94,6 +95,36 @@ namespace NLORM.Core
             return SqlMapper.Execute(DbConnection,sql,o);
         }
 
+
+        virtual public int Update<T>(Object o)
+        {
+            GenUpdateSql(typeof(T));
+            GenWhereSql();
+            var updateStr = SqlBuilder.SQLString;
+            var whereStr = SqlBuilder.GetWhereSQLString();
+            var sql = updateStr;
+            if (!string.IsNullOrEmpty(whereStr))
+            {
+                sql += " WHERE "+whereStr;
+            }
+            var consObject = SqlBuilder.GetWhereParas();
+            setProValueToDynPara(consObject, o);
+            ResetFliterCache();
+            return SqlMapper.Execute(DbConnection, sql, consObject);
+        }
+
+        private void setProValueToDynPara(DynamicParameters dp, Object o)
+        {
+            Type obj = o.GetType();
+            IList<PropertyInfo> props = new List<PropertyInfo>(obj.GetProperties());
+
+            foreach (PropertyInfo prop in props)
+            {
+                object propValue = prop.GetValue(o, null);
+                dp.Add("@"+prop.Name,propValue);
+            }
+        }
+
         public INLORMDb FliterBy(FliterType fType, dynamic param)
         {
 
@@ -124,6 +155,12 @@ namespace NLORM.Core
             SqlBuilder.GenSelect(t);
         }
 
+        private void GenUpdateSql(Type t)
+        {
+            QueryType = t;
+            SqlBuilder.GenUpdate(t);
+        }
+
         private void ResetSqlBuilder()
         {
             SqlBuilder = SqlBuilder.CreateOne();
@@ -140,7 +177,6 @@ namespace NLORM.Core
             QueryType = t;
             SqlBuilder.GenDelete(t);
         }
-
 
     }
 }

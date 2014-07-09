@@ -67,6 +67,15 @@ namespace NLORM.Core
             return ret;
         }
 
+        virtual public string GenUpdate(Type t)
+        {
+            _whereConsPara = new Dapper.DynamicParameters();
+            var md = ConvertClassToModelDef(t);
+            var ret = SqlGen.GenUpdateSql(md);
+            _sqlString += ret;
+            return ret;
+        }
+
         public string GenWhereCons(FliterObject fo)
         {
             var ret = "";
@@ -134,13 +143,14 @@ namespace NLORM.Core
 
 
 
-        public dynamic GetWhereParas()
+        public Dapper.DynamicParameters GetWhereParas()
         {
             return _whereConsPara;
         }
 
 
         abstract public ISqlBuilder CreateOne();
+
 
     }
 }
