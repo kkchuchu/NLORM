@@ -47,6 +47,13 @@ namespace NLORM.Core
             return (IEnumerable<T>)ret;
         }
 
+        private int delete(string sql, dynamic param = null, IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
+        {
+            var ret = SqlMapper.Execute(DbConnection, sql, param);
+            return ret;
+        }
+
+
 
         virtual public IEnumerable<T> Query<T>()
         {
@@ -78,7 +85,7 @@ namespace NLORM.Core
             }
             var consObject = SqlBuilder.GetWhereParas();
             ResetFliterCache();
-            return ((List<int>)Query<int>(sql, consObject)).Count;
+            return delete(sql, consObject);
         }
 
         virtual public int Insert<T>(Object o)
