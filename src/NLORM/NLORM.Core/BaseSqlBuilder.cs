@@ -13,7 +13,7 @@ namespace NLORM.Core
 
         private string _sqlString="";
         private string _whereString = "";
-        private dynamic _whereConsPara;
+        private Dapper.DynamicParameters _whereConsPara;
         private int _pCount;
         public string SQLString
         {
@@ -51,7 +51,7 @@ namespace NLORM.Core
 
         virtual public string GenSelect(Type t)
         {
-            _whereConsPara = new ExpandoObject();
+            _whereConsPara = new Dapper.DynamicParameters();
             var md = ConvertClassToModelDef(t);
             var ret = SqlGen.GenSelectSql(md);
             _sqlString += ret;
@@ -60,7 +60,7 @@ namespace NLORM.Core
 
         virtual public string GenDelete(Type t)
         {
-            _whereConsPara = new ExpandoObject();
+            _whereConsPara = new Dapper.DynamicParameters();
             var md = ConvertClassToModelDef(t);
             var ret = SqlGen.GenDeleteSql(md);
             _sqlString += ret;
@@ -125,8 +125,11 @@ namespace NLORM.Core
 
         private void AddParaToConstObject(string s, object o)
         {
-            IDictionary<string, object> wherDic = _whereConsPara;
-            wherDic.Add(s, o);
+            if (_whereConsPara == null)
+            {
+                _whereConsPara = new Dapper.DynamicParameters();
+            }
+            _whereConsPara.Add("@"+s, o);
         }
 
 
