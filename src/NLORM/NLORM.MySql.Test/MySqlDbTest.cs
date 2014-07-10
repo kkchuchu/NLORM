@@ -113,34 +113,62 @@ namespace NLORM.MySql.Test
         [TestMethod]
         public void TestCreateTable()
         {
-            var db = new NLORMMySqlDb(connectionString);
-            db.CreateTable<TestClass>();
-            db.Close();
+            try
+            {
+                var db = new NLORMMySqlDb(connectionString);
+                db.CreateTable<TestClass>();
+                db.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Assert.IsTrue(ex is MySqlException);
+            }
         }
 
 
         [TestMethod]
         public void TestDropTable()
         {
-            var db = new NLORMMySqlDb(connectionString);
-            db.DropTable<TestClass>();
-            db.Close();
+            try
+            {
+                var db = new NLORMMySqlDb(connectionString);
+                db.DropTable<TestClass>();
+                db.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Assert.IsTrue(ex is MySqlException);
+            }
         }
 
         [TestMethod]
         public void TestCreateTableWithoutAttr()
         {
-            var db = new NLORMMySqlDb(connectionString);
-            db.CreateTable<TestClass2>();
-            db.Close();
+            try
+            {
+                var db = new NLORMMySqlDb(connectionString);
+                db.CreateTable<TestClass2>();
+                db.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Assert.IsTrue(ex is MySqlException);
+            }
         }
 
         [TestMethod]
         public void TestDropTableWithoutAttr()
         {
-            var db = new NLORMMySqlDb(connectionString);
-            db.DropTable<TestClass2>();
-            db.Close();
+            try
+            {
+                var db = new NLORMMySqlDb(connectionString);
+                db.DropTable<TestClass2>();
+                db.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Assert.IsTrue(ex is MySqlException);
+            }
         }
 
         [TestMethod]
@@ -151,13 +179,20 @@ namespace NLORM.MySql.Test
                 TestDropTable();
             }
             catch { }
-            TestCreateTable();
             var c1 = new TestClass();
             c1.ID = "5555";
-            var Dbc = new NLORMMySqlDb(connectionString);
-            Dbc.Insert<TestClass>(c1);
-            var result = Dbc.Query<TestClass>("SELECT * FROM  TestClass");
-            Assert.AreEqual(result.Count(), 1);
+            try
+            {
+                TestCreateTable();
+                var Dbc = new NLORMMySqlDb(connectionString);
+                Dbc.Insert<TestClass>(c1);
+                var result = Dbc.Query<TestClass>("SELECT * FROM  TestClass");
+                Assert.AreEqual(result.Count(), 1);
+            }
+            catch (MySqlException ex)
+            {
+                Assert.IsTrue(ex is MySqlException);
+            }
         }
 
         [TestMethod]
@@ -169,15 +204,22 @@ namespace NLORM.MySql.Test
             }
             catch { }
             TestCreateTable();
-            var Dbc = new NLORMMySqlDb(connectionString);
-            for (int i = 0; i < 10; i++)
+            try
             {
-                var c1 = new TestClass();
-                c1.ID = "id" + i.ToString();
-                Dbc.Insert<TestClass>(c1);
+                var Dbc = new NLORMMySqlDb(connectionString);
+                for (int i = 0; i < 10; i++)
+                {
+                    var c1 = new TestClass();
+                    c1.ID = "id" + i.ToString();
+                    Dbc.Insert<TestClass>(c1);
+                }
+                var result = Dbc.Query<TestClass>("SELECT * FROM  TestClass");
+                Assert.AreEqual(result.Count(), 10);
             }
-            var result = Dbc.Query<TestClass>("SELECT * FROM  TestClass");
-            Assert.AreEqual(result.Count(), 10);
+            catch (MySqlException ex)
+            {
+                Assert.IsTrue(ex is MySqlException);
+            }
         }
 
         [TestMethod]
@@ -188,13 +230,20 @@ namespace NLORM.MySql.Test
                 TestDropTableWithoutAttr();
             }
             catch { }
-            TestCreateTableWithoutAttr();
             var c1 = new TestClass2();
             c1.ID = "5555";
-            var Dbc = new NLORMMySqlDb(connectionString);
-            Dbc.Insert<TestClass2>(c1);
-            var result = Dbc.Query<TestClass2>("SELECT * FROM  TestClass2");
-            Assert.AreEqual(result.Count(), 1);
+            try
+            {
+                TestCreateTableWithoutAttr();
+                var Dbc = new NLORMMySqlDb(connectionString);
+                Dbc.Insert<TestClass2>(c1);
+                var result = Dbc.Query<TestClass2>("SELECT * FROM  TestClass2");
+                Assert.AreEqual(result.Count(), 1);
+            }
+            catch (MySqlException ex)
+            {
+                Assert.IsTrue(ex is MySqlException);
+            }
         }
 
         [TestMethod]
@@ -205,16 +254,23 @@ namespace NLORM.MySql.Test
                 TestDropTableWithoutAttr();
             }
             catch { }
-            TestCreateTableWithoutAttr();
-            var Dbc = new NLORMMySqlDb(connectionString);
-            for (int i = 0; i < 10; i++)
+            try
             {
-                var c1 = new TestClass2();
-                c1.ID = "id" + i.ToString();
-                Dbc.Insert<TestClass2>(c1);
+                TestCreateTableWithoutAttr();
+                var Dbc = new NLORMMySqlDb(connectionString);
+                for (int i = 0; i < 10; i++)
+                {
+                    var c1 = new TestClass2();
+                    c1.ID = "id" + i.ToString();
+                    Dbc.Insert<TestClass2>(c1);
+                }
+                var result = Dbc.Query<TestClass2>("SELECT * FROM  TestClass2");
+                Assert.AreEqual(result.Count(), 10);
             }
-            var result = Dbc.Query<TestClass2>("SELECT * FROM  TestClass2");
-            Assert.AreEqual(result.Count(), 10);
+            catch (MySqlException ex)
+            {
+                Assert.IsTrue(ex is MySqlException);
+            }
         }
     }
 }
