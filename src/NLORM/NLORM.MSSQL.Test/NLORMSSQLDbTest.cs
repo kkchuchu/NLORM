@@ -12,40 +12,41 @@ using Dapper;
 
 namespace NLORM.MSSQL.Test
 {
-    class TestClass01
-    {
-		[ColumnType(DbType.String,"30",false,"this is id comment")]
-        public string ID { get; set; }
-
-		public string name { get; set; }
-    }
-
-	class TestClassDecimal
-	{
-		[ColumnType(DbType.Decimal,"20,10", false, "decimal test")]
-		public Int32 DID { get; set;}
-
-		[ColumnType(DbType.Decimal, "10", true, "decimal test")]
-		public Int32 DDID { get; set;}
-	}
-	class TestClass2
-    {
-        public string ID { get; set; }
-    }
-
-	class TestClassbit
-	{
-		[ColumnType(DbType.Boolean, "1", false, "bit test")]
-		public Boolean BTAG { get; set;}
-
-		[ColumnType(DbType.Boolean, "1", true, "bit test")]
-		public Boolean BBTAG { get; set;}
-	}
 
 	[TestClass]
 	public class NLORMSSQLDbTest
     {
-		private string constr = @"Data Source=.\SQLEXPRESS;Database=TestORM;Integrated Security=True;";
+        class TestClass01
+        {
+            [ColumnType(DbType.String, "30", false, "this is id comment")]
+            public string ID { get; set; }
+
+            public string name { get; set; }
+        }
+
+        class TestClassDecimal
+        {
+            [ColumnType(DbType.Decimal, "20,10", false, "decimal test")]
+            public Int32 DID { get; set; }
+
+            [ColumnType(DbType.Decimal, "10", true, "decimal test")]
+            public Int32 DDID { get; set; }
+        }
+        class TestClass2
+        {
+            public string ID { get; set; }
+        }
+
+        class TestClassbit
+        {
+            [ColumnType(DbType.Boolean, "1", false, "bit test")]
+            public Boolean BTAG { get; set; }
+
+            [ColumnType(DbType.Boolean, "1", true, "bit test")]
+            public Boolean BBTAG { get; set; }
+        }
+        public static string coonectionstring = @"Data Source=.\SQLEXPRESS;Database=TestORM;Integrated Security=True;";
+        private string constr = coonectionstring;
 		[TestInitialize()]
 		public void TestInitialize()
 		{
