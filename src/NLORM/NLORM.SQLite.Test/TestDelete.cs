@@ -91,10 +91,11 @@ namespace NLORM.SQLite.Test
         public void TestDeleteAllRecords()
         {
             var db = new NLORMSQLiteDb(connectionString);
+            int totalcount = db.Query<TestClassOne>().Count();
             int dc = db.Delete<TestClassOne>();
 
             var items = db.Query<TestClassOne>();
-            Assert.AreEqual(dc, 5);
+            Assert.AreEqual(dc, totalcount);
         }
     }
 }
