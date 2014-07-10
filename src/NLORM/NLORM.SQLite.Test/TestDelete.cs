@@ -86,5 +86,15 @@ namespace NLORM.SQLite.Test
             var items = db.Query<TestClassOne>();
             Assert.AreEqual( 3, items.Count() );
         }
+
+        [TestMethod]
+        public void TestDeleteAllRecords()
+        {
+            var db = new NLORMSQLiteDb(connectionString);
+            int dc = db.Delete<TestClassOne>();
+
+            var items = db.Query<TestClassOne>();
+            Assert.AreEqual(dc, 5);
+        }
     }
 }
