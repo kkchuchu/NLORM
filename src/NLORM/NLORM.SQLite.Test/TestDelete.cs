@@ -31,8 +31,8 @@ namespace NLORM.SQLite.Test
         {
             try
             {
-                File.Delete(filePath);
-                var db = this.createtable();
+                var db = new NLORMSQLiteDb(connectionString);
+                this.createtable( db);
                 this.insertdata( db);
             }
             finally
@@ -54,11 +54,9 @@ namespace NLORM.SQLite.Test
             }
         }
 
-        private INLORMDb createtable()
+        private void createtable( INLORMDb db)
         {
-            var db = new NLORMSQLiteDb( connectionString);
             db.CreateTable<TestClassOne>();
-            return db;
         }
         private void insertdata( INLORMDb db)
         {
