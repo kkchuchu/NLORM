@@ -10,7 +10,9 @@ namespace NLORM.Core
         EQUAL_AND,
         EQUAL_OR,
         LESS_AND,
-        LESS_OR
+        LESS_OR,
+        GREATER_AND,
+        GREATER_OR
     };
 
 }

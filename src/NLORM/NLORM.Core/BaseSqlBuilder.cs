@@ -87,6 +87,18 @@ namespace NLORM.Core
                 case FliterType.EQUAL_OR:
                     ret = GenWhereConsEqual(fo,"OR");
                     break;
+                case FliterType.LESS_AND:
+                    ret = GenWhereConsLess(fo, "AND");
+                    break;
+                case FliterType.LESS_OR:
+                    ret = GenWhereConsLess(fo, "OR");
+                    break;
+                case FliterType.GREATER_AND:
+                    throw new NotImplementedException();
+                    break;
+                case FliterType.GREATER_OR:
+                    throw new NotImplementedException();
+                    break;
                 default:
                     Debug.Assert(false);
                     break;
@@ -120,6 +132,25 @@ namespace NLORM.Core
             return ret;
         }
 
+        private string GenWhereConsLess( FliterObject fo, string op)
+        {
+            var ret = " ";
+            var fliterInfo = fo.Cons.GetType().GetProperties();
+            var i = 1;
+            foreach (var info in fliterInfo)
+            {
+                _pCount++;
+                ret += " " + info.Name + "<@P" + _pCount + " ";
+                object v = info.GetValue(fo.Cons, null);
+                AddParaToConstObject("P" + _pCount, v);
+                if (i < fliterInfo.Length)
+                {
+                    ret += " " + op + " ";
+                    i++;
+                }
+            }
+            return ret;            
+        }
 
         private ModelDefinition ConvertClassToModelDef<T>() 
         {

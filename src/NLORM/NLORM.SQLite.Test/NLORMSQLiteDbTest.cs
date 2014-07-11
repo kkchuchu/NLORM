@@ -31,6 +31,12 @@ namespace NLORM.SQLite.Test
 
     }
 
+    class TestClass4
+    {
+        public string ID { get; set; }
+        public int Age { get; set; }
+    }
+
     /// <summary>
     /// Summary description for NLORMSQLiteDbTest
     /// </summary>
@@ -233,6 +239,13 @@ namespace NLORM.SQLite.Test
             sqliteDbc.DropTable<TestClass3>();
         }
 
+        [TestMethod]
+        public void TestCreateTableTestClass4()
+        {
+            var sqliteDbc = new NLORMSQLiteDb(connectionString);
+            sqliteDbc.CreateTable<TestClass4>(); 
+        }
+
         private void GenTestClass3TestData()
         {
             TestCreateTableTestClass3();
@@ -268,7 +281,33 @@ namespace NLORM.SQLite.Test
             Assert.AreEqual(result.Count(), 2);
         }
 
+        [TestMethod]
+        public void TestSelectClass4SelectByAge()
+        {
+            GenTestClass4TestData();
+            var sqliteDbc = new NLORMSQLiteDb(connectionString);
+            var result = sqliteDbc.FliterBy(FliterType.LESS_AND, new { Age = 14})
+                                  .Query<TestClass4>();
 
+            Assert.AreEqual(result.Count(), 2);
+        }
 
+        private void GenTestClass4TestData()
+        {
+            TestCreateTableTestClass4();
+            var c1 = new TestClass4();
+            c1.ID = "5555";
+            c1.Age = 13;
+            var c2 = new TestClass4();
+            c2.ID = "5566";
+            c2.Age = 12;
+            var c3 = new TestClass4();
+            c3.ID = "1234";
+            c3.Age = 15;
+            var sqliteDbc = new NLORMSQLiteDb(connectionString);
+            sqliteDbc.Insert<TestClass4>(c1);
+            sqliteDbc.Insert<TestClass4>(c2);
+            sqliteDbc.Insert<TestClass4>(c3);
+        }
     }
 }
