@@ -150,7 +150,7 @@ namespace NLORM.Core
             return this;
         }
 
-        public ITransaction BeginTransaction(string transactonName="")
+        virtual public ITransaction BeginTransaction(string transactonName = "")
         {
             trans = new BaseTransaction(DbConnection);
             return trans;
