@@ -10,24 +10,36 @@ namespace NLORM.Core
     {
         private IDbTransaction trans;
 
+        public IDbTransaction DbTransaction
+        {
+            get
+            {
+                return trans;
+            }
+        }
+
         public BaseTransaction(IDbConnection dbc)
         {
+            if (dbc.State != ConnectionState.Open)
+            {
+                dbc.Open();
+            }
             trans = dbc.BeginTransaction();
         }
 
         public void Commit()
         {
-            throw new NotImplementedException();
+            trans.Commit();
         }
 
         public void Rollback()
         {
-            throw new NotImplementedException();
+            trans.Rollback();
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            trans.Dispose();
         }
     }
 }
