@@ -59,6 +59,7 @@
     <Compile Include="TestCreateTable.cs" />
     <Compile Include="TestDelete.cs" />
     <Compile Include="TestInsert.cs" />
+    <Compile Include="TestTransaction.cs" />
     <Compile Include="TestUpdate.cs" />
   </ItemGroup>
   <ItemGroup>

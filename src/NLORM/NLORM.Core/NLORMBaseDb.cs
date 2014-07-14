@@ -13,6 +13,7 @@ namespace NLORM.Core
         protected IDbConnection DbConnection;
         protected Type QueryType;
         protected List<FliterObject> FliterObjects;
+        protected ITransaction trans=null;
 
         virtual public void Open()
         {
@@ -42,18 +43,30 @@ namespace NLORM.Core
             DbConnection.Execute(sql);
         }
 
-        virtual public IEnumerable<T> Query<T>(string sql, dynamic param = null, IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
+        virtual public IEnumerable<T> Query<T>(string sql, dynamic param = null, ITransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
         {
-            var ret = SqlMapper.Query<T>(DbConnection, sql,param,transaction,buffered,commandTimeout,commandType);
+            var ret = SqlMapper.Query<T>(DbConnection, sql, param, tryToCastIDbConnection(transaction), buffered, commandTimeout, commandType);
             return (IEnumerable<T>)ret;
         }
 
-        private int delete(string sql, dynamic param = null, IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
+        private int Execute(string sql, dynamic param = null, ITransaction transaction = null, int? commandTimeout = null, CommandType? commandType = null)
         {
-            var ret = SqlMapper.Execute(DbConnection, sql, param);
+
+            var ret = SqlMapper.Execute(DbConnection, sql, param, tryToCastIDbConnection(transaction), commandTimeout, commandType);
             return ret;
         }
 
+        private IDbTransaction tryToCastIDbConnection(ITransaction trans)
+        {
+            if (trans == null)
+            {
+                return null;
+            }
+            else
+            {
+                return ((BaseTransaction)trans).DbTransaction;
+            }
+        }
 
 
         virtual public IEnumerable<T> Query<T>()
@@ -69,7 +82,7 @@ namespace NLORM.Core
             }
             var consObject = SqlBuilder.GetWhereParas();
             ResetFliterCache();
-            return (IEnumerable<T>)Query<T>(sql, consObject);
+            return (IEnumerable<T>)Query<T>(sql, consObject,trans);
         }
 
 
@@ -86,13 +99,13 @@ namespace NLORM.Core
             }
             var consObject = SqlBuilder.GetWhereParas();
             ResetFliterCache();
-            return delete(sql, consObject);
+            return Execute(sql, consObject, trans);
         }
 
         virtual public int Insert<T>(Object o)
         {
             var sql = SqlBuilder.GenInsertSql<T>();
-            return SqlMapper.Execute(DbConnection,sql,o);
+            return Execute(sql, o,trans);
         }
 
 
@@ -135,6 +148,12 @@ namespace NLORM.Core
             f.Fliter = fType;
             FliterObjects.Add(f);
             return this;
+        }
+
+        virtual public ITransaction BeginTransaction(string transactonName = "")
+        {
+            trans = new BaseTransaction(DbConnection);
+            return trans;
         }
 
         private void GenWhereSql()
