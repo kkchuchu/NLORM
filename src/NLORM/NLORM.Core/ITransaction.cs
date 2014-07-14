@@ -7,6 +7,8 @@ namespace NLORM.Core
 {
     public interface ITransaction
     {
-
+        void Commit();
+        void Rollback();
+        void Dispose();
     }
 }

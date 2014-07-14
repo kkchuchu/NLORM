@@ -29,5 +29,7 @@ namespace NLORM.Core
         int Insert<T>(Object o);
         int Delete<T>();
         int Update<T>(Object o);
+
+        ITransaction BeginTransaction(string transactonName);
     }
 }

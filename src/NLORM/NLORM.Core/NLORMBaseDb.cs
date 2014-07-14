@@ -13,6 +13,7 @@ namespace NLORM.Core
         protected IDbConnection DbConnection;
         protected Type QueryType;
         protected List<FliterObject> FliterObjects;
+        protected ITransaction trans=null;
 
         virtual public void Open()
         {
@@ -137,6 +138,12 @@ namespace NLORM.Core
             return this;
         }
 
+        public ITransaction BeginTransaction(string transactonName)
+        {
+            trans = new BaseTransaction(DbConnection);
+            return trans;
+        }
+
         private void GenWhereSql()
         {
             if (FliterObjects == null)
@@ -177,6 +184,9 @@ namespace NLORM.Core
             QueryType = t;
             SqlBuilder.GenDelete(t);
         }
+
+
+
 
     }
 }
