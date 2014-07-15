@@ -52,6 +52,7 @@
     <Compile Include="BasicDefinitions\FliterObject.cs" />
     <Compile Include="BasicDefinitions\ModelDefinition.cs" />
     <Compile Include="Dapper\SqlMapper.cs" />
+    <Compile Include="Exceptions\NLORMException.cs" />
     <Compile Include="FilterTypes.cs" />
     <Compile Include="INLORMDb.cs" />
     <Compile Include="ISqlBuilder.cs" />
