@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
 
 namespace NLORM.Core.Attributes
 {
@@ -11,10 +8,10 @@ namespace NLORM.Core.Attributes
     {
         public ColumnTypeAttribute(DbType dbtype,string length,bool nullable,string comment)
         {
-            this.DBType = dbtype;
-            this.Length = length;
-            this.Nullable = nullable;
-            this.Comment = comment;
+            DBType = dbtype;
+            Length = length;
+            Nullable = nullable;
+            Comment = comment;
         }
         public DbType DBType { get; set; }
         public string Length { get; set; }

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Reflection;
 using NLORM.Core.BasicDefinitions;
 using NLORM.Core.Attributes;
@@ -10,11 +8,6 @@ namespace NLORM.Core
 {
     public class ModelDefinitionConverter
     {
-
-        public ModelDefinitionConverter()
-        {
-        }
-
         public ModelDefinition ConverClassToModelDefinition<T>() 
         {
 
@@ -44,13 +37,12 @@ namespace NLORM.Core
         private Dictionary<string, ColumnFieldDefinition> GetColumnFieldDefinition(Type classType)
         {
             var propeties = classType.GetProperties();
-			Dictionary<string, ColumnFieldDefinition> ret = new Dictionary<string, ColumnFieldDefinition>();
+			var ret = new Dictionary<string, ColumnFieldDefinition>();
             foreach (var pro in propeties)
             {
-                string proName = pro.Name;
                 var columnFieldDef = GetColumnFieldDefByProprty(pro);
 
-				if ( GenCloumn( pro) == true )
+				if ( GenCloumn( pro) )
 					ret.Add(pro.Name, columnFieldDef);
             }
             return ret;
@@ -98,19 +90,20 @@ namespace NLORM.Core
 
 		private bool GenCloumn(PropertyInfo prop)
 		{
-			bool tag = true;
+			var tag = true;
 
-			object[] attrs = prop.GetCustomAttributes( true);
+			var attrs = prop.GetCustomAttributes( true);
 
-			NotGenColumnAttribute ngattr = null;
-			foreach ( object attr in attrs)
+		    foreach ( object attr in attrs)
 			{
-				ngattr = attr as NotGenColumnAttribute;
-				if ( ngattr != null && ngattr.GenCol == false )
-					tag = false;
+			    var ngattr = attr as NotGenColumnAttribute;
+			    if (ngattr != null)
+			    {
+			        tag = false;
+			    }
 			}
 
-			return tag;
+		    return tag;
 		}
     }
 }

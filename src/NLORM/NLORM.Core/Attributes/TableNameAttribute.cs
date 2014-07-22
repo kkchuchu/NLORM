@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace NLORM.Core.Attributes
 {
@@ -10,7 +7,7 @@ namespace NLORM.Core.Attributes
     {
         public TableNameAttribute(string tableName)
         {
-            this.TableName = tableName;
+            TableName = tableName;
         }
         public string TableName { get; set; }
     }
