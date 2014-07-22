@@ -56,9 +56,9 @@ namespace NLORM.Core
             return ret;
         }
 
-        private IDbTransaction tryToCastIDbConnection(ITransaction trans)
+        private IDbTransaction tryToCastIDbConnection(ITransaction transaction)
         {
-            return trans == null ? null : ((BaseTransaction)trans).DbTransaction;
+            return transaction == null ? null : ((BaseTransaction)transaction).DbTransaction;
         }
 
 
