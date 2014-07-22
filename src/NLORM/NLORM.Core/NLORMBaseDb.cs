@@ -58,14 +58,7 @@ namespace NLORM.Core
 
         private IDbTransaction tryToCastIDbConnection(ITransaction trans)
         {
-            if (trans == null)
-            {
-                return null;
-            }
-            else
-            {
-                return ((BaseTransaction)trans).DbTransaction;
-            }
+            return trans == null ? null : ((BaseTransaction)trans).DbTransaction;
         }
 
 
