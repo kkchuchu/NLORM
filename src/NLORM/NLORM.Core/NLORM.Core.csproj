@@ -55,6 +55,7 @@
     <Compile Include="Exceptions\NLORMException.cs" />
     <Compile Include="FilterTypes.cs" />
     <Compile Include="INLORMDb.cs" />
+    <Compile Include="IQuery.cs" />
     <Compile Include="ISqlBuilder.cs" />
     <Compile Include="ISqlGenerator.cs" />
     <Compile Include="ITransaction.cs" />
