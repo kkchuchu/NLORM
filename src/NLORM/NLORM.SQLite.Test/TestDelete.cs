@@ -71,8 +71,8 @@ namespace NLORM.SQLite.Test
         public void TestDeleteOneRecord()
         {
             var db = new NLORMSQLiteDb( connectionString);
-            int i =  db.FliterBy(FliterType.EQUAL_AND, new { Id = "sssss"}).Delete<TestClassOne>();
-            var items = db.FliterBy( FliterType.EQUAL_AND, new { Id = "sssss"}).Query<TestClassOne>();
+            int i =  db.FilterBy(FilterType.EQUAL_AND, new { Id = "sssss"}).Delete<TestClassOne>();
+            var items = db.FilterBy( FilterType.EQUAL_AND, new { Id = "sssss"}).Query<TestClassOne>();
             Assert.AreEqual( 0, items.Count() );
         }
 
@@ -80,7 +80,7 @@ namespace NLORM.SQLite.Test
         public void TestDeleteTwoRecord()
         {
             var db = new NLORMSQLiteDb( connectionString);
-            db.FliterBy(FliterType.EQUAL_AND, new { income = 901234}).Delete<TestClassOne>();
+            db.FilterBy(FilterType.EQUAL_AND, new { income = 901234}).Delete<TestClassOne>();
             var items = db.Query<TestClassOne>();
             Assert.AreEqual( 3, items.Count() );
         }

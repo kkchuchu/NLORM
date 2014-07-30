@@ -49,10 +49,14 @@
     <Compile Include="BaseSqlBuilder.cs" />
     <Compile Include="BaseSqlGenerator.cs" />
     <Compile Include="BaseTransaction.cs" />
-    <Compile Include="BasicDefinitions\FliterObject.cs" />
+    <Compile Include="BasicDefinitions\FilterObject.cs" />
+    <Compile Include="BasicDefinitions\IFilterObject.cs" />
     <Compile Include="BasicDefinitions\ModelDefinition.cs" />
+    <Compile Include="BasicDefinitions\OpFilterObject.cs" />
     <Compile Include="Dapper\SqlMapper.cs" />
+    <Compile Include="Exceptions\FilterChainException.cs" />
     <Compile Include="Exceptions\NLORMException.cs" />
+    <Compile Include="Exceptions\ParaErrorException.cs" />
     <Compile Include="FilterTypes.cs" />
     <Compile Include="INLORMDb.cs" />
     <Compile Include="IQuery.cs" />

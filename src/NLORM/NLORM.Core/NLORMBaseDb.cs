@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using Dapper;
 using NLORM.Core.BasicDefinitions;
 using System.Reflection;
+using NLORM.Core.Exceptions;
 
 namespace NLORM.Core
 {
-    public class NLORMBaseDb : INLORMDb
+    public class NLORMBaseDb : INLORMDb,IQuery
     {
         protected ISqlBuilder SqlBuilder;
         protected IDbConnection DbConnection;
         protected Type QueryType;
-        protected List<FliterObject> FliterObjects;
+        protected List<IFilterObject> FliterObjects;
         protected ITransaction trans=null;
 
         virtual public void Open()
@@ -131,14 +133,41 @@ namespace NLORM.Core
             }
         }
 
-        public INLORMDb FliterBy(FliterType fType, dynamic param)
+        public IQuery FilterBy(FilterType fType, dynamic param)
         {
-
-            FliterObjects = FliterObjects?? new List<FliterObject>();
-            var f = new FliterObject();
+            if (param == null)
+            {
+                throw new ParaErrorException("FilterBy Para can not be null");
+            }
+            FliterObjects = FliterObjects?? new List<IFilterObject>();
+            var f = new FilterObject();
             f.ClassType = QueryType;
             f.Cons = param;
-            f.Fliter = fType;
+            f.Filter = fType;
+            FliterObjects.Add(f);
+            return this;
+        }
+
+        public IQuery And()
+        {
+            if (FliterObjects == null)
+            {
+                throw new FilterChainException("No filter brefore AND.");
+            }
+            var f = new OpFilterObject();
+            f.type = OpFilterType.AND;
+            FliterObjects.Add(f);
+            return this;
+        }
+
+        public IQuery Or()
+        {
+            if (FliterObjects == null)
+            {
+                throw new FilterChainException("No filter brefore OR.");
+            }
+            var f = new OpFilterObject();
+            f.type = OpFilterType.AND;
             FliterObjects.Add(f);
             return this;
         }

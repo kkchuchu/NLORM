@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NLORM.Core
 {
-    public enum FliterType
+    public enum FilterType
     {
         EQUAL_AND,
         EQUAL_OR,
@@ -14,5 +14,9 @@ namespace NLORM.Core
         GREATER_AND,
         GREATER_OR
     };
-
+    public enum OpFilterType
+    {
+        AND,
+        OR
+    };
 }

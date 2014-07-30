@@ -72,15 +72,13 @@ namespace NLORM.SQLite.Test
             db.Insert<TestClassOne>(new TestClassOne() { Id = "alber", income = 901234 });
         }
 
-
-
         [TestMethod]
         public void TestUpdateOneRow()
         {
             var db = new NLORMSQLiteDb(connectionString);
             var newobj = new TestClassOne { Id = "sssss", income = 100 };
-            int i = db.FliterBy(FliterType.EQUAL_AND, new { Id = "sssss" }).Update<TestClassOne>(newobj);
-            var items = db.FliterBy(FliterType.EQUAL_AND, new { Id = "sssss" }).Query<TestClassOne>().First();
+            int i = db.FilterBy(FilterType.EQUAL_AND, new { Id = "sssss" }).Update<TestClassOne>(newobj);
+            var items = db.FilterBy(FilterType.EQUAL_AND, new { Id = "sssss" }).Query<TestClassOne>().First();
             Assert.AreEqual(100, items.income);
         }
     }

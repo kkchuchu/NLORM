@@ -2,10 +2,10 @@
 
 namespace NLORM.Core.BasicDefinitions
 {
-    public class FliterObject
+    public class FilterObject : IFilterObject
     {
         public Type ClassType { get; set; }
-        public FliterType Fliter { get; set; }
+        public FilterType Filter { get; set; }
         public dynamic Cons { get; set; }
     }
 }

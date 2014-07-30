@@ -76,34 +76,66 @@ namespace NLORM.Core
             return ret;
         }
 
-        public string GenWhereCons(FliterObject fo)
+        public string GenWhereCons(IFilterObject fo)
+        {
+            Type t = fo.GetType();
+            if (t == typeof (FilterObject))
+            {
+                return genFliterObject((FilterObject) fo);
+            }
+            else if(t == typeof(OpFilterObject))
+            {
+                return genOpFliterObject((OpFilterObject)fo);
+            }
+            return "";
+        }
+
+        private string genOpFliterObject(OpFilterObject fo)
         {
             var ret = "";
-            switch (fo.Fliter)
+            switch (fo.type)
             {
-                case FliterType.EQUAL_AND:
-                    ret = GenWhereConsEqual(fo,"AND");
+                case OpFilterType.AND:
+                    ret = " AND ";
                     break;
-                case FliterType.EQUAL_OR:
-                    ret = GenWhereConsEqual(fo,"OR");
+                case OpFilterType.OR:
+                    ret = " OR ";
                     break;
-                case FliterType.LESS_AND:
+                default:
+                    Debug.Assert(false);
+                    break;
+            }
+            return ret;
+        }
+
+        private string genFliterObject(FilterObject fo)
+        {
+            var ret = "";
+            switch (fo.Filter)
+            {
+                case FilterType.EQUAL_AND:
+                    ret = GenWhereConsEqual(fo, "AND");
+                    break;
+                case FilterType.EQUAL_OR:
+                    ret = GenWhereConsEqual(fo, "OR");
+                    break;
+                case FilterType.LESS_AND:
                     ret = GenWhereConsLess(fo, "AND");
                     break;
-                case FliterType.LESS_OR:
+                case FilterType.LESS_OR:
                     ret = GenWhereConsLess(fo, "OR");
                     break;
-                case FliterType.GREATER_AND:
+                case FilterType.GREATER_AND:
                     throw new NotImplementedException();
                     break;
-                case FliterType.GREATER_OR:
+                case FilterType.GREATER_OR:
                     throw new NotImplementedException();
                     break;
                 default:
                     Debug.Assert(false);
                     break;
             }
-            _whereString+=" ("+ret +") ";
+            _whereString += " (" + ret + ") ";
             return ret;
         }
 
@@ -112,7 +144,7 @@ namespace NLORM.Core
             return _whereString;
         }
 
-        private string GenWhereConsEqual(FliterObject fo,string op)
+        private string GenWhereConsEqual(FilterObject fo,string op)
         {
             var ret = " ";
             var fliterInfo = fo.Cons.GetType().GetProperties();
@@ -132,7 +164,7 @@ namespace NLORM.Core
             return ret;
         }
 
-        private string GenWhereConsLess( FliterObject fo, string op)
+        private string GenWhereConsLess( FilterObject fo, string op)
         {
             var ret = " ";
             var fliterInfo = fo.Cons.GetType().GetProperties();

@@ -78,7 +78,7 @@ namespace NLORM.MSSQL.Test
         public void TestDeleteOneRecord()
         {
             var db = new NLORMMSSQLDb(connectionString);
-            int deletedcount = db.FliterBy(FliterType.EQUAL_AND, new { Id = "sssss" }).Delete<TestClassOne>();
+            int deletedcount = db.FilterBy(FilterType.EQUAL_AND, new { Id = "sssss" }).Delete<TestClassOne>();
             Assert.AreEqual(deletedcount, 1);
         }
 
@@ -86,7 +86,7 @@ namespace NLORM.MSSQL.Test
         public void TestDeleteTwoRecord()
         {
             var db = new NLORMMSSQLDb(connectionString);
-            db.FliterBy(FliterType.EQUAL_AND, new { income = 901234 }).Delete<TestClassOne>();
+            db.FilterBy(FilterType.EQUAL_AND, new { income = 901234 }).Delete<TestClassOne>();
             var items = db.Query<TestClassOne>();
             Assert.AreEqual(3, items.Count());
         }

@@ -219,7 +219,7 @@ namespace NLORM.SQLite.Test
             var sqliteDbc = new NLORMSQLiteDb(connectionString);
             sqliteDbc.Insert<TestClass>(c1);
             sqliteDbc.Insert<TestClass>(c2);
-            var result = sqliteDbc.FliterBy(FliterType.EQUAL_AND, new { ID = "5555" })
+            var result = sqliteDbc.FilterBy(FilterType.EQUAL_AND, new { ID = "5555" })
                                   .Query<TestClass>();
             Assert.AreEqual(result.Count(), 1);
         }
@@ -265,7 +265,7 @@ namespace NLORM.SQLite.Test
         {
             GenTestClass3TestData();
             var sqliteDbc = new NLORMSQLiteDb(connectionString);
-            var result = sqliteDbc.FliterBy(FliterType.EQUAL_AND, new { ID = "5555" })
+            var result = sqliteDbc.FilterBy(FilterType.EQUAL_AND, new { ID = "5555" })
                                   .Query<TestClass3>();
             Assert.AreEqual(result.Count(), 1);
         }
@@ -276,7 +276,7 @@ namespace NLORM.SQLite.Test
         {
             GenTestClass3TestData();
             var sqliteDbc = new NLORMSQLiteDb(connectionString);
-            var result = sqliteDbc.FliterBy(FliterType.EQUAL_AND, new { NAME = "N5555" })
+            var result = sqliteDbc.FilterBy(FilterType.EQUAL_AND, new { NAME = "N5555" })
                                   .Query<TestClass3>();
             Assert.AreEqual(result.Count(), 2);
         }
@@ -286,7 +286,7 @@ namespace NLORM.SQLite.Test
         {
             GenTestClass4TestData();
             var sqliteDbc = new NLORMSQLiteDb(connectionString);
-            var result = sqliteDbc.FliterBy(FliterType.LESS_AND, new { Age = 14})
+            var result = sqliteDbc.FilterBy(FilterType.LESS_AND, new { Age = 14})
                                   .Query<TestClass4>();
 
             Assert.AreEqual(result.Count(), 2);

@@ -134,7 +134,7 @@ namespace NLORM.MSSQL.Test
 			db.CreateTable<TestClass01>();
 			db.Insert<TestClass01>( new TestClass01(){ ID = @"11", name = @"albert"});
 			db.Insert<TestClass01>( new TestClass01(){ ID = @"22", name = @"star"});
-			var result = db.FliterBy( FliterType.EQUAL_AND, new { name = "albert"} ).Query<TestClass01>();
+			var result = db.FilterBy( FilterType.EQUAL_AND, new { name = "albert"} ).Query<TestClass01>();
 
 			Assert.AreEqual( 1, result.Count() );
 		}
