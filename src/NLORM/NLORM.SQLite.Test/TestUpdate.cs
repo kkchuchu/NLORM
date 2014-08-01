@@ -81,5 +81,20 @@ namespace NLORM.SQLite.Test
             var items = db.FilterBy(FilterType.EQUAL_AND, new { Id = "sssss" }).Query<TestClassOne>().First();
             Assert.AreEqual(100, items.income);
         }
+
+        [TestMethod]
+        public void TestUpdateWithOr()
+        {
+            var db = new NLORMSQLiteDb(connectionString);
+            var newobj = new TestClassOne {  income = 100 };
+            int i = db.FilterBy(FilterType.EQUAL_AND, new { Id = "sssss" })
+                .Or().FilterBy(FilterType.EQUAL_AND, new { Id = "rrrrr" })
+                .Update<TestClassOne>(new { income = 100 });
+            var items = db.FilterBy(FilterType.EQUAL_AND, new { Id = "sssss" }).Query<TestClassOne>().First();
+            var itemsr = db.FilterBy(FilterType.EQUAL_AND, new { Id = "rrrrr" }).Query<TestClassOne>().First();
+            Assert.AreEqual(100, items.income);
+            Assert.AreEqual(100, itemsr.income);
+        }
+
     }
 }

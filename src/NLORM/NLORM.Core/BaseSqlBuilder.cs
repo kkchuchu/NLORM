@@ -67,11 +67,11 @@ namespace NLORM.Core
             return ret;
         }
 
-        virtual public string GenUpdate(Type t)
+        virtual public string GenUpdate(Type t,Object obj)
         {
             _whereConsPara = new Dapper.DynamicParameters();
             var md = ConvertClassToModelDef(t);
-            var ret = SqlGen.GenUpdateSql(md);
+            var ret = SqlGen.GenUpdateSql(md,obj);
             _sqlString += ret;
             return ret;
         }
@@ -105,6 +105,7 @@ namespace NLORM.Core
                     Debug.Assert(false);
                     break;
             }
+            _whereString += " " + ret + " ";
             return ret;
         }
 

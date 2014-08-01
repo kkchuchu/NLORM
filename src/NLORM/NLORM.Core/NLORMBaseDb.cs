@@ -106,7 +106,7 @@ namespace NLORM.Core
 
         virtual public int Update<T>(Object o)
         {
-            GenUpdateSql(typeof(T));
+            GenUpdateSql(typeof(T),o);
             GenWhereSql();
             var updateStr = SqlBuilder.SQLString;
             var whereStr = SqlBuilder.GetWhereSQLString();
@@ -167,7 +167,7 @@ namespace NLORM.Core
                 throw new FilterChainException("No filter brefore OR.");
             }
             var f = new OpFilterObject();
-            f.type = OpFilterType.AND;
+            f.type = OpFilterType.OR;
             FliterObjects.Add(f);
             return this;
         }
@@ -196,10 +196,10 @@ namespace NLORM.Core
             SqlBuilder.GenSelect(t);
         }
 
-        private void GenUpdateSql(Type t)
+        private void GenUpdateSql(Type t,Object obj)
         {
             QueryType = t;
-            SqlBuilder.GenUpdate(t);
+            SqlBuilder.GenUpdate(t,obj);
         }
 
         private void ResetSqlBuilder()

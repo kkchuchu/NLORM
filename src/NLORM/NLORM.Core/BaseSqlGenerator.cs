@@ -213,7 +213,7 @@ namespace NLORM.Core
             return ret.ToString();
         }
 
-        public string GenUpdateSql(ModelDefinition md)
+        public string GenUpdateSql(ModelDefinition md,Object obj)
         {
             var ret = new StringBuilder();
 
@@ -223,11 +223,12 @@ namespace NLORM.Core
             valueFields.Append(GenInsertValueFields(md));
             ret.Append(" UPDATE ");
             ret.Append(md.TableName +" SET ");
+            var objMdf = new ModelDefinitionConverter().ConverClassToModelDefinition(obj.GetType());
             int i = 1;
-            foreach (var df in md.PropertyColumnDic.Values)
+            foreach (var df in objMdf.PropertyColumnDic.Values)
             {
                 ret.Append(" " + df.ColumnName + "=@" + df.PropName + " ");
-                if (i < md.PropertyColumnDic.Values.Count)
+                if (i < objMdf.PropertyColumnDic.Values.Count)
                 {
                     ret.Append(" , ");
                     i++;

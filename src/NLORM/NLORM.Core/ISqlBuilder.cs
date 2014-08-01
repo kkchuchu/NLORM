@@ -16,7 +16,7 @@ namespace NLORM.Core
 
         string GenSelect(Type t);
         string GenDelete(Type t);
-        string GenUpdate(Type t);
+        string GenUpdate(Type t,Object obj);
         string GenWhereCons(IFilterObject fo);
         Dapper.DynamicParameters GetWhereParas();
 
