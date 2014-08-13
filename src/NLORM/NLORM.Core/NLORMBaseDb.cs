@@ -6,6 +6,7 @@ using Dapper;
 using NLORM.Core.BasicDefinitions;
 using System.Reflection;
 using NLORM.Core.Exceptions;
+using System.Diagnostics;
 
 namespace NLORM.Core
 {
@@ -16,6 +17,15 @@ namespace NLORM.Core
         protected Type QueryType;
         protected List<IFilterObject> FliterObjects;
         protected ITransaction trans=null;
+
+        IDbConnection INLORMDb.DbConnection
+        {
+            get
+            {
+                Debug.Assert(DbConnection != null);
+                return DbConnection;
+            }
+        }
 
         virtual public void Open()
         {
@@ -218,6 +228,9 @@ namespace NLORM.Core
             QueryType = t;
             SqlBuilder.GenDelete(t);
         }
+
+
+
 
     }
 }

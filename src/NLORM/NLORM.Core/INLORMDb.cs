@@ -10,6 +10,8 @@ namespace NLORM.Core
         void Close();
         void Dispose();
 
+        IDbConnection DbConnection { get; }
+
         /// <summary>
         ///     Use this creating Table.
         /// </summary>
