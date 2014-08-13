@@ -56,8 +56,14 @@ namespace NLORM.Core
             ColumnTypeAttribute colTypeAttr = null; 
             foreach (object attr in attrs)
             {
-                colNameAttr = attr as ColumnNameAttribute;
-                colTypeAttr = attr as ColumnTypeAttribute;
+                if (attr.GetType().Equals(typeof(ColumnNameAttribute)))
+                {
+                    colNameAttr = attr as ColumnNameAttribute;
+                }
+                if (attr.GetType().Equals(typeof(ColumnTypeAttribute)))
+                {
+                    colTypeAttr = attr as ColumnTypeAttribute;
+                }
             }
             AsignColNameAttrToDef(ret, colNameAttr,prop);
             AsignColTypeAttrToDef(ret, colTypeAttr,prop);

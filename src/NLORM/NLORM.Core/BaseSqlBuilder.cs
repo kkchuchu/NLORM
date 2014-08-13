@@ -148,21 +148,35 @@ namespace NLORM.Core
         private string GenWhereConsEqual(FilterObject fo,string op)
         {
             var ret = " ";
-            var fliterInfo = fo.Cons.GetType().GetProperties();
+            var ConDic = GetConDic(fo);
             var i = 1;
-            foreach (var info in fliterInfo)
+            foreach (var key in ConDic.Keys)
             {
-                _pCount++;
-                ret += " " + info.Name + "=@P" + _pCount+" ";
-                object v = info.GetValue(fo.Cons, null);
-                AddParaToConstObject("P"+_pCount,v);
-                if (i < fliterInfo.Length)
+                ret += " " + key + " =@P" + _pCount + " ";
+                AddParaToConstObject("P" + _pCount, ConDic[key]);
+                if (i < ConDic.Keys.Count)
                 {
                     ret += " " + op + " ";
                     i++;
                 }
+                _pCount++;
             }
             return ret;
+        }
+
+        private IDictionary<string, object> GetConDic(FilterObject fo)
+        {
+            var type = fo.Cons.GetType();
+            Utility.IPropertyGetter pg;
+            if (type.Equals(typeof(ExpandoObject)))
+            {
+                pg = new Utility.ExpandoPorpertyGetter();
+            }
+            else
+            {
+                pg = new Utility.NormalPorpertyGetter();
+            }
+            return pg.GetPropertyDic(fo.Cons);
         }
 
         private string GenWhereConsLess( FilterObject fo, string op)

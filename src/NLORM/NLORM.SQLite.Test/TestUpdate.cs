@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NLORM.Core;
+using System.Dynamic;
 
 
 namespace NLORM.SQLite.Test
@@ -92,6 +93,38 @@ namespace NLORM.SQLite.Test
                 .Update<TestClassOne>(new { income = 100 });
             var items = db.FilterBy(FilterType.EQUAL_AND, new { Id = "sssss" }).Query<TestClassOne>().First();
             var itemsr = db.FilterBy(FilterType.EQUAL_AND, new { Id = "rrrrr" }).Query<TestClassOne>().First();
+            Assert.AreEqual(100, items.income);
+            Assert.AreEqual(100, itemsr.income);
+        }
+
+        [TestMethod]
+        public void TestUpdateOneRowUesExpando()
+        {
+            var db = new NLORMSQLiteDb(connectionString);
+            var newobj = new TestClassOne { Id = "sssss", income = 100 };
+            dynamic filterObj = new ExpandoObject();
+            filterObj.Id = "sssss";
+            int i = db.FilterBy(FilterType.EQUAL_AND, filterObj).Update<TestClassOne>(newobj);
+            var items = db.FilterBy(FilterType.EQUAL_AND, filterObj).Query<TestClassOne>()[0];
+            Assert.AreEqual(100, items.income);
+        }
+
+        [TestMethod]
+        public void TestUpdateWithOrUesExpando()
+        {
+            var db = new NLORMSQLiteDb(connectionString);
+            var newobj = new TestClassOne { income = 100 };
+
+            dynamic filterObjA = new ExpandoObject();
+            dynamic filterObjB = new ExpandoObject();
+            filterObjA.Id = "sssss";
+            filterObjB.Id = "rrrrr";
+
+            int i = db.FilterBy(FilterType.EQUAL_AND, filterObjA)
+                .Or().FilterBy(FilterType.EQUAL_AND, filterObjB)
+                .Update<TestClassOne>(new { income = 100 });
+            var items = db.FilterBy(FilterType.EQUAL_AND, filterObjA).Query<TestClassOne>()[0];
+            var itemsr = db.FilterBy(FilterType.EQUAL_AND, filterObjB).Query<TestClassOne>()[0];
             Assert.AreEqual(100, items.income);
             Assert.AreEqual(100, itemsr.income);
         }
