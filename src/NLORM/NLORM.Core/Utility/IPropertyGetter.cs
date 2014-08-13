@@ -8,6 +8,6 @@ namespace NLORM.Core.Utility
 {
     public interface IPropertyGetter
     {
-         IDictionary<string, object> GetPropertyDic(FilterObject Fo);
+         IDictionary<string, object> GetPropertyDic(object Fo);
     }
 }

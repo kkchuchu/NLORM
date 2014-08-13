@@ -10,9 +10,9 @@ namespace NLORM.Core.Utility
 {
     public class ExpandoPorpertyGetter : IPropertyGetter
     {
-        public IDictionary<string, object> GetPropertyDic(FilterObject Fo)
+        public IDictionary<string, object> GetPropertyDic(object Fo)
         {
-            var eoDic = Fo.Cons as IDictionary<string,object>;
+            var eoDic = Fo as IDictionary<string,object>;
             Debug.Assert(eoDic != null);
             return eoDic;            
         }

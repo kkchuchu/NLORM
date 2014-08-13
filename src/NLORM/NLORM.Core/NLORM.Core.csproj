@@ -67,6 +67,9 @@
     <Compile Include="NLORMBaseDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BasicDefinitions\ColumnFieldDefinition.cs" />
+    <Compile Include="Utility\ExpandoPorpertyGetter.cs" />
+    <Compile Include="Utility\IPropertyGetter.cs" />
+    <Compile Include="Utility\NormalPorpertyGetter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
