@@ -18,13 +18,10 @@ namespace NLORM.Core
         protected List<IFilterObject> FliterObjects;
         protected ITransaction trans=null;
 
-        IDbConnection INLORMDb.DbConnection
+        public IDbConnection GetDbConnection()
         {
-            get
-            {
-                Debug.Assert(DbConnection != null);
-                return DbConnection;
-            }
+            Debug.Assert(DbConnection != null);
+            return DbConnection;
         }
 
         virtual public void Open()
@@ -228,9 +225,6 @@ namespace NLORM.Core
             QueryType = t;
             SqlBuilder.GenDelete(t);
         }
-
-
-
 
     }
 }
