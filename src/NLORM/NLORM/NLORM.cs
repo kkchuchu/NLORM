@@ -8,9 +8,9 @@ namespace NLORM
 {
     public static class NLORM
     {
-        public static INLORMDb GetDb()
+        public static INLORMDb GetDb(string connectionString,DbType dbType)
         {
-            return null;
+             return NLORMFactory.Instance.GetDb(connectionString, dbType);
         }
     }
 }
