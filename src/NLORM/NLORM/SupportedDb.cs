@@ -5,5 +5,5 @@ using System.Text;
 
 namespace NLORM
 {
-    public enum DbType { MSSQL,SQLITE,MYSQL };
+    public enum SupportedDb{ MSSQL,SQLITE,MYSQL };
 }

@@ -28,15 +28,15 @@ namespace NLORM
             }
         }
 
-        public INLORMDb GetDb(string ConnectString, DbType dbType)
+        public INLORMDb GetDb(string ConnectString, SupportedDb dbType)
         {
             switch (dbType)
             {
-                case DbType.MSSQL:
+                case SupportedDb.MSSQL:
                     return new NLORMMSSQLDb(ConnectString);
-                case DbType.SQLITE:
+                case SupportedDb.SQLITE:
                     return new NLORMSQLiteDb(ConnectString);
-                case DbType.MYSQL:
+                case SupportedDb.MYSQL:
                     return new NLORMMySqlDb(ConnectString);
                 default:
                     throw new NLORMException("Not SupportDB");

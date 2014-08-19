@@ -6,9 +6,9 @@ using System.Text;
 
 namespace NLORM
 {
-    public static class NLORM
+    public static class Manager
     {
-        public static INLORMDb GetDb(string connectionString,DbType dbType)
+        public static INLORMDb GetDb(string connectionString, SupportedDb dbType)
         {
              return NLORMFactory.Instance.GetDb(connectionString, dbType);
         }
