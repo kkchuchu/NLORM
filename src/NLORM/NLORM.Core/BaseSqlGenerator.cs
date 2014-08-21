@@ -225,12 +225,33 @@ namespace NLORM.Core
             ret.Append(" UPDATE ");
             ret.Append(md.TableName +" SET ");
             var type = obj.GetType();
+            Utility.IPropertyGetter pg;
             if (type.Equals(typeof(ExpandoObject)))
             {
+                var expando = obj as ExpandoObject;
+                ret.Append(GenExpandoUpdateParaString(expando));
             }
             else
             {
                 ret.Append(GenNormalUpdateParaString(obj));
+            }
+            return ret.ToString();
+        }
+
+        private string GenExpandoUpdateParaString(ExpandoObject obj)
+        {
+            var ret = new StringBuilder();
+            var i = 1;
+            var pg = new Utility.ExpandoPorpertyGetter();
+            var paraDic = pg.GetPropertyDic(obj);
+            foreach (var key in paraDic.Keys)
+            {
+                ret.Append(" " + key + "=@" + key + " ");
+                if (i < paraDic.Keys.Count)
+                {
+                    ret.Append(" , ");
+                    i++;
+                }
             }
             return ret.ToString();
         }
