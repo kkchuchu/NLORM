@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Text;
 using NLORM.Core.BasicDefinitions;
+using System.Dynamic;
 
 namespace NLORM.Core
 {
@@ -223,6 +224,20 @@ namespace NLORM.Core
             valueFields.Append(GenInsertValueFields(md));
             ret.Append(" UPDATE ");
             ret.Append(md.TableName +" SET ");
+            var type = obj.GetType();
+            if (type.Equals(typeof(ExpandoObject)))
+            {
+            }
+            else
+            {
+                ret.Append(GenNormalUpdateParaString(obj));
+            }
+            return ret.ToString();
+        }
+
+        private string GenNormalUpdateParaString(object obj)
+        {
+            var ret = new StringBuilder();
             var objMdf = new ModelDefinitionConverter().ConverClassToModelDefinition(obj.GetType());
             int i = 1;
             foreach (var df in objMdf.PropertyColumnDic.Values)
