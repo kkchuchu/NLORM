@@ -12,7 +12,7 @@ namespace NLORM.MSSQL.Test
     [TestClass]
     public class TestUpdate
     {
-        string connectionString = NLORMSSQLDbTest.coonectionstring;
+        string connectionString = NLORMSSQLDbTest.ConnectionString;
         public TestUpdate()
         {
         }

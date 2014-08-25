@@ -18,7 +18,7 @@ namespace NLORM.MSSQL.Test
             public int income { get; set; }
         }
 
-        private string connectionString = NLORMSSQLDbTest.coonectionstring;
+        private string connectionString = NLORMSSQLDbTest.ConnectionString;
 
         [TestInitialize()]
         public void TestInitialize()
