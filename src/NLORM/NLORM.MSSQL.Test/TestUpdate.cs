@@ -2,6 +2,7 @@
 using NLORM.Core;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -23,16 +24,18 @@ namespace NLORM.MSSQL.Test
 
             public int income { get; set;}
         }
-
+        
         [TestInitialize()]
         public void TestInitialize()
         {
+            var db = new NLORMMSSQLDb(NLORMSSQLDbTest.masterdb);
+            IDbCommand cmd = db.GetDbConnection().CreateCommand();
+            cmd.CommandText = @"CREATE DATABASE TestORM";
             try
             {
-                var db = new NLORMMSSQLDb(connectionString);
-                new NLORMMSSQLDb(connectionString);
-                this.createtable( db);
-                this.insertdata( db);
+                db.Open();
+                cmd.ExecuteNonQuery();
+                db.Close();
             }
             finally
             {
@@ -43,15 +46,25 @@ namespace NLORM.MSSQL.Test
         [TestCleanup()]
         public void TestCleanup()
         {
+            var db = new NLORMMSSQLDb(NLORMSSQLDbTest.masterdb);
+            IDbCommand cmd = db.GetDbConnection().CreateCommand();
+            cmd.CommandText = @"DROP DATABASE TestORM";
+            IDbCommand closecmd = db.GetDbConnection().CreateCommand();
+            closecmd.CommandText = @"alter database TestORM set single_user with rollback immediate";
+
             try
             {
-                var db = new NLORMMSSQLDb(connectionString);
-                db.DropTable<TestClassOne>();
+                db.Open();
+                closecmd.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
+                db.Close();
             }
             finally
             {
+
             }
         }
+
         private void createtable(INLORMDb db)
         {
             try
@@ -76,7 +89,10 @@ namespace NLORM.MSSQL.Test
         public void TestUpdateOneRow()
         {
             var db = new NLORMMSSQLDb(connectionString);
+            var oldobj = new TestClassOne(){ Id= "sssss", income = 20};
             var newobj = new TestClassOne { Id = "sssss", income = 100 };
+            db.CreateTable<TestClassOne>();
+            db.Insert<TestClassOne>(oldobj);
             int i = db.FilterBy(FilterType.EQUAL_AND, new { Id = "sssss" }).Update<TestClassOne>(newobj);
             var items = db.FilterBy(FilterType.EQUAL_AND, new { Id = "sssss" }).Query<TestClassOne>().First();
             Assert.AreEqual(100, items.income);
