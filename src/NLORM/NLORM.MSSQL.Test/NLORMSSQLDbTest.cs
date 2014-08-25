@@ -45,59 +45,68 @@ namespace NLORM.MSSQL.Test
             [ColumnType(DbType.Boolean, "1", true, "bit test")]
             public Boolean BBTAG { get; set; }
         }
-        public static string coonectionstring = @"Data Source=.\SQLEXPRESS;Database=TestORM;Integrated Security=True;";
-        private string constr = coonectionstring;
-		[TestInitialize()]
-		public void TestInitialize()
-		{
-			INLORMDb msdb = null;
-			try
-			{
-				msdb = new NLORMMSSQLDb( constr);
-				msdb.DropTable<TestClass01>();
-				msdb.DropTable<TestClass2>();
-				msdb.DropTable<TestClassDecimal>();
-			}
-			catch ( Exception)
-			{
-			}
-		}
+        public static string ConnectionString = @"";
+        public static string masterdb = @"";
 
-		[TestCleanup()]
-		public void TestCleanup()
-		{
-			INLORMDb mssqlDb = null;
-			try
-			{
-				mssqlDb = new NLORMMSSQLDb( constr);
-				mssqlDb.DropTable<TestClass01>();
-				mssqlDb.DropTable<TestClass2>();
-				mssqlDb.DropTable<TestClassDecimal>();
-			}
-			catch ( Exception)
-			{
-			}
-		}
+        [TestInitialize()]
+        public void TestInitialize()
+        {
+            var db = new NLORMMSSQLDb(NLORMSSQLDbTest.masterdb);
+            IDbCommand cmd = db.GetDbConnection().CreateCommand();
+            cmd.CommandText = @"CREATE DATABASE TestORM";
+            try
+            {
+                db.Open();
+                cmd.ExecuteNonQuery();
+                db.Close();
+            }
+            finally
+            {
+
+            }
+        }
+
+        [TestCleanup()]
+        public void TestCleanup()
+        {
+            var db = new NLORMMSSQLDb(NLORMSSQLDbTest.masterdb);
+            IDbCommand cmd = db.GetDbConnection().CreateCommand();
+            cmd.CommandText = @"DROP DATABASE TestORM";
+            IDbCommand closecmd = db.GetDbConnection().CreateCommand();
+            closecmd.CommandText = @"alter database TestORM set single_user with rollback immediate";
+
+            try
+            {
+                db.Open();
+                closecmd.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
+                db.Close();
+            }
+            finally
+            {
+
+            }
+        }
 
 		[TestMethod]
         public void TestCreateTableWithoutDef()
         {
 			INLORMDb mssqlDb = null;
-			mssqlDb = new NLORMMSSQLDb( constr);
+			mssqlDb = new NLORMMSSQLDb( ConnectionString);
 			mssqlDb.CreateTable<TestClass2>();
         }
 
 		[TestMethod]
 		public void TestCreateTable()
 		{
-			INLORMDb db = new NLORMMSSQLDb( constr);
+			INLORMDb db = new NLORMMSSQLDb( ConnectionString);
 			db.CreateTable<TestClass01>();
 		}
 
 		[TestMethod]
 		public void TestInsertAlotItems()
 		{
-			INLORMDb db = new NLORMMSSQLDb( constr);
+			INLORMDb db = new NLORMMSSQLDb( ConnectionString);
 			db.CreateTable<TestClass01>();
 			for ( int i = 0; i < 1000; i++)
 			{
@@ -112,7 +121,7 @@ namespace NLORM.MSSQL.Test
 		public void TestDropTable()
 		{
 			INLORMDb db = null;
-			db = new NLORMMSSQLDb( constr);
+			db = new NLORMMSSQLDb( ConnectionString);
 			db.CreateTable<TestClass01>();
 			db.DropTable<TestClass01>();
 		}
@@ -121,7 +130,7 @@ namespace NLORM.MSSQL.Test
 		public void TestQueryMethod1()
 		{
 			INLORMDb db = null;
-			db = new NLORMMSSQLDb( constr);
+			db = new NLORMMSSQLDb( ConnectionString);
 			this.TestInsertAlotItems();
 			var result = db.Query<TestClass01>( @"SELECT * FROM TestClass01 where ID = @ID", new TestClass01(){ ID = @"01"});
 			Assert.AreEqual( 1, result.Count());
@@ -130,7 +139,7 @@ namespace NLORM.MSSQL.Test
 		[TestMethod]
 		public void TestQueryMethod2()
 		{
-			INLORMDb db = new NLORMMSSQLDb( constr);
+			INLORMDb db = new NLORMMSSQLDb( ConnectionString);
 			db.CreateTable<TestClass01>();
 			db.Insert<TestClass01>( new TestClass01(){ ID = @"11", name = @"albert"});
 			db.Insert<TestClass01>( new TestClass01(){ ID = @"22", name = @"star"});
@@ -142,7 +151,7 @@ namespace NLORM.MSSQL.Test
 		[TestMethod]
 		public void TestCreatDecimalType()
 		{
-			INLORMDb db = new NLORMMSSQLDb( constr);
+			INLORMDb db = new NLORMMSSQLDb( ConnectionString);
 			db.CreateTable<TestClassDecimal>();
 
 			db.DropTable<TestClassDecimal>();
@@ -151,7 +160,7 @@ namespace NLORM.MSSQL.Test
 		[TestMethod]
 		public void TestCreatbitType()
 		{
-			INLORMDb db = new NLORMMSSQLDb( constr);
+			INLORMDb db = new NLORMMSSQLDb( ConnectionString);
 			db.CreateTable<TestClassbit>();
 
 			db.DropTable<TestClassbit>();
