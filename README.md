@@ -15,13 +15,13 @@ And every feature can be used independently .
 ### Get NLORMDb
 NLROM get started with manipulating the database by acquiring a NLROMDb . You could acquire a NLROMDb supported by NLORMFactroy. 
 
-```
+```csharp
 //Get a NLORMDb which supported MsSql Server
 var connectionStr = "IamConnectionString";
 INLORMDb db = NLORM.Manager.GetDb(connectionStr, SupportedDb.MSSQL);
 ```
 
-```
+```csharp
 //Get a NLORMDb which supported Sqlite
 var connectionStr = "Data Source=C:\\test.sqlite";
 INLORMDb db = NLORM.Manager.GetDb(connectionStr, SupportedDb.SQLITE);
@@ -33,7 +33,8 @@ to the property in Model Class . The rule can be set on lots of different Attrib
 
 
 The following example define the User Model, these attributes contains Id、Name、Email、Birth.
-```
+
+```csharp
 //An User Model Class
 public class User
 {
@@ -48,7 +49,7 @@ property name in Model class is not necessarily in accordance with column name i
 Here providing some attributes to correspond naming in NLORM 
 
 
-```
+```csharp
 //Naming Attribute
 [TableName("UUSER")]
 public class User
@@ -67,7 +68,7 @@ public class User
 
 You could also use ColumnType Attribute assisting with set up DB’s attributes when creating Table for Model Class .
 
-```
+```csharp
 [TableName("UUSER")]
 public class User
 {
@@ -89,7 +90,7 @@ public class User
 
 Use NLORMDb create an User Table.
 
-```
+```csharp
 INLORMDb db = NLORM.Manager.GetDb(connectionStr, SupportedDb.SQLITE);
 db.CreateTable<User>();
 ```
@@ -97,7 +98,7 @@ db.CreateTable<User>();
 ### Insert Model
 
 
-```
+```csharp
 var user1 = new User { ID = "135", Name = "Nlorm", Email = "nlrom@is.good", Birth = DateTime.Now };
 db.Insert<User>(user1);
 ```
@@ -105,19 +106,19 @@ db.Insert<User>(user1);
 ### Query
 In Query , NLORM will pull back a set of results from FilterBy . This list can be extract as filtering through those results .
 
-```
+```csharp
 //Select All
 INLORMDb db = NLORM.Manager.GetDb(connectionStr, SupportedDb.SQLITE);
 var users = db.Query<User>();
 ```
 
-```
+```csharp
 //Select Id is 135
 INLORMDb db = NLORM.Manager.GetDb(connectionStr, SupportedDb.SQLITE);
 var users = db.FilterBy(FilterType.EQUAL_AND,new { ID="135"}).Query<User>();
 ```
 
-```
+```csharp
 //Select Id is 135 and Name is "Nlorm"
 INLORMDb db = NLORM.Manager.GetDb(connectionStr, SupportedDb.SQLITE);
 var users = db.FilterBy(FilterType.EQUAL_AND,new { ID="135",Name="Nlorm"}).Query<User>();
@@ -129,7 +130,7 @@ INLORMDb db = NLORM.Manager.GetDb(connectionStr, SupportedDb.SQLITE);
 var users = db.FilterBy(FilterType.EQUAL_OR,new { ID="135",Name="Nlorm"}).Query<User>();
 ```
 
-```
+```csharp
 //Select Id is 135 AND Id is 136
 INLORMDb db = NLORM.Manager.GetDb(connectionStr, SupportedDb.SQLITE);
 var users = db.FilterBy(FilterType.EQUAL_AND, new { ID = "135" })
@@ -141,13 +142,13 @@ var users = db.FilterBy(FilterType.EQUAL_AND, new { ID = "135" })
 Delete data. Similar to Query , working with FilterBy to filter out those data which is going to delete . 
 
 
-```
+```csharp
 //Delete Id is 135
 INLORMDb db = NLORM.Manager.GetDb(connectionStr, SupportedDb.SQLITE);
 var users = db.FilterBy(FilterType.EQUAL_AND,new { ID="135"}).Delete<User>();
 ```
 
-```
+```csharp
 //Select Id is 135 and Name is "Nlorm"
 INLORMDb db = NLORM.Manager.GetDb(connectionStr, SupportedDb.SQLITE);
 var users = db.FilterBy(FilterType.EQUAL_AND,new { ID="135",Name="Nlorm"}).Delete<User>();
@@ -156,7 +157,7 @@ var users = db.FilterBy(FilterType.EQUAL_AND,new { ID="135",Name="Nlorm"}).Delet
 ### Update
 Update data. Work with FilterBy to select Model which is going to update . 
 
-```
+```csharp
 //Update Id is 135 to New Name
 var newUser= new User { ID = "135", Name = "Nlorm New", Email = "nlrom@is.good", Birth = DateTime.Now };
 INLORMDb db = NLORM.Manager.GetDb(connectionStr, SupportedDb.SQLITE);
@@ -164,7 +165,7 @@ db.FilterBy(FilterType.EQUAL_AND,new { ID="135"}).Update<User>(newUser);
 ```
 Or using [Anonymous Types](http://msdn.microsoft.com/en-us/library/bb397696.aspx)
 
-```
+```csharp
 //Update Id is 135 to New Name
 INLORMDb db = NLORM.Manager.GetDb(connectionStr, SupportedDb.SQLITE);
 db.FilterBy(FilterType.EQUAL_AND,new { ID="135"}).Update<User>(new {Name = "Nlorm New"});
@@ -173,7 +174,7 @@ db.FilterBy(FilterType.EQUAL_AND,new { ID="135"}).Update<User>(new {Name = "Nlor
 ### Transaction
 Use Transaction in NLROM.
 
-```
+```csharp
 INLORMDb db = NLORM.Manager.GetDb(connectionStr, SupportedDb.SQLITE);
 db.CreateTable<TestClassUser>();
 var trans = sqliteDbc.BeginTransaction();
