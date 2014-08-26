@@ -2,42 +2,39 @@
 
 ## Introduction
 
-NLORM(dotNet Lightweight ORM)是一個基於C# .Net實作的一個輕量級
-ORM Framework。主要目的在於減輕程式設計師過去要將Table轉換為物件
-時的負擔。
+NLORM(dotNet Lightweight ORM) is a lightweight ORM Framework built on C# .Net implementations.
+The primary purpose is to ease the burden of programmers converting Table into objects.
 
-NLORM基於1-class對應1-table的概念進行設計。為了達到易於使用的以及
-高度的擴充性。NLORM所提供的每個功能都可以被單獨使用。
+NLORM base on the concept of 1-class to 1-tables ,which attempt to user-friendly and highly expandability .
+And every feature can be used independently .
 
 ## Download
 
 ## Examples
 
 ### Get NLORMDb
-在NLROM中必須取得一個NLROMDb來對DB進行操作。可以藉由NLORMFactroy來取
-得一個NLORM支援的DB。更詳細的操作請參考文件[NLORM](/nlrom/)章節。
+NLROM get started with manipulating the database by acquiring a NLROMDb . You could acquire a NLROMDb supported by NLORMFactroy. 
 
 ```
-//取得一個連線至MsSql Server的NLORMDb
+//Get a NLORMDb which supported MsSql Server
 var connectionStr = "IamConnectionString";
 INLORMDb db = NLORM.Manager.GetDb(connectionStr, SupportedDb.MSSQL);
 ```
 
 ```
-//取得一個Sqlite的NLORMDb
+//Get a NLORMDb which supported Sqlite
 var connectionStr = "Data Source=C:\\test.sqlite";
 INLORMDb db = NLORM.Manager.GetDb(connectionStr, SupportedDb.SQLITE);
 ```
 
 ### Model
-NLORM採用1-class對應1-table的設計原則。所以每個table的column需對應到一個
-Model class中的property。而Model Class對應Table column的規則在NLORM中可以
-透過多種不同的Attribute來設定。更詳細的定義請參考文件[Model](/model/)章節。
+A rule of correspondence between NLROM such that every table’s column have to correspond 
+to the property in Model Class . The rule can be set on lots of different Attribute .
 
 
-以下範例定義了一個User的Model。他有Id、Name、Email、Birth等屬性
+The following example define the User Model, these attributes contains Id、Name、Email、Birth.
 ```
-//一個User的Model務件
+//An User Model Class
 public class User
 {
     public string ID { get; set; }
@@ -46,12 +43,13 @@ public class User
     public DateTime Birth { get; set; }
 }
 ```
+However Class Name doesn’t mean Table Name in sometimes , 
+property name in Model class is not necessarily in accordance with column name in DB either . 
+Here providing some attributes to correspond naming in NLORM 
 
 
-但是許多時候Class Name不一定就是資料庫的Table Name。而Model class的property name
-在DB中的column name也不一定一致。所以NLORM中提供了幾個attrtibute來做命名上的對應。
 ```
-//命名範例
+//Naming Attribute
 [TableName("UUSER")]
 public class User
 {
@@ -67,8 +65,7 @@ public class User
 }
 ```
 
-而在使用NLORM幫Model Class建立Table時還可以使用ColumnType Attribute協助建立一些DB的
-屬性。
+You could also use ColumnType Attribute assisting with set up DB’s attributes when creating Table for Model Class .
 
 ```
 [TableName("UUSER")]
@@ -89,10 +86,8 @@ public class User
 ```
 
 ### Create Table
-利用NLORMDb建立一個User Model的Table。
 
-
-詳細的使用方法請參考文件[CRUD](/crud/)章節。
+Use NLORMDb create an User Table.
 
 ```
 INLORMDb db = NLORM.Manager.GetDb(connectionStr, SupportedDb.SQLITE);
@@ -101,8 +96,6 @@ db.CreateTable<User>();
 
 ### Insert Model
 
-詳細的使用方法請參考文件[CRUD](/crud/)章節。
-
 
 ```
 var user1 = new User { ID = "135", Name = "Nlorm", Email = "nlrom@is.good", Birth = DateTime.Now };
@@ -110,9 +103,7 @@ db.Insert<User>(user1);
 ```
 
 ### Query
-在Query的方法中，NLORM提供了FilterBy方法來過慮查詢結果。預設回傳傳入Model的List。
-
-詳細的使用方法請參考文件[CRUD](/crud/)章節。
+In Query , NLORM will pull back a set of results from FilterBy . This list can be extract as filtering through those results .
 
 ```
 //Select All
@@ -147,9 +138,9 @@ var users = db.FilterBy(FilterType.EQUAL_AND, new { ID = "135" })
 ```
 
 ### Delete
-刪除資料。用法跟Query類似，搭配FilterBy來過慮要刪除的資料。
+Delete data. Similar to Query , working with FilterBy to filter out those data which is going to delete . 
 
-詳細的使用方法請參考文件[CRUD](/crud/)章節。
+
 ```
 //Delete Id is 135
 INLORMDb db = NLORM.Manager.GetDb(connectionStr, SupportedDb.SQLITE);
@@ -163,16 +154,15 @@ var users = db.FilterBy(FilterType.EQUAL_AND,new { ID="135",Name="Nlorm"}).Delet
 ```
 
 ### Update
-更新資料。搭配FilterBy來篩選要更新的Model。
+Update data. Work with FilterBy to select Model which is going to update . 
 
-詳細的使用方法請參考文件[CRUD](/crud/)章節。
 ```
 //Update Id is 135 to New Name
 var newUser= new User { ID = "135", Name = "Nlorm New", Email = "nlrom@is.good", Birth = DateTime.Now };
 INLORMDb db = NLORM.Manager.GetDb(connectionStr, SupportedDb.SQLITE);
 db.FilterBy(FilterType.EQUAL_AND,new { ID="135"}).Update<User>(newUser);
 ```
-或使用匿名型別
+Or using [Anonymous Types](http://msdn.microsoft.com/en-us/library/bb397696.aspx)
 
 ```
 //Update Id is 135 to New Name
@@ -181,7 +171,7 @@ db.FilterBy(FilterType.EQUAL_AND,new { ID="135"}).Update<User>(new {Name = "Nlor
 ```
 
 ### Transaction
-在NLORM中使用Transaction
+Use Transaction in NLROM.
 
 ```
 INLORMDb db = NLORM.Manager.GetDb(connectionStr, SupportedDb.SQLITE);
@@ -199,5 +189,8 @@ sqliteDbc.Close();
 ## Contributing
 
 Feel free to folk,and send me pull request.
+
+## LICENSE
+GPL v2
 
 
