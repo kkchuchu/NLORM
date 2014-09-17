@@ -192,6 +192,6 @@ sqliteDbc.Close();
 Feel free to folk,and send me pull request.
 
 ## LICENSE
-GPL v2
+MIT License
 
 
