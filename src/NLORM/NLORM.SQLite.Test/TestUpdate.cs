@@ -129,5 +129,32 @@ namespace NLORM.SQLite.Test
             Assert.AreEqual(100, itemsr.income);
         }
 
+        [TestMethod]
+        public void TestUpdateOneRowUseExpandoToUpdate()
+        {
+            var db = new NLORMSQLiteDb(connectionString);
+            dynamic newobj = new ExpandoObject();
+            newobj.income = 100;
+            //dynamic newobj = new TestClassOne { Id = "sssss", income = 100 };
+            int i = db.FilterBy(FilterType.EQUAL_AND, new { Id = "sssss" }).Update<TestClassOne>(newobj);
+            var items = db.FilterBy(FilterType.EQUAL_AND, new { Id = "sssss" }).Query<TestClassOne>().First();
+            Assert.AreEqual(100, items.income);
+        }
+
+        [TestMethod]
+        public void TestUpdateWithOrUseExpandoToUpdate()
+        {
+            var db = new NLORMSQLiteDb(connectionString);
+            dynamic newobjc = new ExpandoObject();
+            newobjc.income = 100;
+            int i = db.FilterBy(FilterType.EQUAL_AND, new { Id = "sssss" })
+                .Or().FilterBy(FilterType.EQUAL_AND, new { Id = "rrrrr" })
+                .Update<TestClassOne>(newobjc);
+            var items = db.FilterBy(FilterType.EQUAL_AND, new { Id = "sssss" }).Query<TestClassOne>().First();
+            var itemsr = db.FilterBy(FilterType.EQUAL_AND, new { Id = "rrrrr" }).Query<TestClassOne>().First();
+            Assert.AreEqual(100, items.income);
+            Assert.AreEqual(100, itemsr.income);
+        }
+
     }
 }

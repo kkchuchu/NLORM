@@ -18,6 +18,7 @@ namespace NLORM.SQLite.Test
         public string ID { get; set; }
 
     }
+
     class TestClass2
     {
         public string ID { get; set; }

@@ -7,6 +7,7 @@ using NLORM.Core.BasicDefinitions;
 using System.Reflection;
 using NLORM.Core.Exceptions;
 using System.Diagnostics;
+using System.Dynamic;
 
 namespace NLORM.Core
 {
@@ -130,13 +131,24 @@ namespace NLORM.Core
 
         private void setProValueToDynPara(DynamicParameters dp, Object o)
         {
-            Type obj = o.GetType();
-            IList<PropertyInfo> props = new List<PropertyInfo>(obj.GetProperties());
-
-            foreach (PropertyInfo prop in props)
+            Type type = o.GetType();
+            if (type.Equals(typeof(ExpandoObject)))
             {
-                object propValue = prop.GetValue(o, null);
-                dp.Add("@"+prop.Name,propValue);
+                var pg = new Utility.ExpandoPorpertyGetter();
+                var paraDic = pg.GetPropertyDic(o);
+                foreach (var key in paraDic.Keys)
+                {
+                    dp.Add("@" + key, paraDic[key]);
+                }
+            }
+            else
+            {
+                IList<PropertyInfo> props = new List<PropertyInfo>(type.GetProperties());
+                foreach (PropertyInfo prop in props)
+                {
+                    object propValue = prop.GetValue(o, null);
+                    dp.Add("@" + prop.Name, propValue);
+                }
             }
         }
 
