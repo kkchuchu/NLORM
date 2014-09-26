@@ -3,6 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NLORM.Core;
 
 namespace NLORM.MySql.Test
 {
@@ -36,34 +37,77 @@ namespace NLORM.MySql.Test
             }
         }
 
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
-
-        [TestMethod]
-        public void TestMethod1()
+        [TestInitialize()]
+        public void MyTestInitialize()
         {
-            //
-            // TODO: Add test logic here
-            //
+            var dbc = new NLORMMySqlDb(connectionString);
+            Init(dbc);
         }
+
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+        }
+
+        private void Init(INLORMDb db)
+        {
+            try
+            {
+                db.DropTable<TestClassUser>();
+            }
+            catch { }
+            db.CreateTable<TestClassUser>();
+        }
+
+         private class TestClassUser
+         {
+             public int ID { get; set; }
+             public string Name { get; set; }
+             public DateTime CreateTime { get; set; }
+         }
+         [TestMethod]
+         public void TestInsertUserClass()
+         {
+             var MySqlDbc = new NLORMMySqlDb(connectionString);
+
+             var testObj = new TestClassUser();
+             testObj.ID = 1;
+             testObj.Name = "Name " + 1;
+             testObj.CreateTime = DateTime.Now;
+
+             MySqlDbc.Insert<TestClassUser>(testObj);
+             var selLis = MySqlDbc.Query<TestClassUser>();
+             Assert.AreEqual(selLis.Count(), 1);
+             var selUser = selLis.ToArray()[0];
+             Assert.AreEqual(testObj.ID, selUser.ID);
+             Assert.AreEqual(testObj.Name, selUser.Name);
+             Assert.AreEqual(testObj.CreateTime.ToString(), selUser.CreateTime.ToString());
+         }
+
+         [TestMethod]
+         public void TestInsertUserClassMuti()
+         {
+             var MySqlDbc = new NLORMMySqlDb(connectionString);
+
+             var insertList = new List<TestClassUser>();
+
+             for (int i = 0; i < 30; i++)
+             {
+                 var testObj = new TestClassUser
+                 {
+                     ID = i,
+                     Name = "Name " + i,
+                     CreateTime = DateTime.Now.AddDays(i)
+                 };
+                 insertList.Add(testObj);
+             }
+             foreach (TestClassUser user in insertList)
+             {
+                 MySqlDbc.Insert<TestClassUser>(user);
+             }
+
+             var selLis = MySqlDbc.Query<TestClassUser>();
+             Assert.AreEqual(selLis.Count(), 30);
+         }
     }
 }
