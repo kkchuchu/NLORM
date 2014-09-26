@@ -14,9 +14,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLORM.MSSQL", "NLORM.MSSQL\NLORM.MSSQL.csproj", "{BB9A9A2E-D5F4-4953-8E46-CD9D60E46222}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLORM.MSSQL.Test", "NLORM.MSSQL.Test\NLORM.MSSQL.Test.csproj", "{C812E724-4BAF-4BE1-AB18-43C806223728}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLORM.MySql", "NLORM.MySql\NLORM.MySql.csproj", "{C3E047B2-C7A1-455F-8203-490AF9DE8C8D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLORM.MySql.Test", "NLORM.MySql.Test\NLORM.MySql.Test.csproj", "{5B182A02-8B26-4A57-BD4D-25A3328B796D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLORM.Postgresql", "NLORM.Postgresql\NLORM.Postgresql.csproj", "{A5AE31B7-5582-4D25-9D5F-6F878F228A49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,6 +63,10 @@ Global
 		{5B182A02-8B26-4A57-BD4D-25A3328B796D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B182A02-8B26-4A57-BD4D-25A3328B796D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B182A02-8B26-4A57-BD4D-25A3328B796D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5AE31B7-5582-4D25-9D5F-6F878F228A49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5AE31B7-5582-4D25-9D5F-6F878F228A49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5AE31B7-5582-4D25-9D5F-6F878F228A49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5AE31B7-5582-4D25-9D5F-6F878F228A49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
