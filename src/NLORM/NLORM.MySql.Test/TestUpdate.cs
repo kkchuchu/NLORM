@@ -12,11 +12,10 @@ namespace NLORM.MySql.Test
     [TestClass]
     public class TestUpdate
     {
+        static public string connectionString ;
         public TestUpdate()
         {
-            //
-            // TODO: Add constructor logic here
-            //
+            connectionString = "Server=test.mysql.nlorm;Database=nlorm;uid=admin;pwd=1qaz;";
         }
 
         private TestContext testContextInstance;
