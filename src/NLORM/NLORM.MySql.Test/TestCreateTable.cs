@@ -3,6 +3,8 @@ using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NLORM.Core.Attributes;
+using System.Data;
 
 namespace NLORM.MySql.Test
 {
@@ -58,12 +60,60 @@ namespace NLORM.MySql.Test
         //
         #endregion
 
-        [TestMethod]
-        public void TestMethod1()
+        class TestClassOnlyString
         {
-            //
-            // TODO: Add test logic here
-            //
+            public string ID { get; set; }
         }
+
+        [TestMethod]
+        public void TestCreateTableOnlyString()
+        {
+            try
+            {
+                var Dbc = new NLORMMySqlDb(connectionString);
+                Dbc.DropTable<TestClassOnlyString>();
+            }
+            catch { }
+            var MySqlDbc = new NLORMMySqlDb(connectionString);
+            MySqlDbc.CreateTable<TestClassOnlyString>();
+        }
+
+        class TestClassOnlyStringWCfd
+        {
+            [ColumnType(DbType.String, "30", false, "this is id comment")]
+            public string ID { get; set; }
+        }
+
+        [TestMethod]
+        public void TestCreateTableOnlyStringWithCfd()
+        {
+            try
+            {
+                var Dbc = new NLORMMySqlDb(connectionString);
+                Dbc.DropTable<TestClassOnlyStringWCfd>();
+            }
+            catch { }
+            var MySqlDbc = new NLORMMySqlDb(connectionString);
+            MySqlDbc.CreateTable<TestClassOnlyStringWCfd>();
+        }
+
+        class TestClassOnlyInt
+        {
+            public int ID { get; set; }
+        }
+
+        [TestMethod]
+        public void TestCreateTableOnlyInt()
+        {
+            try
+            {
+                var Dbc = new NLORMMySqlDb(connectionString);
+                Dbc.DropTable<TestClassOnlyInt>();
+            }
+            catch { }
+            var MySqlDbc = new NLORMMySqlDb(connectionString);
+            MySqlDbc.CreateTable<TestClassOnlyInt>();
+        }
+
     }
 }
