@@ -115,5 +115,286 @@ namespace NLORM.MySql.Test
             MySqlDbc.CreateTable<TestClassOnlyInt>();
         }
 
+        class TestClassOnlyIntWCfd
+        {
+            [ColumnType(DbType.Int32, "", false, "this is id comment")]
+            public int ID { get; set; }
+
+            [ColumnType(DbType.Int16, "", false, "this is id comment")]
+            public int ID2 { get; set; }
+        }
+
+
+        [TestMethod]
+        public void TestCreateTableOnlyIntWcfd()
+        {
+            try
+            {
+                var Dbc = new NLORMMySqlDb(connectionString);
+                Dbc.DropTable<TestClassOnlyIntWCfd>();
+            }
+            catch { }
+            var MySqlDbc = new NLORMMySqlDb(connectionString);
+            MySqlDbc.CreateTable<TestClassOnlyIntWCfd>();
+        }
+
+        class TestClassOnlyDateTime
+        {
+            public DateTime time { get; set; }
+        }
+
+        [TestMethod]
+        public void TestCreateTableOnlyDateTime()
+        {
+            try
+            {
+                var Dbc = new NLORMMySqlDb(connectionString);
+                Dbc.DropTable<TestClassOnlyDateTime>();
+            }
+            catch { }
+            var MySqlDbc = new NLORMMySqlDb(connectionString);
+            MySqlDbc.CreateTable<TestClassOnlyDateTime>();
+        }
+
+        class TestClassOnlyDateTimeWCfd
+        {
+            [ColumnType(DbType.DateTime, "", false, "this is time comment")]
+            public DateTime time { get; set; }
+        }
+
+        [TestMethod]
+        public void TestCreateTableOnlyDateTimeWcfd()
+        {
+            try
+            {
+                var Dbc = new NLORMMySqlDb(connectionString);
+                Dbc.DropTable<TestClassOnlyDateTimeWCfd>();
+            }
+            catch { }
+            var MySqlDbc = new NLORMMySqlDb(connectionString);
+            MySqlDbc.CreateTable<TestClassOnlyDateTimeWCfd>();
+        }
+
+        class TestClassOnlyTimeWcfd
+        {
+            [ColumnType(DbType.Time, "", false, "this is time comment")]
+            public TimeSpan maintaintime { get; set; }
+        }
+
+        [TestMethod]
+        public void TestCreateTableOnlyTimeWcfd()
+        {
+            try
+            {
+                var Dbc = new NLORMMySqlDb(connectionString);
+                Dbc.DropTable<TestClassOnlyTimeWcfd>();
+            }
+            catch { }
+            var MySqlDbc = new NLORMMySqlDb(connectionString);
+            MySqlDbc.CreateTable<TestClassOnlyTimeWcfd>();
+        }
+
+        class TestClassOnlyTime
+        {
+            public TimeSpan maintaintime { get; set; }
+        }
+
+        [TestMethod]
+        public void TestCreateTabkeOnlyTime()
+        {
+            try
+            {
+                var Dbc = new NLORMMySqlDb(connectionString);
+                Dbc.DropTable<TestClassOnlyTime>();
+            }
+            catch { }
+            var MySqlDbc = new NLORMMySqlDb(connectionString);
+            MySqlDbc.CreateTable<TestClassOnlyTime>();
+        }
+
+        class TestClassOnlyFloatWcfd
+        {
+            [ColumnType(DbType.Double, "", false, "this is double comment")]
+            public Double revenue { get; set; }
+        }
+
+        [TestMethod]
+        public void TestCreateTableOnlyFloatWcfd()
+        {
+            try
+            {
+                var Dbc = new NLORMMySqlDb(connectionString);
+                Dbc.DropTable<TestClassOnlyFloatWcfd>();
+            }
+            catch { }
+            var MySqlDbc = new NLORMMySqlDb(connectionString);
+            MySqlDbc.CreateTable<TestClassOnlyFloatWcfd>();
+        }
+
+        class TestClassOnlyFloat
+        {
+            public Double revenue { get; set; }
+        }
+
+        [TestMethod]
+        public void TestCreateTableOnlyFloat()
+        {
+            try
+            {
+                var Dbc = new NLORMMySqlDb(connectionString);
+                Dbc.DropTable<TestClassOnlyFloat>();
+            }
+            catch { }
+            var MySqlDbc = new NLORMMySqlDb(connectionString);
+            MySqlDbc.CreateTable<TestClassOnlyFloat>();
+        }
+
+        class TestClassOnlySingleWcfd
+        {
+            public Single reserve { get; set; }
+        }
+
+        [TestMethod]
+        public void TestCreateTableOnlySingleWcfd()
+        {
+            try
+            {
+                var Dbc = new NLORMMySqlDb(connectionString);
+                Dbc.DropTable<TestClassOnlySingleWcfd>();
+            }
+            catch { }
+            var MySqlDbc = new NLORMMySqlDb(connectionString);
+            MySqlDbc.CreateTable<TestClassOnlySingleWcfd>();
+        }
+
+        class TestClassOnlySingle
+        {
+            public Single reserve { get; set; }
+        }
+
+        [TestMethod]
+        public void TestCreatTableOnlySingle()
+        {
+            try
+            {
+                var Dbc = new NLORMMySqlDb(connectionString);
+                Dbc.DropTable<TestClassOnlySingle>();
+            }
+            catch { }
+            var MySqlDbc = new NLORMMySqlDb(connectionString);
+            MySqlDbc.CreateTable<TestClassOnlySingle>();
+        }
+
+        class TestClassOnlyInt64Wcfd
+        {
+            [ColumnType(DbType.Int64, "", false, " this is int64 comment")]
+            public Int64 bigbrother { get; set; }
+        }
+
+        [TestMethod]
+        public void TestCreateTableOnlyInt64Wcfd()
+        {
+            try
+            {
+                var Dbc = new NLORMMySqlDb(connectionString);
+                Dbc.DropTable<TestClassOnlyInt64Wcfd>();
+            }
+            catch { }
+            var MySqlDbc = new NLORMMySqlDb(connectionString);
+            MySqlDbc.CreateTable<TestClassOnlyInt64Wcfd>();
+        }
+
+        class TestclassOnlyInt64
+        {
+            public Int64 bigbrother { get; set; }
+        }
+
+        [TestMethod]
+        public void TestCreateTableOnlyInt64()
+        {
+            try
+            {
+                var Dbc = new NLORMMySqlDb(connectionString);
+                Dbc.DropTable<TestclassOnlyInt64>();
+            }
+            catch { }
+            var MySqlDbc = new NLORMMySqlDb(connectionString);
+            MySqlDbc.CreateTable<TestclassOnlyInt64>();
+        }
+
+        class TestClassOnlyInt16Wcfd
+        {
+            [ColumnType(DbType.Int16, "", false, " this is int16 comment")]
+            public Int16 littlebrother { get; set; }
+        }
+
+        [TestMethod]
+        public void TestCreateTableOnlyInt16Wcfd()
+        {
+            try
+            {
+                var Dbc = new NLORMMySqlDb(connectionString);
+                Dbc.DropTable<TestClassOnlyInt16Wcfd>();
+            }
+            catch { }
+            var MySqlDbc = new NLORMMySqlDb(connectionString);
+            MySqlDbc.CreateTable<TestClassOnlyInt16Wcfd>();
+        }
+
+        class TestClassOnlyInt16
+        {
+            public Int16 littlebrother { get; set; }
+        }
+
+        [TestMethod]
+        public void TestCreateTableOnlyInt16()
+        {
+            try
+            {
+                var Dbc = new NLORMMySqlDb(connectionString);
+                Dbc.DropTable<TestClassOnlyInt16>();
+            }
+            catch { }
+            var MySqlDbc = new NLORMMySqlDb(connectionString);
+            MySqlDbc.CreateTable<TestClassOnlyInt16>();
+        }
+
+        class TestClassOnlyTinyintWcfd
+        {
+            [ColumnType(DbType.Byte, "", false, " this is tinyint comment")]
+            public Byte tinyintcolumn { get; set; }
+        }
+
+        [TestMethod]
+        public void TestCreateTableOnlyTinyintWcfd()
+        {
+            try
+            {
+                var Dbc = new NLORMMySqlDb(connectionString);
+                Dbc.DropTable<TestClassOnlyTinyintWcfd>();
+            }
+            catch { }
+            var MySqlDbc = new NLORMMySqlDb(connectionString);
+            MySqlDbc.CreateTable<TestClassOnlyTinyintWcfd>();
+        }
+
+        class TestClassOnlyTinyint
+        {
+            public Byte tinyintcolumn { get; set; }
+        }
+
+        [TestMethod]
+        public void TestCreateTableOnlyTinyint()
+        {
+            try
+            {
+                var Dbc = new NLORMMySqlDb(connectionString);
+                Dbc.DropTable<TestClassOnlyTinyint>();
+            }
+            catch { }
+            var MySqlDbc = new NLORMMySqlDb(connectionString);
+            MySqlDbc.CreateTable<TestClassOnlyTinyint>();
+        }
+
     }
 }
