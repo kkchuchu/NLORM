@@ -1,4 +1,4 @@
-# NLORM, A Lightweight ORM For C# .Net 
+# NLORM - A Lightweight ORM For C# .Net 
 
 ## Introduction
 
