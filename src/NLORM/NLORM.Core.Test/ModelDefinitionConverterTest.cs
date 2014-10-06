@@ -108,6 +108,5 @@ namespace NLORM.Core.Test
             Assert.AreEqual<int>( 0,md.PropertyColumnDic.Count);
         }
 
-        //TODO Add prop name test case
     }
 }
