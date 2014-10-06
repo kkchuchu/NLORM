@@ -26,10 +26,12 @@ namespace NLORM.Core
                 _sqlString = value;
             }
         }
+
         public BaseSqlBuilder()
         {
             SqlGen = new BaseSqlGenerator();
         }
+
         virtual public string GenCreateTableSql<T>() 
         {
 
