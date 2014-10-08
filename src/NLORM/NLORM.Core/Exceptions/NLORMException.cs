@@ -20,7 +20,7 @@ namespace NLORM.Core.Exceptions
 
         public NLORMException(string errorCode,string message) :base(message)
         {
-            errorCode = errorCode;
+            this.errorCode = errorCode;
         }
     }
 }
