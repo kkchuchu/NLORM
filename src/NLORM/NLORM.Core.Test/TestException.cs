@@ -2,6 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Data;
 
 namespace NLORM.Core.Test
 {
@@ -37,10 +38,9 @@ namespace NLORM.Core.Test
         }
 
         [TestMethod]
-        public void TestSupportDBTypeGen()
+        public void TestDBTypeGuidGen()
         {
-            var cfd = new NLORM.Core.BasicDefinitions.ColumnFieldDefinition();
-            cfd.FieldType = System.Data.DbType.Guid;
+            var cfd = createFakeCfdByDbType(DbType.Guid);
             var cfdDic = new Dictionary<string, BasicDefinitions.ColumnFieldDefinition>();
             cfdDic.Add("test1", cfd);
             var md = new NLORM.Core.BasicDefinitions.ModelDefinition("Test", cfdDic);
@@ -57,6 +57,35 @@ namespace NLORM.Core.Test
             {
                 Assert.Fail();
             }
+        }
+
+        [TestMethod]
+        public void TestDBTypeUInt16Gen()
+        {
+            var cfd = createFakeCfdByDbType(DbType.UInt16);
+            var cfdDic = new Dictionary<string, BasicDefinitions.ColumnFieldDefinition>();
+            cfdDic.Add("test1", cfd);
+            var md = new NLORM.Core.BasicDefinitions.ModelDefinition("Test", cfdDic);
+            var sqlGen = new BaseSqlGenerator();
+            try
+            {
+                sqlGen.GenCreateTableSql(md);
+            }
+            catch (NLORM.Core.Exceptions.NLORMException nle)
+            {
+                Assert.AreEqual(nle.ErrorCode, "SG");
+            }
+            catch (Exception e)
+            {
+                Assert.Fail();
+            }
+        }
+
+        private BasicDefinitions.ColumnFieldDefinition createFakeCfdByDbType(DbType dbType)
+        {
+            var cfd = new NLORM.Core.BasicDefinitions.ColumnFieldDefinition();
+            cfd.FieldType = dbType;
+            return cfd;
         }
     }
 }
