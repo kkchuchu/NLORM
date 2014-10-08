@@ -5,12 +5,15 @@ using System.Reflection;
 using System.Text;
 using NLORM.Core.BasicDefinitions;
 using System.Dynamic;
+using System.Collections.Generic;
 
 namespace NLORM.Core
 {
     public class BaseSqlGenerator : ISqlGenerator
     {
         private const string StringDeafultLength = "255";
+        private Dictionary<DbType, Func<ColumnFieldDefinition,string>> createSqlFuncDic = null;
+
         public string GenCreateTableSql(ModelDefinition md)
         {
             var ret = new StringBuilder();
@@ -29,71 +32,7 @@ namespace NLORM.Core
             return ret.ToString();
         }
 
-        private string GenColumnCreateTableSql(ColumnFieldDefinition cfd)
-        {
-            string ret = null;
-            switch (cfd.FieldType)
-            {
-                case DbType.Byte://tinyint
-                    ret = GenCreateTinyint(cfd);
-                    break;
-                case DbType.SByte:
-                    throw new NotImplementedException();
-                    break;
-                case DbType.Int16://smallint
-                    ret = GenCreateInteger(cfd);
-                    break;
-                case DbType.Int32:
-                    ret = GenCreateInteger(cfd);
-                    break;
-                case DbType.UInt16:
-                    throw new NotImplementedException();
-                    break;
-                case DbType.Int64://bigint
-                    ret = GenCreateBigint(cfd);
-                    break;
-                case DbType.UInt64:
-                    throw new NotImplementedException();
-                    break;
-                case DbType.UInt32:
-                    throw new NotImplementedException();
-                    break;
-                case DbType.Single://real
-                    ret = GenCreateReal(cfd);
-                    break;
-                case DbType.Double://float
-                    ret = GenCreateFloat(cfd);
-                    break;
-                case DbType.Decimal:
-                    ret = GenCreateDecimal(cfd);
-                    break;
-                case DbType.Boolean:
-                    ret = GenCreateBit(cfd);
-                    break;
-                case DbType.String:
-                    ret = GenCreateString(cfd);
-                    break;
-                case DbType.StringFixedLength:
-                    throw new NotImplementedException();
-                    break;
-                case DbType.Guid:
-                    throw new NotImplementedException();
-                    break;
-                case DbType.DateTime:
-                    ret = GenCreateDateTime(cfd);
-                    break;
-                case DbType.DateTimeOffset:
-                    throw new NotImplementedException();
-                    break;
-                case DbType.Time://time
-                    ret = GenCreateTime(cfd);
-                    break;
-                default:
-                    Debug.Assert(false, "not support type");
-                    break;
-            }
-            return ret;
-        }
+
 
         virtual public string GenCreateString(ColumnFieldDefinition cfd)
         {
@@ -303,6 +242,32 @@ namespace NLORM.Core
                 i++;
             }
             return ret;
+        }
+
+        private string GenColumnCreateTableSql(ColumnFieldDefinition cfd)
+        {
+            GenCreateSqlFuncDic();
+            return createSqlFuncDic[cfd.FieldType](cfd);
+        }
+
+        private void GenCreateSqlFuncDic()
+        {
+            if (createSqlFuncDic != null)
+            {
+                return;
+            }
+            createSqlFuncDic = new Dictionary<DbType, Func<ColumnFieldDefinition, string>>();
+            createSqlFuncDic.Add(DbType.Byte, GenCreateTinyint);
+            createSqlFuncDic.Add(DbType.Int16, GenCreateInteger);  //smallInt
+            createSqlFuncDic.Add(DbType.Int32, GenCreateInteger);
+            createSqlFuncDic.Add(DbType.Int64, GenCreateBigint);
+            createSqlFuncDic.Add(DbType.Single, GenCreateReal);
+            createSqlFuncDic.Add(DbType.Double, GenCreateFloat);
+            createSqlFuncDic.Add(DbType.Decimal, GenCreateDecimal);
+            createSqlFuncDic.Add(DbType.Boolean, GenCreateBit);
+            createSqlFuncDic.Add(DbType.String, GenCreateString);
+            createSqlFuncDic.Add(DbType.DateTime, GenCreateDateTime);
+            createSqlFuncDic.Add(DbType.Time, GenCreateTime);
         }
 
     }
