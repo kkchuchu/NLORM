@@ -39,7 +39,7 @@ namespace NLORM
                 case SupportedDb.MYSQL:
                     return new NLORMMySqlDb(ConnectString);
                 default:
-                    throw new NLORMException("Not SupportDB");
+                    throw new NLORMException("N","Not SupportDB");
             }
         }
     }

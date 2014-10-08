@@ -8,7 +8,7 @@ namespace NLORM.Core.Exceptions
 {
     public class FilterChainException : NLORMException
     {
-        public FilterChainException(string message) : base(message)
+        public FilterChainException(string message) : base("FCE",message)
         {
         }
     }

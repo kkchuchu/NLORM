@@ -32,8 +32,6 @@ namespace NLORM.Core
             return ret.ToString();
         }
 
-
-
         virtual public string GenCreateString(ColumnFieldDefinition cfd)
         {
             var length = string.IsNullOrEmpty(cfd.Length) ? StringDeafultLength : cfd.Length;
@@ -247,6 +245,10 @@ namespace NLORM.Core
         private string GenColumnCreateTableSql(ColumnFieldDefinition cfd)
         {
             GenCreateSqlFuncDic();
+            if (!createSqlFuncDic.ContainsKey(cfd.FieldType))
+            {
+                throw new NLORM.Core.Exceptions.NLORMException("SG","NOT SUPPORT DBTYPE");
+            }
             return createSqlFuncDic[cfd.FieldType](cfd);
         }
 

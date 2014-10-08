@@ -9,9 +9,18 @@ namespace NLORM.Core.Exceptions
     [Serializable]
     public class NLORMException : Exception,ISerializable
     {
-
-        public NLORMException(string message) :base(message)
+        public string ErrorCode 
         {
+            get 
+            {
+                return errorCode;
+            }
+        }
+        private string errorCode;
+
+        public NLORMException(string errorCode,string message) :base(message)
+        {
+            errorCode = errorCode;
         }
     }
 }
