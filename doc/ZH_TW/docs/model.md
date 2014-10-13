@@ -39,3 +39,11 @@
 
     [NotGenColumn]
     public string NotInDB { get; set;}
+
+
+##IndexAttribute
+
+用來宣告Property對應資料庫中欄位的索引鍵.宣告為IndexAttribute的Property在建立資料表時會宣告為索引鍵.
+
+    [Index]
+    public string ID { get; set;}
