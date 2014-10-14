@@ -22,6 +22,7 @@ namespace NLORM.LambdaExtension.Test
     [TestClass]
     public class NLORMLambdaTest
     {
+        static readonly string connectionstring = @"";
         [TestInitialize]
         public void TestInitialize()
         {
@@ -36,7 +37,7 @@ namespace NLORM.LambdaExtension.Test
         [TestMethod]
         public void TestCallMethd()
         {
-            INLORMDb db = new NLORMMSSQLDb();
+            NLORMMSSQLDb db = new NLORMMSSQLDb(connectionstring);
             db.Where<Model>( x => x.NAME == "albert" ).Select<Model>( x => new { x.ID, x.NAME});
             
             db.Insert<Model>( new Model(){ ID = "111", NAME = "azzz"});

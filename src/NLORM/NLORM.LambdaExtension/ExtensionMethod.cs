@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace NLORM.LambdaExtension
 {
-    public static class ExtensionMethod
+    public class ExtensionMethod
     {
-        public static INLORMDb Where<T>( this INLORMDb db, Expression<Func<T, bool>> exp)
-        {            
+        public static MSSQL.NLORMMSSQLDb Where<T>( this MSSQL.NLORMMSSQLDb db, Expression<Func<T, bool>> exp)
+        {
+
             return db;
         }
 
