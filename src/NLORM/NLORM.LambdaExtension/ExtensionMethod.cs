@@ -9,36 +9,16 @@ using System.Threading.Tasks;
 
 namespace NLORM.LambdaExtension
 {
-    public class ExtensionMethod
+    public partial interface INLORMDb
     {
-        public static MSSQL.NLORMMSSQLDb Where<T>( this MSSQL.NLORMMSSQLDb db, Expression<Func<T, bool>> exp)
-        {
+        INLORMDb Where<T>( Expression<Func<T, bool>> exp);
 
-            return db;
-        }
+        List<object> Select<T>( Expression<Func<T, object>> exp);
 
-        public static List<object> Select<T>( this INLORMDb db, Expression<Func<T, object>> exp)
-        {
-            return new List<object>();
-        }
+        bool Insert<T>( T t);
 
-        public static bool Insert<T>( this INLORMDb db, T t)
-        {
-            return false;
-        }
+        int Update<T>( object t);
 
-        public static int Update<T>( this INLORMDb db, object t)
-        {
-            return 0;
-        }
-
-        public static int Delete<T>( this INLORMDb db)
-        {
-            return 0;
-        }
-
-
-    }
-
-    
+        int Delete<T>();
+    }    
 }
