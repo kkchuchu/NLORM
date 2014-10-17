@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="ExpressionVisitor.cs" />
     <Compile Include="ExtensionMethod.cs" />
+    <Compile Include="NExpressionVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
