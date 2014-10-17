@@ -11,7 +11,7 @@ using System.Dynamic;
 
 namespace NLORM.Core
 {
-    public class NLORMBaseDb : INLORMDb,IQuery
+    public partial class NLORMBaseDb : INLORMDb,IQuery
     {
         protected ISqlBuilder SqlBuilder;
         protected IDbConnection DbConnection;
