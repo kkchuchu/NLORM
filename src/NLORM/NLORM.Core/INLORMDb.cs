@@ -4,7 +4,7 @@ using System.Data;
 
 namespace NLORM.Core
 {
-    public interface INLORMDb
+    public partial interface INLORMDb
     {
         void Open();
         void Close();
