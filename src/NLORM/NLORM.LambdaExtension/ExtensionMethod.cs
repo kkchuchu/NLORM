@@ -6,31 +6,34 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using NLORM.LambdaExtension;
 
 namespace NLORM.LambdaExtension
 {
-    public partial interface INLORMDb
+    public class NEDataBase
     {
-        INLORMDb Where<T>( Expression<Func<T, bool>> exp);
-
-        List<object> Select<T>( Expression<Func<T, object>> exp);
-
-        bool Insert<T>( T t);
-
-        int Update<T>( object t);
-
-        int Delete<T>();
-    }    
-
-    public partial class NLORMBaseDb : INLORMDb
-    {
-        public INLORMDb Where<T>( Expression<Func<T, bool>> exp)
+        public NEDataBase( string connectionstring)
         {
+            this.db = new MSSQL.NLORMMSSQLDb( connectionstring);
+
+            visitor = new NExpressionVisitor();
+            list = new List<Expression>();
+        }
+        private NExpressionVisitor visitor;
+        private INLORMDb db;
+        private List<Expression> list;
+
+
+        public NEDataBase Where<T>( Expression<Func<T, bool>> exp)
+        {
+            Expression e = visitor.Visit(exp);
+            list.Add(e);
             return this;
         }
 
         public List<object> Select<T> ( Expression<Func<T, object>> exp)
         {
+            list.Clear();
             return new List<object>();
         }
 
@@ -49,5 +52,4 @@ namespace NLORM.LambdaExtension
             return 0;
         }
     }
-
 }

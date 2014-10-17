@@ -14,7 +14,7 @@ namespace NLORM.LambdaExtension
         {
         }
 
-        protected virtual Expression Visit(Expression exp)
+        public virtual Expression Visit(Expression exp)
         {
             if (exp == null)
                 return exp;
