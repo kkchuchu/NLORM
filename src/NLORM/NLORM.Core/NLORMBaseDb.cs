@@ -197,6 +197,12 @@ namespace NLORM.Core
             return trans;
         }
 
+
+        virtual public ISqlBuilder GetSqlBuilder()
+        {
+            return SqlBuilder;
+        }
+
         private void GenWhereSql()
         {
             if (FliterObjects == null)
