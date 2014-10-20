@@ -34,5 +34,6 @@ namespace NLORM.Core
         int Update<T>(Object o);
 
         ITransaction BeginTransaction(string transactonName);
+        ISqlBuilder GetSqlBuilder();
     }
 }
