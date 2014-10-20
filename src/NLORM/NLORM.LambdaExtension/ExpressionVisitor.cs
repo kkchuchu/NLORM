@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLORM.Core;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -10,8 +11,10 @@ namespace NLORM.LambdaExtension
 {
     public abstract class ExpressionVisitor
     {
-        protected ExpressionVisitor()
+        private ISqlBuilder sqlbuilder;
+        protected ExpressionVisitor( ISqlBuilder sqlbuilder)
         {
+            this.sqlbuilder = sqlbuilder;
         }
 
         public virtual Expression Visit(Expression exp)
