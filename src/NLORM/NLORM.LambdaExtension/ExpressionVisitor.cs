@@ -108,7 +108,7 @@ namespace NLORM.LambdaExtension
             return initializer;
         }
 
-        protected virtual Expression VisitUnary(UnaryExpression u)
+        protected virtual Expression VisitUnary(  UnaryExpression u)
         {
             Expression operand = this.Visit(u.Operand);
             if (operand != u.Operand)
