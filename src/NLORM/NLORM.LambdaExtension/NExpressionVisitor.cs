@@ -9,9 +9,6 @@ namespace NLORM.LambdaExtension
 {
     public class NExpressionVisitor : ExpressionVisitor
     {
-        public NExpressionVisitor( ISqlBuilder sqlbuilder) : base( sqlbuilder)
-        {
-        }
         public override System.Linq.Expressions.Expression Visit(System.Linq.Expressions.Expression exp)
         {
             return base.Visit(exp);

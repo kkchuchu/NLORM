@@ -1,20 +1,14 @@
-﻿using NLORM.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NLORM.LambdaExtension
 {
     public abstract class ExpressionVisitor
     {
-        private ISqlBuilder sqlbuilder;
-        protected ExpressionVisitor( ISqlBuilder sqlbuilder)
+        protected ExpressionVisitor()
         {
-            this.sqlbuilder = sqlbuilder;
         }
 
         public virtual Expression Visit(Expression exp)
@@ -111,7 +105,7 @@ namespace NLORM.LambdaExtension
             return initializer;
         }
 
-        protected virtual Expression VisitUnary(  UnaryExpression u)
+        protected virtual Expression VisitUnary(UnaryExpression u)
         {
             Expression operand = this.Visit(u.Operand);
             if (operand != u.Operand)

@@ -23,16 +23,17 @@ namespace NLORM.LambdaExtension
         private INLORMDb db;
         private List<Expression> list;
 
-
         public NEDataBase Where<T>( Expression<Func<T, bool>> exp)
         {
-            Expression e = visitor.Visit(exp);
+            var e = visitor.Visit(exp);
+            
             list.Add(e);
             return this;
         }
 
         public List<object> Select<T> ( Expression<Func<T, object>> exp)
         {
+            
             list.Clear();
             return new List<object>();
         }
@@ -51,5 +52,11 @@ namespace NLORM.LambdaExtension
         {
             return 0;
         }
+
+    }
+
+    public class PartialSQL
+    {
+        
     }
 }
