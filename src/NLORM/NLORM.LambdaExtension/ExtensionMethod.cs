@@ -17,33 +17,34 @@ namespace NLORM.LambdaExtension
             this.db = new MSSQL.NLORMMSSQLDb( connectionstring);
 
             visitor = new NExpressionVisitor();
-            list = new List<Expression>();
+            conditions = new List<Expression>();
         }
         private NExpressionVisitor visitor;
         private INLORMDb db;
-        private List<Expression> list;
+        private List<Expression> conditions;
 
         public NEDataBase Where<T>( Expression<Func<T, bool>> exp)
         {
             var e = visitor.Visit(exp);
             
-            list.Add(e);
+            conditions.Add(e);
             return this;
         }
 
         public List<object> Select<T> ( Expression<Func<T, object>> exp)
         {
-            
-            list.Clear();
+            var e = visitor.Visit(exp);
+            db.Query<T>( @"");
+            conditions.Clear();
             return new List<object>();
         }
 
-        public bool Insert<T> ( T t)
+        public bool Insert<T> ( T t)// this done
         {
             return false;
         }
 
-        public int Update<T>( object t)
+        public int Update<T>( object t)// this is done
         {
             return 0;
         }
@@ -53,10 +54,16 @@ namespace NLORM.LambdaExtension
             return 0;
         }
 
-    }
+        private string _wherecondition()
+        {
+            string wheresql = string.Empty;
+            foreach ( Expression cond in conditions)
+            {
+                wheresql += cond.ToString();
+            }
 
-    public class PartialSQL
-    {
-        
+            conditions.Clear();
+            return wheresql;
+        }
     }
 }
